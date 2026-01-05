@@ -1,0 +1,82 @@
+[
+    {
+        "id": "CASE_001_AMBIGUOUS_EXCLUSION",
+        "clause": "The Supplier shall not be liable for any consequential losses, including but not limited to loss of profit, unless such losses arise from gross negligence.",
+        "context": "Supplier delayed delivery by 2 weeks causing factory shutdown. Supplier claims 'consequential loss' exclusion applies.",
+        "expected_verdict": "PLAINTIFF_WIN",
+        "key_doctrine": "CONTRA_PROFERENTEM",
+        "rationale": "The term 'consequential losses' is notoriously ambiguous. Under Contra Proferentem, it is construed against the drafter (Supplier) to exclude direct financial loss like shutdown costs."
+    },
+    {
+        "id": "CASE_002_CLEAR_FORCE_MAJEURE",
+        "clause": "Force Majeure Event means any event beyond reasonable control, specifically including: earthquake, flood, fire, and pandemic. In such event, performance is suspended.",
+        "context": "A flood destroyed the warehouse. Supplier suspended delivery. Buyer sues for breach.",
+        "expected_verdict": "DEFENSE_WIN",
+        "key_doctrine": "PARTY_AUTONOMY",
+        "rationale": "The clause explicitly lists 'flood'. The event is clear and unequivocal. Court respects the agreed risk allocation."
+    },
+    {
+        "id": "CASE_003_STATUTORY_OVERRIDE",
+        "clause": "The Supplier warrants goods for 3 months. All other warranties, express or implied, are hereby excluded.",
+        "context": "Product failed after 4 months. Buyer cites Consumer Protection Act (Mandatory 2-year warranty).",
+        "expected_verdict": "PLAINTIFF_WIN",
+        "key_doctrine": "AUTHORITY_LEVEL",
+        "rationale": "Statutory warranties (Public Order) cannot be excluded by contract. The 3-month limit is void."
+    },
+    {
+        "id": "CASE_004_STRICT_CONSTRUCTION",
+        "clause": "Liability for 'negligence' is excluded.",
+        "context": "Supplier's employee deliberately smashed the product. Supplier claims exclusion applies.",
+        "expected_verdict": "PLAINTIFF_WIN",
+        "key_doctrine": "STRICT_CONSTRUCTION",
+        "rationale": "Exclusion for 'negligence' does not cover 'willful misconduct' or 'deliberate acts'. Exclusion fails strict construction test."
+    },
+    {
+        "id": "CASE_005_ECONOMIC_HARDSHIP",
+        "clause": "If raw material prices increase by >50%, Supplier may renegotiate price.",
+        "context": "Prices rose by 60%. Supplier seeks renegotiation. Buyer refuses.",
+        "expected_verdict": "DEFENSE_WIN",
+        "key_doctrine": "FREEDOM_OF_CONTRACT",
+        "rationale": "The hardship clause is specific (>50%) and clear. Binding on the Buyer."
+    },
+    {
+        "id": "CASE_006_TIME_ESSENCE",
+        "clause": "Time shall be of the essence. Any delay entitles Buyer to terminate immediately.",
+        "context": "Supplier delivered 1 hour late due to traffic. Buyer terminated.",
+        "expected_verdict": "DEFENSE_WIN",
+        "key_doctrine": "STRICT_COMPLIANCE",
+        "rationale": "When 'Time is of the essence' is express, any breach condition is repudiatory. Court upholds strict termination right."
+    },
+    {
+        "id": "CASE_007_PENALTY_CLAUSE",
+        "clause": "In event of any breach, Supplier shall pay $1,000,000 as liquidated damages.",
+        "context": "Contract value is $50,000. Breach caused $500 loss. Supplier refuses to pay $1M.",
+        "expected_verdict": "PLAINTIFF_WIN",
+        "key_doctrine": "PENALTY_RULE",
+        "rationale": "$1M is extravagant and unconscionable compared to the greatest loss. It is a penalty, not genuine pre-estimate. Void."
+    },
+    {
+        "id": "CASE_008_ENTIRE_AGREEMENT",
+        "clause": "This Agreement constitutes the entire agreement. No prior representations are binding.",
+        "context": "Sales rep promised 'free updates' orally before signing. Contract is silent. Buyer sues for updates.",
+        "expected_verdict": "DEFENSE_WIN",
+        "key_doctrine": "PAROL_EVIDENCE",
+        "rationale": "Entire Agreement clause excludes prior oral representations. Written contract prevails."
+    },
+    {
+        "id": "CASE_009_CONSUMER_UNFAIR_TERM",
+        "clause": "Supplier may unilaterally change the price at any time without notice.",
+        "context": "Consumer contract. Supplier doubled price. Consumer refuses to pay.",
+        "expected_verdict": "PLAINTIFF_WIN",
+        "key_doctrine": "UNFAIR_TERMS",
+        "rationale": "Unilateral price change without notice in a consumer contract is inherently unfair and significant imbalance. Void."
+    },
+    {
+        "id": "CASE_010_IMPLIED_FITNESS",
+        "clause": "Supplier warrants goods are free from defects.",
+        "context": "Buyer bought specific drill for underwater use (communicated this). Drill works on land but failed underwater.",
+        "expected_verdict": "PLAINTIFF_WIN",
+        "key_doctrine": "IMPLIED_FITNESS_FOR_PURPOSE",
+        "rationale": "Buyer relied on Supplier's skill/judgment for specific purpose. Implied term of fitness applies despite silence."
+    }
+]

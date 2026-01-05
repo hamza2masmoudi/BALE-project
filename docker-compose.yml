@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  bale-app:
+    build: .
+    container_name: bale_engine
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./.env:/app/.env
+      - ./data:/app/data
+      - ./chroma_db:/app/chroma_db
+    environment:
+      - PYTHONUNBUFFERED=1
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+    restart: unless-stopped

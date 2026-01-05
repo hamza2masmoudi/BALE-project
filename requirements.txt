@@ -1,0 +1,15 @@
+langgraph
+langchain
+langchain-community
+langchain-openai
+streamlit
+chromadb
+pypdf
+pdfplumber
+sentence-transformers
+rank_bm25
+python-dotenv
+openai
+tenacity
+fpdf
+requests
