@@ -1,0 +1,23 @@
+# Exclude Virtual Env (Critical)
+.venv/
+venv/
+env/
+
+# Exclude Git
+.git/
+
+# Exclude Local Data/DBs
+chroma_db/
+data/chroma_db/
+tmp/
+*.db
+*.sqlite3
+
+# Exclude IDEs
+.vscode/
+.idea/
+.DS_Store
+
+# Exclude PyCache
+__pycache__/
+*.pyc

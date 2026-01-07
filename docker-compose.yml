@@ -12,6 +12,9 @@ services:
       - ./chroma_db:/app/chroma_db
     environment:
       - PYTHONUNBUFFERED=1
+      - LOCAL_LLM_ENDPOINT=http://host.docker.internal:11434/v1/chat/completions
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     deploy:
       resources:
         limits:

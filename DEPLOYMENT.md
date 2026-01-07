@@ -1,61 +1,77 @@
-# BALE 2.0 Deployment Guide
+# BALE 2.1 Deployment Guide
+
+> **Architecture**: Open-Weight Neuro-Symbolic
+> **Infrastructure**: Docker + Ollama (LocalHost)
 
 ## 1. Prerequisites
-*   **Python 3.10+** installed.
-*   **Docker** (Optional, for containerized deployment).
-*   **API Keys**:
-    *   Mistral AI (`MISTRAL_API_KEY`)
-    *   DeepSeek (`DEEPSEEK_API_KEY`) - *Optional (System falls back to Mistral)*
+*   **Host Machine**: Mac (M1/M2/M3), Linux, or Windows (WSL2) with 16GB+ RAM.
+*   **Docker**: Installed and running.
+*   **Ollama**: Installed on the **HOST** machine.
 
-## 2. Installation
+---
 
-### Local Deployment
-1.  **Clone the repository**:
+## 2. Infrastructure Setup (The "Brain")
+
+BALE 2.1 runs inside a container (Body) but thinking happens on the host (Brain).
+
+### Step 1: Prepare the Host
+1.  **Install Ollama**: [ollama.com](https://ollama.com)
+2.  **Pull the Model**:
     ```bash
-    git clone https://github.com/your-repo/bale-project.git
-    cd bale-project
+    ollama pull qwen2.5:14b
+    ```
+3.  **Start Server**:
+    Ensure Ollama is running (`ollama serve`). By default it listens on port `11434`.
+
+---
+
+## 3. Application Deployment (The "Body")
+
+### Option A: Docker (Recommended)
+This method isolates the Python environment but networks with the host for intelligence.
+
+1.  **Configure `.env`**:
+    Ensure your `.env` file points to the Docker host gateway:
+    ```bash
+    LOCAL_LLM_ENDPOINT=http://host.docker.internal:11434/v1/chat/completions
+    LOCAL_LLM_MODEL=qwen2.5:14b
+    ```
+    *(Note: `docker-compose.yml` sets this automatically, but good to keep in sync).*
+
+2.  **Build & Run**:
+    ```bash
+    docker-compose up --build -d
     ```
 
-2.  **Create Virtual Environment**:
+3.  **Access**:
+    Open `http://localhost:8501`.
+
+### Option B: Bare Metal (Local Python)
+Use this for development or if you don't use Docker.
+
+1.  **Install**:
     ```bash
     python3 -m venv .venv
     source .venv/bin/activate
-    ```
-
-3.  **Install Dependencies**:
-    ```bash
     pip install -r requirements.txt
     ```
 
-4.  **Configuration**:
-    *   Copy `.env.example` to `.env`.
-    *   Add your API keys.
-
-5.  **Run the Application**:
+2.  **Run**:
     ```bash
-    streamlit run app.py
+    ./run.sh
     ```
 
-### Docker Deployment
-1.  **Build Image**:
-    ```bash
-    docker-compose build
-    ```
+---
 
-2.  **Run Container**:
-    ```bash
-    docker-compose up
-    ```
-    Access the app at `http://localhost:8501`.
+## 4. Troubleshooting Network
 
-## 3. Production Notes
-*   **Concurrency**: Streamlit is single-threaded by default. For high traffic, consider deploying on **Google Cloud Run** or **AWS Fargate** with multiple instances.
-*   **Vector Database**: The current implementation uses local ChromaDB. For production, switch to a managed Vector DB (Pinecone/Weaviate) by updating `src/vector_store.py`.
-*   **Logging**: Logs are currently output to stdout. Configure a centralized logging driver (e.g., CloudWatch) in `docker-compose.yml`.
+If the container cannot see Ollama:
+1.  **Mac/Windows**: `host.docker.internal` works out of the box.
+2.  **Linux**: You may need to add `--network="host"` or verify `host-gateway` support in your Docker version.
 
-## 4. Verification
-To verify the deployment is scientifically sound before serving traffic:
+## 5. Verification
+Run the Smoke Test inside the container to verify the brain link:
 ```bash
-python3 tests/benchmark_soundness.py
+docker exec -it bale_engine python3 tests/benchmark_smoke.py
 ```
-Target: **>80% Pass Rate** on the Gold Set.
+Target: **✅ PASS**
