@@ -119,4 +119,3 @@ We replaced high-level wrappers (LangChain) with raw HTTP requests.
 *   **Force conflict.** You learn more from two agents disagreeing than one agent agreeing with itself.
 *   **Own the brain.** Real engineering means controlling your dependencies. That’s why we moved to open-source models.
 
-You have built a system that doesn't just "chat"—it **thinks, debates, and judges** according to strict rules. That is true Computer Science.
