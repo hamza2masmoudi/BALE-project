@@ -1,0 +1,229 @@
+/* Font Imports: Space Grotesk (Tech) & Inter (Clean) */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+:root {
+    --bg-color: #E6E8EB;
+    /* Light Grey Base */
+    --tech-black: #0F0F0F;
+    /* Deep Black Accent */
+    --tech-white: #FFFFFF;
+    /* Pure White Cards */
+    --accent-grey: #8E9196;
+    /* Divider/Secondary Text */
+    --highlight: #000000;
+    /* Primary Action */
+}
+
+/* Global Reset & Typography */
+html,
+body,
+[class*="css"] {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--tech-black);
+}
+
+h1,
+h2,
+h3,
+.hero-text,
+.section-header {
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -0.02em;
+}
+
+/* --- OVERRIDES (Streamlit Defaults) --- */
+
+/* Main App Background */
+.stApp {
+    background-color: var(--bg-color);
+}
+
+/* Sidebar Styling - Minimalist Grey */
+[data-testid="stSidebar"] {
+    background-color: var(--bg-color);
+    border-right: 1px solid #D1D5DB;
+}
+
+/* Buttons: Brutalist Black Pills */
+div.stButton>button {
+    background-color: var(--tech-black);
+    color: var(--tech-white);
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 500;
+    border-radius: 4px;
+    /* Slightly rounded, industrial */
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.5rem;
+}
+
+div.stButton>button:hover {
+    background-color: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+div.stButton>button:active {
+    background-color: #000;
+    transform: translateY(0px);
+}
+
+/* --- CUSTOM COMPONENTS --- */
+
+/* Hero Section: "/// Your Ultimate Legal Document" */
+.hero-container {
+    padding: 40px 0 20px 0;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #D1D5DB;
+}
+
+.hero-prefix {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--tech-black);
+    opacity: 0.7;
+    margin-right: 10px;
+}
+
+.hero-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 2.8rem;
+    font-weight: 500;
+    line-height: 1.2;
+    color: var(--tech-black);
+}
+
+.hero-highlight {
+    font-weight: 700;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 65%, #D1D5DB 65%);
+    display: inline;
+}
+
+/* Tags: "01/ LEGAL" */
+.tech-tag {
+    display: inline-block;
+    background-color: var(--tech-white);
+    border: 1px solid #D1D5DB;
+    border-radius: 4px;
+    padding: 4px 12px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--tech-black);
+    text-transform: uppercase;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* Cards: White, Soft Shadow */
+.tech-card {
+    background-color: var(--tech-white);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+    margin-bottom: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.card-header {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-number {
+    font-size: 0.9rem;
+    color: var(--accent-grey);
+    margin-right: 10px;
+}
+
+/* Verdict Card: The "Black Box" */
+.verdict-card-black {
+    background-color: var(--tech-black);
+    color: var(--tech-white);
+    border-radius: 12px;
+    padding: 30px;
+    position: relative;
+    /* overflow: hidden; Removed to prevent text cutoff */
+    word-wrap: break-word;
+    /* Ensure long text wraps */
+    min-height: 400px;
+    /* Give it presence */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.verdict-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: var(--tech-white);
+    line-height: 1.2;
+}
+
+.risk-stat {
+    font-size: 4rem;
+    /* Larger impact */
+    font-weight: 700;
+    font-family: 'Space Grotesk', sans-serif;
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.risk-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 5px;
+}
+
+/* Timeline / Streaming Feed - Cleaner */
+.stream-item {
+    padding-left: 24px;
+    border-left: 1px solid #E5E7EB;
+    /* Thinner line */
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.stream-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 6px;
+    width: 7px;
+    height: 7px;
+    background-color: var(--tech-black);
+    border-radius: 0%;
+    /* Square dots for tech feel */
+}
+
+.stream-agent {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--tech-black);
+    letter-spacing: -0.01em;
+}
+
+.stream-content {
+    font-size: 0.9rem;
+    color: #4B5563;
+    margin-top: 4px;
+    line-height: 1.4;
+}

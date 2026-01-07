@@ -8,6 +8,7 @@ class BaleState(TypedDict):
     # Dialectic Outputs
     civilist_opinion: Optional[str]
     commonist_opinion: Optional[str]
+    ip_opinion: Optional[str]
     synthesizer_comparison: Optional[str]
     interpretive_gap: int # 0-100
     

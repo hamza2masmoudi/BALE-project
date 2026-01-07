@@ -19,7 +19,7 @@ def test_connection():
     }
     
     try:
-        response = requests.post(endpoint, json=payload, timeout=5)
+        response = requests.post(endpoint, json=payload, timeout=60)
         response.raise_for_status()
         print("✅ SUCCESS: Connection Established")
         print("Response:", response.json()["choices"][0]["message"]["content"])

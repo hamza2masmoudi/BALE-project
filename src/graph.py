@@ -10,6 +10,7 @@ def compile_graph():
     # Add Nodes
     workflow.add_node("civilist", agents.civilist_node)
     workflow.add_node("commonist", agents.commonist_node)
+    workflow.add_node("ip_specialist", agents.ip_specialist_node)
     workflow.add_node("synthesizer", agents.synthesizer_node)
     workflow.add_node("simulation", agents.simulation_node)
     workflow.add_node("harmonizer", agents.harmonizer_node)
@@ -20,7 +21,8 @@ def compile_graph():
 
     # Sequential Loop
     workflow.add_edge("civilist", "commonist")
-    workflow.add_edge("commonist", "synthesizer")
+    workflow.add_edge("commonist", "ip_specialist")
+    workflow.add_edge("ip_specialist", "synthesizer")
     workflow.add_edge("synthesizer", "simulation")
     workflow.add_edge("simulation", "harmonizer")
     workflow.add_edge("harmonizer", "gatekeeper")

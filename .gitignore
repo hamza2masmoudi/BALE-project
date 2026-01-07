@@ -19,3 +19,5 @@ env/
 # BALE Specific
 tmp/
 *.log
+data/
+

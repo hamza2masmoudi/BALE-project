@@ -106,6 +106,37 @@ class BaleAgents:
         
         return {"commonist_opinion": output}
 
+    def ip_specialist_node(self, state: BaleState) -> Dict:
+        """
+        IP Specialist: Analysis via WIPO / Copyright / Patent Law.
+        """
+        content = state.get("content", "")
+        # Basic keyword check to save resources
+        is_ip_relevant = any(kw in content.lower() for kw in ["copyright", "patent", "intellectual property", "trademark", "license", "moral right", "royalty", "proprietary"])
+        
+        if not is_ip_relevant:
+            logger.info("[IP Specialist] No IP terms found. Skipping.")
+            return {"ip_opinion": "N/A - No IP content detected."}
+
+        logger.info("[IP Specialist] Analyzing Intellectual Property clauses")
+        
+        sys_msg = """You are 'The IP Specialist', an expert in International Intellectual Property Law (WIPO/Berne/TRIPS).
+        Analyze the text specifically for IP risks:
+        - Identify assignment vs license issues.
+        - Check for 'Moral Rights' waivers (valid in US, void in France/EU).
+        - Flag strict liability in IP indemnities.
+        """
+        try:
+            output = self._call_local_model([
+                SystemMessage(content=sys_msg),
+                HumanMessage(content=f"Analyze IP risks in this text:\n{content}")
+            ], temperature=0.1)
+        except Exception as e:
+            logger.error(f"Error IP Specialist: {e}")
+            output = f"Error: {e}"
+        
+        return {"ip_opinion": output}
+
     def synthesizer_node(self, state: BaleState) -> Dict:
         """
         Synthesizer: Measures the Interpretive Gap.
