@@ -11,6 +11,7 @@ class BaleState(TypedDict):
     ip_opinion: Optional[str]
     synthesizer_comparison: Optional[str]
     interpretive_gap: int # 0-100
+    metrics: Optional[Dict[str, int]] # Radar Chart Data
     
     # Harmonizer Outputs (Phase 8)
     harmonized_clause: Optional[str]

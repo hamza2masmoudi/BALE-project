@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import tempfile
 import json
+import plotly.graph_objects as go
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -18,6 +19,77 @@ def load_css(file_path):
         st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 
 load_css("assets/style.css")
+
+# --- CHART HELPERS ---
+def create_radar_chart(metrics):
+    categories = [
+        'Civil Alignment', 'Common Alignment', 
+        'Certainty', 'Good Faith', 'Enforceability'
+    ]
+    
+    # Map from metrics keys to friendly names
+    values = [
+        metrics.get("civil_law_alignment", 50),
+        metrics.get("common_law_alignment", 50),
+        metrics.get("contract_certainty", 50),
+        metrics.get("good_faith_score", 50),
+        metrics.get("enforceability_score", 50)
+    ]
+    
+    fig = go.Figure()
+    fig.add_trace(go.Scatterpolar(
+        r=values,
+        theta=categories,
+        fill='toself',
+        fillcolor='rgba(15, 15, 15, 0.2)',
+        line=dict(color='black', width=2),
+        name='Contract Profile'
+    ))
+
+    fig.update_layout(
+        polar=dict(
+            radialaxis=dict(visible=True, range=[0, 100], showticklabels=False, linecolor='rgba(0,0,0,0.2)'),
+            angularaxis=dict(linecolor='black')
+        ),
+        showlegend=False,
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        margin=dict(l=40, r=40, t=40, b=40),
+        font=dict(family="Space Grotesk, sans-serif", size=12, color="black")
+    )
+    return fig
+
+def create_gauge(risk):
+    fig = go.Figure(go.Indicator(
+        mode = "gauge+number",
+        value = risk,
+        title = {'text': "LITIGATION RISK", 'font': {'size': 14, 'family': "Space Grotesk"}},
+        number = {'font': {'size': 40, 'family': "Space Grotesk", 'color': "black"}},
+        gauge = {
+            'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "black"},
+            'bar': {'color': "black"},
+            'bgcolor': "white",
+            'borderwidth': 2,
+            'bordercolor': "black",
+            'steps': [
+                {'range': [0, 30], 'color': "#E6E8EB"},
+                {'range': [30, 70], 'color': "#D1D5DB"}
+            ],
+            'threshold': {
+                'line': {'color': "red", 'width': 4},
+                'thickness': 0.75,
+                'value': 90
+            }
+        }
+    ))
+    
+    fig.update_layout(
+        paper_bgcolor='rgba(0,0,0,0)',
+        height=250,
+        margin=dict(l=20, r=20, t=50, b=20),
+        font=dict(family="Space Grotesk, sans-serif", color="black")
+    )
+    return fig
 
 # --- HERO SECTION (Brutalist Top) ---
 st.markdown("""
@@ -44,9 +116,9 @@ with st.sidebar:
     uploaded_file = st.file_uploader("UPLOAD LEGAL_DOC", type=["pdf"])
     st.markdown("""
     <div style="margin-top: 20px;">
-        <span class="tech-tag">01/ LEGAL</span>
-        <span class="tech-tag">02/ AI</span>
-        <span class="tech-tag">03/ SECURITY</span>
+        <span class="ui-tag">01/ LEGAL</span>
+        <span class="ui-tag">02/ AI</span>
+        <span class="ui-tag">03/ SECURITY</span>
     </div>
     """, unsafe_allow_html=True)
 
@@ -74,10 +146,13 @@ if uploaded_file:
         # Streaming Area
         stream_container = st.empty()
         
+        # Dashboard Tabs (Visible after analysis)
+        dash_tabs = st.empty()
+        
         if st.session_state.get("analyzing"):
             
             # Init Message
-            stream_html = '<div class="tech-card">'
+            stream_html = '<div class="ui-card">'
             stream_html += '<div class="stream-item"><div class="stream-agent">SYSTEM</div><div class="stream-content">Ingesting PDF...</div></div>'
             stream_container.markdown(stream_html + '</div>', unsafe_allow_html=True)
             
@@ -119,6 +194,24 @@ if uploaded_file:
             st.session_state.analysis_complete = True
             os.remove(tmp_path)
 
+        # RENDER VISUALS IF COMPLETE
+        if st.session_state.analysis_complete:
+            with dash_tabs:
+                st.markdown('<div class="section-header" style="margin-top: 20px;">/// BALE VITALS</div>', unsafe_allow_html=True)
+                tab_v, tab_t = st.tabs(["VISUALS", "TRANSCRIPT"])
+                
+                with tab_v:
+                     metrics = st.session_state.report.get("metrics", {})
+                     # Default metrics if missing
+                     if not metrics:
+                         metrics = {"civil_law_alignment": 50, "common_law_alignment": 50, "contract_certainty": 50, "good_faith_score": 50, "enforceability_score": 50}
+                     
+                     st.plotly_chart(create_radar_chart(metrics), use_container_width=True)
+                
+                with tab_t:
+                    st.markdown(st.session_state.report.get("transcript", "N/A"))
+
+
     # --- RESULT VIEW ---
     with col_log:
         if st.session_state.analysis_complete:
@@ -142,7 +235,7 @@ if uploaded_file:
                 <div class="risk-label">INTERPRETIVE GAP: {gap}%</div>
                 
                 <div style="margin-top: 30px; text-align: right;">
-                     <span class="tech-tag">EXPORT PDF</span>
+                     <span class="ui-tag">EXPORT PDF</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -150,33 +243,22 @@ if uploaded_file:
             # 2. DETAILS (Tabs)
             st.markdown('<div class="section-header" style="margin-top: 30px;">/// DATA POINTS</div>', unsafe_allow_html=True)
             
-            tab1, tab2, tab3 = st.tabs(["01/ AGENTS", "02/ SYNTHESIS", "03/ GOLDEN_CLAUSE"])
+            # GAUGE CHART HERE
+            st.plotly_chart(create_gauge(risk), use_container_width=True)
             
-            with tab1:
-                st.info(f"Civilist: {report.get('civilist', 'N/A')[:200]}...")
-                st.info(f"Commonist: {report.get('commonist', 'N/A')[:200]}...")
-                
-            with tab2:
-                st.write(report.get("synthesis", "N/A"))
-                
-            with tab3:
-                st.success(report.get("golden_clause", "N/A"))
+            st.info(f"Civilist: {report.get('civilist', 'N/A')[:100]}...")
+            st.success(f"Golden: {report.get('golden_clause', 'N/A')[:100]}...")
 
 else:
     # Landing Page State (Empty State)
     st.markdown("""
-    <div class="tech-card">
-        <div class="card-header">
-            <span>Mission / Vision</span>
-            <span class="card-number">01</span>
+    <div class="ui-card" style="text-align: center; padding: 60px;">
+        <h3 style="margin-bottom: 20px;">READY FOR INTELLIGENCE</h3>
+        <p style="color: #6B7280; margin-bottom: 30px;">Connect to Neural Core to begin processing.</p>
+        <div>
+           <span class="ui-tag">01/ UPLOAD PDF</span>
+           <span class="ui-tag">02/ ANALYZE</span>
+           <span class="ui-tag">03/ REPORT</span>
         </div>
-        <p style="opacity: 0.8;">
-        Do you wish there was a smarter, more efficient way to handle routine tasks?
-        BALE 2.2 automates the creation and adjudication of various legal documents.
-        </p>
-        <br>
-        <span class="tech-tag">01/ UPLOAD PDF</span>
-        <span class="tech-tag">02/ ANALYZE</span>
-        <span class="tech-tag">03/ REPORT</span>
     </div>
     """, unsafe_allow_html=True)

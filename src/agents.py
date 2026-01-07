@@ -152,6 +152,13 @@ class BaleAgents:
         - "synthesis": A summary of the conflict.
         - "interpretive_gap": Integer 0-100 (0=Agreement, 100=Total Conflict).
         - "symbolic_logic": A pseudo-code representation of the conflict (e.g. A != B).
+        - "metrics": {
+            "civil_law_alignment": 0-100,
+            "common_law_alignment": 0-100,
+            "contract_certainty": 0-100,
+            "good_faith_score": 0-100,
+            "enforceability_score": 0-100
+        }
         """
         try:
             response_content = self._call_local_model([
@@ -169,15 +176,24 @@ class BaleAgents:
             synthesis = data.get("synthesis", "No synthesis.")
             gap = data.get("interpretive_gap", 0)
             logic = data.get("symbolic_logic", "N/A")
+            metrics = data.get("metrics", {
+                "civil_law_alignment": 50,
+                "common_law_alignment": 50,
+                "contract_certainty": 50,
+                "good_faith_score": 50,
+                "enforceability_score": 50
+            })
         except Exception as e:
             logger.error(f"Error Synthesizer: {e}")
             synthesis = f"Error: {e}"
             gap = 0
             logic = "Error"
+            metrics = {}
 
         return {
             "synthesizer_comparison": synthesis,
             "interpretive_gap": gap,
+            "metrics": metrics,
             "reasoning_steps": [logic] 
         }
 
