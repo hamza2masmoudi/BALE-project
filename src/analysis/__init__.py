@@ -5,10 +5,20 @@ from src.analysis.clause_analyzer import (
     ContractAnalysis,
     clause_analyzer
 )
+from src.analysis.integrated_analyzer import (
+    IntegratedAnalyzer,
+    IntegratedAnalysisResult,
+    integrated_analyzer,
+    analyze_contract_full
+)
 
 __all__ = [
     "ClauseAnalyzer",
     "ClauseRisk", 
     "ContractAnalysis",
-    "clause_analyzer"
+    "clause_analyzer",
+    "IntegratedAnalyzer",
+    "IntegratedAnalysisResult",
+    "integrated_analyzer",
+    "analyze_contract_full",
 ]
