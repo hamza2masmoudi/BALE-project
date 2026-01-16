@@ -1,0 +1,223 @@
+{
+    "dataset_info": {
+        "name": "BALE Comprehensive Evaluation Dataset",
+        "version": "1.0",
+        "created": "2026-01-16",
+        "purpose": "End-to-end evaluation of BALE frontier capabilities",
+        "total_contracts": 25,
+        "contract_types": [
+            "MSA",
+            "NDA",
+            "SLA",
+            "License",
+            "Employment",
+            "Partnership",
+            "Vendor",
+            "Consulting"
+        ],
+        "jurisdictions": [
+            "US",
+            "UK",
+            "EU",
+            "GERMANY",
+            "SINGAPORE",
+            "INTERNATIONAL"
+        ],
+        "industries": [
+            "technology",
+            "finance",
+            "healthcare",
+            "manufacturing",
+            "legal"
+        ]
+    },
+    "evaluation_criteria": {
+        "frontier_I_silence": "Correctly identify missing clauses",
+        "frontier_II_archaeology": "Detect drafting traces and placeholders",
+        "frontier_III_temporal": "Assess meaning stability over time",
+        "frontier_IV_network": "Infer entity behavior patterns",
+        "frontier_V_strain": "Detect doctrinal stress points",
+        "frontier_VI_social": "Identify power dynamics",
+        "frontier_VII_ambiguity": "Detect strategic vs accidental vagueness",
+        "frontier_VIII_dispute": "Predict likely contested clauses",
+        "frontier_IX_imagination": "Identify legal gaps",
+        "frontier_X_reflexive": "Track system influence"
+    },
+    "contracts": [
+        {
+            "id": "msa_001",
+            "file": "msa_balanced.json",
+            "type": "MSA",
+            "risk": "low",
+            "scenario": "Balanced terms"
+        },
+        {
+            "id": "msa_002",
+            "file": "msa_vendor_heavy.json",
+            "type": "MSA",
+            "risk": "high",
+            "scenario": "Vendor-favorable"
+        },
+        {
+            "id": "msa_003",
+            "file": "msa_ai_services.json",
+            "type": "MSA",
+            "risk": "medium",
+            "scenario": "AI services with novel clauses"
+        },
+        {
+            "id": "nda_001",
+            "file": "nda_mutual.json",
+            "type": "NDA",
+            "risk": "low",
+            "scenario": "Mutual standard NDA"
+        },
+        {
+            "id": "nda_002",
+            "file": "nda_one_sided.json",
+            "type": "NDA",
+            "risk": "medium",
+            "scenario": "One-sided disclosure"
+        },
+        {
+            "id": "sla_001",
+            "file": "sla_cloud.json",
+            "type": "SLA",
+            "risk": "medium",
+            "scenario": "Cloud service SLA"
+        },
+        {
+            "id": "sla_002",
+            "file": "sla_enterprise.json",
+            "type": "SLA",
+            "risk": "low",
+            "scenario": "Enterprise with strong guarantees"
+        },
+        {
+            "id": "license_001",
+            "file": "license_saas.json",
+            "type": "License",
+            "risk": "medium",
+            "scenario": "SaaS license"
+        },
+        {
+            "id": "license_002",
+            "file": "license_perpetual.json",
+            "type": "License",
+            "risk": "high",
+            "scenario": "Perpetual license with traps"
+        },
+        {
+            "id": "employment_001",
+            "file": "employment_exec.json",
+            "type": "Employment",
+            "risk": "medium",
+            "scenario": "Executive employment"
+        },
+        {
+            "id": "employment_002",
+            "file": "employment_noncompete.json",
+            "type": "Employment",
+            "risk": "high",
+            "scenario": "Non-compete heavy"
+        },
+        {
+            "id": "partnership_001",
+            "file": "partnership_jv.json",
+            "type": "Partnership",
+            "risk": "medium",
+            "scenario": "Joint venture"
+        },
+        {
+            "id": "vendor_001",
+            "file": "vendor_it.json",
+            "type": "Vendor",
+            "risk": "medium",
+            "scenario": "IT services vendor"
+        },
+        {
+            "id": "consulting_001",
+            "file": "consulting_strategy.json",
+            "type": "Consulting",
+            "risk": "low",
+            "scenario": "Strategy consulting"
+        },
+        {
+            "id": "edge_001",
+            "file": "edge_missing_clauses.json",
+            "type": "MSA",
+            "risk": "high",
+            "scenario": "Many missing clauses"
+        },
+        {
+            "id": "edge_002",
+            "file": "edge_old_contract.json",
+            "type": "MSA",
+            "risk": "high",
+            "scenario": "Outdated 2018 contract"
+        },
+        {
+            "id": "edge_003",
+            "file": "edge_power_imbalance.json",
+            "type": "Vendor",
+            "risk": "high",
+            "scenario": "Extreme power imbalance"
+        },
+        {
+            "id": "edge_004",
+            "file": "edge_ambiguous.json",
+            "type": "MSA",
+            "risk": "medium",
+            "scenario": "Highly ambiguous terms"
+        },
+        {
+            "id": "edge_005",
+            "file": "edge_dispute_prone.json",
+            "type": "License",
+            "risk": "high",
+            "scenario": "Dispute-prone clauses"
+        },
+        {
+            "id": "intl_001",
+            "file": "intl_gdpr.json",
+            "type": "DPA",
+            "risk": "medium",
+            "scenario": "EU GDPR compliance"
+        },
+        {
+            "id": "intl_002",
+            "file": "intl_singapore.json",
+            "type": "MSA",
+            "risk": "low",
+            "scenario": "Singapore law"
+        },
+        {
+            "id": "finance_001",
+            "file": "finance_lending.json",
+            "type": "Loan",
+            "risk": "high",
+            "scenario": "Commercial lending"
+        },
+        {
+            "id": "health_001",
+            "file": "health_baa.json",
+            "type": "BAA",
+            "risk": "medium",
+            "scenario": "HIPAA BAA"
+        },
+        {
+            "id": "tech_001",
+            "file": "tech_api.json",
+            "type": "API",
+            "risk": "medium",
+            "scenario": "API terms of service"
+        },
+        {
+            "id": "tech_002",
+            "file": "tech_crypto.json",
+            "type": "Terms",
+            "risk": "high",
+            "scenario": "Crypto/Web3 terms"
+        }
+    ]
+}

@@ -1,0 +1,30 @@
+{
+    "id": "edge_004",
+    "name": "Highly Ambiguous MSA",
+    "type": "MSA",
+    "jurisdiction": "US",
+    "industry": "technology",
+    "effective_date": "2024-03-01",
+    "parties": [
+        "AmbiguousTech LLC",
+        "ConfusedCustomer Inc."
+    ],
+    "expected_risk": "medium",
+    "expected_findings": {
+        "ambiguity": {
+            "score": 75,
+            "intentional": [
+                "reasonable_efforts",
+                "material_breach",
+                "commercially_reasonable"
+            ],
+            "accidental": [
+                "promptly",
+                "significant",
+                "appropriate"
+            ],
+            "interpretation_risk": "high"
+        }
+    },
+    "text": "MASTER SERVICES AGREEMENT\n\nThis Agreement is entered into as of March 1, 2024 between AmbiguousTech LLC (\"Provider\") and ConfusedCustomer Inc. (\"Customer\").\n\n1. SERVICES\n1.1 Provider shall use reasonable efforts to provide appropriate services to Customer.\n1.2 Services shall be performed in a commercially reasonable manner consistent with good industry practices.\n1.3 Provider shall endeavor to meet Customer's reasonable requirements as may be specified from time to time.\n\n2. DELIVERY\n2.1 Provider shall deliver services promptly and within a reasonable time.\n2.2 If Customer requests changes, Provider shall use best efforts to accommodate such requests.\n2.3 Delivery schedules are approximate and may be adjusted as circumstances require.\n\n3. FEES\n3.1 Customer shall pay reasonable fees for services rendered.\n3.2 Fees may be adjusted periodically to reflect market conditions.\n3.3 Payment is due within a reasonable period following invoice.\n\n4. PERFORMANCE STANDARDS\n4.1 Services shall substantially conform to Customer's reasonable expectations.\n4.2 Provider shall promptly address any significant issues that may arise.\n4.3 Provider shall maintain appropriate quality standards.\n\n5. TERM AND TERMINATION\n5.1 This Agreement shall continue for a reasonable initial period.\n5.2 Either party may terminate for material breach upon appropriate notice.\n5.3 \"Material breach\" means a significant failure that substantially impairs the value of this Agreement.\n\n6. CONFIDENTIALITY\n6.1 Each party shall take appropriate measures to protect the other's confidential information.\n6.2 Confidential information shall be kept confidential for an appropriate period.\n\n7. WARRANTIES\n7.1 Provider makes reasonable representations that services will be adequate for Customer's general purposes.\n7.2 Provider shall exercise reasonable care in performing services.\n\n8. LIABILITY\n8.1 Neither party shall be liable for damages that exceed a reasonable amount.\n8.2 The parties shall use good faith efforts to resolve any disputes.\n\n9. GENERAL\n9.1 This Agreement shall be interpreted in a reasonable manner.\n9.2 Any modifications shall be made through appropriate channels.\n9.3 Notices shall be delivered by appropriate means.\n\n10. GOVERNING LAW\nThis Agreement shall be governed by appropriate applicable law.\n\nAMBIGUOUSTECH LLC\nBy: (signature)\n\nCONFUSEDCUSTOMER INC.\nBy: (signature)"
+}

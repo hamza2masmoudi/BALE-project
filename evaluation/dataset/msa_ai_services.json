@@ -1,0 +1,30 @@
+{
+    "id": "msa_003",
+    "name": "AI Solutions MSA - Novel AI Clauses",
+    "type": "MSA",
+    "jurisdiction": "US",
+    "industry": "technology",
+    "effective_date": "2024-06-01",
+    "parties": [
+        "NeuralAI Systems Corp.",
+        "Enterprise Holdings Inc."
+    ],
+    "expected_risk": "medium",
+    "expected_findings": {
+        "imagination_gaps": [
+            "ai_liability",
+            "ai_outputs",
+            "autonomous_agents"
+        ],
+        "strain_points": [
+            "ai_regulation_pending"
+        ],
+        "novel_concepts": [
+            "model_training",
+            "ai_hallucinations",
+            "autonomous_decisions"
+        ],
+        "pioneering_risk": true
+    },
+    "text": "MASTER SERVICES AGREEMENT FOR AI SOLUTIONS\n\nThis Master Services Agreement (\"Agreement\") is entered into as of June 1, 2024 by and between NeuralAI Systems Corp., a Delaware corporation (\"Provider\"), and Enterprise Holdings Inc., a New York corporation (\"Customer\").\n\n1. AI SERVICES\n1.1 Services. Provider shall provide artificial intelligence and machine learning services as described herein, including AI model deployment, training, and inference services.\n1.2 AI Outputs. Customer acknowledges that AI-generated outputs may contain inaccuracies, biases, or errors. Customer is solely responsible for reviewing, validating, and implementing any AI outputs before reliance.\n1.3 No Guarantees. Provider makes no guarantees regarding the accuracy, completeness, or fitness of AI outputs for any particular purpose.\n\n2. AI MODEL TRAINING\n2.1 Training Data. Customer may provide data to improve AI models (\"Training Data\"). Customer grants Provider a worldwide, perpetual license to use Training Data to train, improve, and develop AI models.\n2.2 Model Ownership. All AI models, including those trained on Customer data, are owned exclusively by Provider.\n2.3 Output Ownership. Outputs generated for Customer using Customer's prompts and inputs shall be owned by Customer, subject to Provider's underlying model ownership.\n\n3. AUTONOMOUS AGENTS\n3.1 Deployment. Customer may deploy AI agents to perform automated tasks. Customer is solely responsible for all actions taken by AI agents on Customer's behalf.\n3.2 Supervision. Customer shall implement appropriate human oversight of AI agent activities.\n3.3 Liability. Provider is not liable for any decisions made or actions taken by AI agents, even if such decisions result from defects in the AI system.\n\n4. AI SAFETY AND ETHICS\n4.1 Use Restrictions. Customer shall not use Services to: (a) generate content that is illegal, harmful, or violates third-party rights; (b) make decisions affecting individuals' legal rights without human review; (c) develop autonomous weapons; or (d) engage in surveillance in violation of law.\n4.2 Compliance. Customer shall comply with all applicable AI regulations, including the EU AI Act where applicable.\n4.3 Bias Mitigation. Customer acknowledges that AI systems may reflect biases in training data and agrees to implement appropriate bias detection and mitigation measures.\n\n5. TERM AND TERMINATION\n5.1 Term. This Agreement shall continue for an initial term of two (2) years.\n5.2 Termination. Either party may terminate for material breach upon thirty (30) days written notice with opportunity to cure.\n\n6. FEES AND PAYMENT\n6.1 Usage-Based Fees. Customer shall pay based on API calls, compute units, and token usage as set forth in the pricing schedule.\n6.2 Payment. Invoices are due within thirty (30) days.\n\n7. DATA PROTECTION\n7.1 Personal Data. Provider shall process personal data in accordance with applicable privacy laws.\n7.2 Security. Provider shall implement industry-standard security measures appropriate for AI systems.\n7.3 Audit. Customer may audit Provider's data protection practices annually.\n\n8. INTELLECTUAL PROPERTY\n8.1 Provider IP. Provider retains all rights in its AI models, algorithms, and technologies.\n8.2 Customer IP. Customer retains all rights in its data and content.\n8.3 Improvements. Any improvements to Provider's AI systems arising from Customer's use shall be owned by Provider.\n\n9. WARRANTIES\n9.1 Performance. Provider warrants that Services will perform substantially as described in documentation.\n9.2 AI Disclaimer. PROVIDER DISCLAIMS ALL WARRANTIES REGARDING AI ACCURACY, RELIABILITY, OR SUITABILITY. AI OUTPUTS MAY CONTAIN HALLUCINATIONS, ERRORS, OR BIASED CONTENT.\n\n10. INDEMNIFICATION\n10.1 Mutual. Each party shall indemnify the other from third-party claims arising from its breach of this Agreement.\n10.2 AI Claims. Customer shall indemnify Provider from claims arising from Customer's use of AI outputs or AI agent actions.\n\n11. LIMITATION OF LIABILITY\n11.1 Cap. Neither party's liability shall exceed fees paid in the twelve (12) months preceding the claim, except for indemnification obligations.\n11.2 AI-Specific. Provider is not liable for damages arising from: (a) AI hallucinations or inaccuracies; (b) AI agent actions; (c) Customer's failure to review AI outputs; or (d) regulatory changes affecting AI.\n\n12. REGULATORY COMPLIANCE\n12.1 Evolving Regulation. Customer acknowledges that AI regulation is evolving. Customer is responsible for compliance with AI-specific regulations in its jurisdiction.\n12.2 Cooperation. Provider shall reasonably cooperate with Customer's regulatory compliance efforts.\n\n13. DISPUTE RESOLUTION\nDisputes shall be resolved by binding arbitration in San Francisco under JAMS rules.\n\n14. GOVERNING LAW\nThis Agreement is governed by California law.\n\nIN WITNESS WHEREOF, the parties have executed this Agreement.\n\nNEURALAI SYSTEMS CORP.\nBy: _________________________\nName: Dr. Alice Zhang\nTitle: Chief Executive Officer\n\nENTERPRISE HOLDINGS INC.\nBy: _________________________\nName: Robert Williams\nTitle: General Counsel"
+}

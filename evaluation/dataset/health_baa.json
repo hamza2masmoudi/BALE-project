@@ -1,0 +1,21 @@
+{
+    "id": "health_001",
+    "name": "HIPAA Business Associate Agreement",
+    "type": "BAA",
+    "jurisdiction": "US",
+    "industry": "healthcare",
+    "effective_date": "2024-01-15",
+    "parties": [
+        "Regional Healthcare System",
+        "HealthTech Solutions Inc."
+    ],
+    "expected_risk": "medium",
+    "expected_findings": {
+        "strain_points": [
+            "hipaa_compliance",
+            "breach_notification"
+        ],
+        "regulatory_compliance": "hipaa"
+    },
+    "text": "BUSINESS ASSOCIATE AGREEMENT\n\nThis Business Associate Agreement (\"BAA\") is entered into as of January 15, 2024 between Regional Healthcare System (\"Covered Entity\") and HealthTech Solutions Inc. (\"Business Associate\").\n\nRECITALS\nWHEREAS, Covered Entity is a \"covered entity\" as defined by HIPAA;\nWHEREAS, Business Associate will provide services that involve access to Protected Health Information;\nWHEREAS, the parties wish to comply with HIPAA requirements.\n\n1. DEFINITIONS\n\"PHI\" means Protected Health Information as defined in 45 CFR 160.103.\n\"ePHI\" means electronic Protected Health Information.\n\"Security Incident\" means the attempted or successful unauthorized access, use, disclosure, modification, or destruction of PHI.\n\"Breach\" has the meaning given in 45 CFR 164.402.\n\n2. PERMITTED USES AND DISCLOSURES\n2.1 Business Associate may use and disclose PHI solely to perform services under the Services Agreement.\n2.2 Business Associate may use PHI for its proper management and administration if necessary for Business Associate to perform services or if required by law.\n2.3 Business Associate shall not use or disclose PHI in a manner not permitted by HIPAA.\n\n3. SAFEGUARDS\n3.1 Business Associate shall implement administrative, physical, and technical safeguards to protect PHI as required by HIPAA Security Rule.\n3.2 Business Associate shall ensure workforce members comply with this BAA.\n3.3 Business Associate shall use encryption for all ePHI in transit and at rest.\n\n4. SUBCONTRACTORS\n4.1 Business Associate shall require subcontractors to agree to restrictions and conditions at least as restrictive as this BAA.\n4.2 Business Associate shall provide Covered Entity with a list of subcontractors who will have access to PHI.\n\n5. REPORTING\n5.1 Security Incidents. Business Associate shall report any Security Incident within 24 hours of discovery.\n5.2 Breaches. Business Associate shall report any Breach of Unsecured PHI without unreasonable delay, and no later than 30 days after discovery.\n5.3 Breach reports shall include: (a) nature of PHI involved; (b) individuals affected; (c) steps taken to mitigate harm.\n\n6. INDIVIDUAL RIGHTS\nBusiness Associate shall:\n(a) Provide access to PHI within 30 days of request;\n(b) Make amendments to PHI as directed by Covered Entity;\n(c) Document disclosures as required for accounting of disclosures;\n(d) Provide information needed to respond to individual requests.\n\n7. MINIMUM NECESSARY\nBusiness Associate shall request, use, and disclose only the minimum PHI necessary to accomplish the intended purpose.\n\n8. AUDITS AND RECORDS\n8.1 Business Associate shall make practices, books, and records available to HHS for compliance determination.\n8.2 Covered Entity may audit Business Associate's compliance annually.\n\n9. TERM AND TERMINATION\n9.1 Term. This BAA shall remain in effect for the term of the Services Agreement.\n9.2 Termination for Breach. Covered Entity may terminate immediately upon material breach by Business Associate.\n9.3 Return of PHI. Upon termination, Business Associate shall return or destroy all PHI, if feasible. If not feasible, protections shall continue.\n\n10. INDEMNIFICATION\nBusiness Associate shall indemnify Covered Entity from any claims, fines, or penalties arising from Business Associate's breach of this BAA or HIPAA.\n\n11. AMENDMENTS\nThe parties agree to amend this BAA as necessary to comply with changes in HIPAA.\n\n12. GOVERNING LAW\nThis BAA is governed by the laws of the State of Texas and HIPAA.\n\nREGIONAL HEALTHCARE SYSTEM\nBy: _________________________\n\nHEALTHTECH SOLUTIONS INC.\nBy: _________________________"
+}

@@ -1,0 +1,31 @@
+{
+    "id": "edge_002",
+    "name": "Outdated 2018 MSA",
+    "type": "MSA",
+    "jurisdiction": "UK",
+    "industry": "technology",
+    "effective_date": "2018-03-15",
+    "parties": [
+        "LegacyTech Ltd.",
+        "OldCustomer PLC"
+    ],
+    "expected_risk": "high",
+    "expected_findings": {
+        "temporal_decay": {
+            "days_elapsed": 2100,
+            "stability_index": 0.45,
+            "doctrine_shifts": [
+                "GDPR",
+                "Brexit",
+                "Schrems_II",
+                "UK_GDPR"
+            ],
+            "urgency": "high"
+        },
+        "strain_points": [
+            "pre_gdpr_language",
+            "eu_uk_transfers"
+        ]
+    },
+    "text": "MASTER SERVICES AGREEMENT\n\nThis Master Services Agreement (\"Agreement\") is made on 15 March 2018 between LegacyTech Ltd., registered in England (\"Supplier\"), and OldCustomer PLC, registered in England (\"Client\").\n\n1. SERVICES\nThe Supplier shall provide IT consulting services to the Client in accordance with the Schedules.\n\n2. TERM\nThis Agreement shall commence on the date hereof and continue for five (5) years unless terminated earlier.\n\n3. CHARGES AND PAYMENT\n3.1 The Client shall pay the Charges set out in Schedule 1.\n3.2 Payment shall be made within 30 days of invoice.\n3.3 All amounts are exclusive of VAT.\n\n4. DATA PROTECTION\n4.1 The Supplier shall comply with the Data Protection Act 1998 in relation to any personal data processed.\n4.2 The Supplier may transfer personal data to processors within the European Economic Area.\n4.3 For transfers outside the EEA, the Supplier shall rely on Safe Harbor certification or EU Model Clauses.\n\n5. INTELLECTUAL PROPERTY\n5.1 All Intellectual Property Rights in the Services shall remain with the Supplier.\n5.2 The Client is granted a non-exclusive licence to use any deliverables.\n\n6. LIMITATION OF LIABILITY\n6.1 Neither party shall be liable for any indirect or consequential loss.\n6.2 The Supplier's total liability shall not exceed the Charges paid in the preceding 12 months.\n\n7. CONFIDENTIALITY\nEach party shall keep confidential all Confidential Information of the other party.\n\n8. TERMINATION\n8.1 Either party may terminate for material breach with 30 days' notice to cure.\n8.2 Either party may terminate for convenience with 90 days' written notice.\n\n9. FORCE MAJEURE\nNeither party shall be liable for failure to perform due to circumstances beyond its reasonable control.\n\n10. GOVERNING LAW\nThis Agreement shall be governed by the laws of England and Wales. The parties submit to the exclusive jurisdiction of the English courts.\n\n11. GENERAL\n11.1 This Agreement constitutes the entire agreement between the parties.\n11.2 Amendment requires writing signed by both parties.\n\nSIGNED for and on behalf of LEGACYTECH LTD.\nDirector: _________________________\n\nSIGNED for and on behalf of OLDCUSTOMER PLC.\nDirector: _________________________\n\nDate: 15 March 2018"
+}

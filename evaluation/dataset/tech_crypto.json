@@ -1,0 +1,27 @@
+{
+    "id": "tech_002",
+    "name": "Web3 Platform Terms of Service",
+    "type": "Terms",
+    "jurisdiction": "INTERNATIONAL",
+    "industry": "technology",
+    "effective_date": "2024-02-01",
+    "parties": [
+        "CryptoDAO Foundation",
+        "User"
+    ],
+    "expected_risk": "high",
+    "expected_findings": {
+        "imagination_gaps": [
+            "dao_liability",
+            "smart_contract_bugs",
+            "token_classification"
+        ],
+        "strain_points": [
+            "securities_law",
+            "defi_regulation"
+        ],
+        "novel_concepts": true,
+        "regulatory_uncertainty": "extreme"
+    },
+    "text": "CRYPTODAO PLATFORM TERMS OF SERVICE\n\nLast Updated: February 1, 2024\n\nBy accessing or using the CryptoDAO Platform (the \"Platform\"), you agree to these Terms of Service.\n\n1. PLATFORM DESCRIPTION\n1.1 The Platform is a decentralized application (\"dApp\") that enables users to interact with blockchain-based smart contracts.\n1.2 The Platform is provided by CryptoDAO Foundation, a Cayman Islands foundation company.\n1.3 The Platform operates on various blockchain networks and is non-custodial.\n\n2. ELIGIBILITY\n2.1 You must be at least 18 years old.\n2.2 You must not be located in a jurisdiction where use of the Platform is prohibited.\n2.3 You must not be on any sanctions list.\n\n3. WALLET CONNECTION\n3.1 You connect your own self-custodial wallet to interact with the Platform.\n3.2 You are solely responsible for the security of your wallet and private keys.\n3.3 We cannot recover lost wallets or reverse blockchain transactions.\n\n4. SMART CONTRACTS\n4.1 The Platform interacts with smart contracts deployed on public blockchains.\n4.2 Smart contracts are autonomous and immutable once deployed.\n4.3 Smart contracts may contain bugs or vulnerabilities that could result in loss of assets.\n4.4 You acknowledge that smart contract risks are inherent and cannot be eliminated.\n\n5. TOKENS AND DIGITAL ASSETS\n5.1 The DAO Token is a governance token that enables participation in protocol governance.\n5.2 DAO Tokens should not be considered investments or securities.\n5.3 The value of DAO Tokens may fluctuate significantly or become worthless.\n5.4 We make no representations about the future value of any tokens.\n\n6. DECENTRALIZED GOVERNANCE\n6.1 The Protocol is governed by DAO Token holders through on-chain voting.\n6.2 Governance decisions are executed automatically by smart contracts.\n6.3 Neither the Foundation nor any individual controls the Protocol.\n\n7. LIQUIDITY POOLS AND DEFI\n7.1 Users may provide liquidity to decentralized pools.\n7.2 Liquidity provision involves risks including impermanent loss, smart contract failure, and total loss of assets.\n7.3 Yields and rewards are determined by protocol mechanics and market conditions.\n\n8. NO FIDUCIARY DUTY\nWe owe no fiduciary duties to you. Nothing in these Terms creates a relationship of attorney-client, broker-dealer, or investment advisor.\n\n9. ASSUMPTION OF RISK\nYou assume all risks associated with:\n(a) Blockchain technology and smart contracts;\n(b) Digital asset price volatility;\n(c) Regulatory uncertainty and potential changes;\n(d) Protocol exploits and hacks;\n(e) Network congestion and transaction failures;\n(f) Wallet and private key security.\n\n10. NO WARRANTIES\nTHE PLATFORM IS PROVIDED \"AS IS\" WITHOUT ANY WARRANTIES. WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.\n\nWE DO NOT WARRANT THAT THE PLATFORM WILL BE UNINTERRUPTED, ERROR-FREE, OR SECURE. WE DO NOT WARRANT THE ACCURACY OF ANY INFORMATION.\n\n11. LIMITATION OF LIABILITY\nTO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL CRYPTODAO FOUNDATION, ITS AFFILIATES, OR ANY TOKEN HOLDERS BE LIABLE FOR ANY DAMAGES WHATSOEVER, INCLUDING DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES.\n\nOUR TOTAL LIABILITY SHALL NOT EXCEED $100 USD.\n\n12. INDEMNIFICATION\nYou shall indemnify and hold harmless CryptoDAO Foundation, DAO Token holders, contributors, and affiliates from any claims arising from your use of the Platform or violation of these Terms.\n\n13. REGULATORY COMPLIANCE\n13.1 You are solely responsible for compliance with laws in your jurisdiction.\n13.2 The regulatory status of blockchain technology and tokens is uncertain and evolving.\n13.3 We make no representations regarding the legal status of DAO Tokens.\n\n14. DISPUTE RESOLUTION\n14.1 Disputes shall be resolved by binding arbitration under JAMS rules.\n14.2 YOU WAIVE THE RIGHT TO PARTICIPATE IN CLASS ACTIONS.\n14.3 Arbitration shall take place in the Cayman Islands.\n\n15. GOVERNING LAW\nThese Terms are governed by Cayman Islands law.\n\n16. MODIFICATIONS\nWe may modify these Terms at any time. Continued use constitutes acceptance.\n\n17. SEVERABILITY\nIf any provision is unenforceable, the remaining provisions remain in effect.\n\nBY USING THE PLATFORM, YOU ACKNOWLEDGE THAT YOU HAVE READ, UNDERSTOOD, AND AGREE TO THESE TERMS."
+}

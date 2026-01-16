@@ -1,0 +1,27 @@
+{
+    "id": "employment_002",
+    "name": "Executive Employment with Non-Compete",
+    "type": "Employment",
+    "jurisdiction": "US",
+    "industry": "technology",
+    "effective_date": "2024-04-01",
+    "parties": [
+        "TechGiant Corp.",
+        "John Executive"
+    ],
+    "expected_risk": "high",
+    "expected_findings": {
+        "strain_points": [
+            "non_compete_enforceability",
+            "ftc_rule"
+        ],
+        "temporal_decay": "high",
+        "landmines": [
+            "non_compete_may_be_void"
+        ],
+        "predictions": [
+            "expect_regulatory_change"
+        ]
+    },
+    "text": "EXECUTIVE EMPLOYMENT AGREEMENT\n\nThis Executive Employment Agreement (\"Agreement\") is entered into as of April 1, 2024 by and between TechGiant Corp., a Delaware corporation (\"Company\"), and John Executive (\"Executive\").\n\n1. POSITION AND DUTIES\n1.1 Title. Executive shall serve as Chief Technology Officer, reporting to the CEO.\n1.2 Duties. Executive shall perform duties consistent with the position and as assigned by the CEO and Board.\n1.3 Commitment. Executive shall devote full business time and best efforts to the Company.\n\n2. COMPENSATION\n2.1 Base Salary. $450,000 per year, payable in accordance with Company payroll practices.\n2.2 Bonus. Target annual bonus of 50% of base salary, based on achievement of performance objectives.\n2.3 Equity. Stock options to purchase 200,000 shares, vesting 25% on first anniversary and monthly thereafter over four years.\n\n3. BENEFITS\nExecutive shall be entitled to participate in all employee benefit plans and receive four (4) weeks paid vacation.\n\n4. TERM AND TERMINATION\n4.1 At-Will. Employment is at-will and may be terminated by either party at any time.\n4.2 Without Cause. If Company terminates without Cause, Executive shall receive: (a) 12 months base salary; (b) prorated bonus; (c) 12 months COBRA; and (d) 12 months accelerated vesting.\n4.3 For Cause. If terminated for Cause, Executive receives only accrued compensation. \"Cause\" means: (i) material breach; (ii) conviction of felony; (iii) fraud; or (iv) willful misconduct.\n4.4 Resignation. Executive may resign upon 30 days notice.\n\n5. CONFIDENTIALITY\n5.1 Definition. \"Confidential Information\" includes all non-public business, technical, and financial information.\n5.2 Obligations. Executive shall not use or disclose Confidential Information except for Company purposes, during and after employment.\n5.3 Return. Upon termination, Executive shall return all Company materials.\n\n6. INTELLECTUAL PROPERTY\n6.1 Assignment. Executive assigns to Company all inventions, works, and intellectual property created during employment or using Company resources.\n6.2 Cooperation. Executive shall execute documents to perfect Company's rights.\n\n7. NON-COMPETITION\n7.1 Restriction. During employment and for two (2) years thereafter, Executive shall not, directly or indirectly:\n(a) Engage in any Competitive Business within the United States;\n(b) Own, manage, operate, control, or participate in any Competitive Business;\n(c) Serve as an officer, director, employee, consultant, or advisor to any Competitive Business.\n\n7.2 Competitive Business. \"Competitive Business\" means any business that develops, markets, or sells products or services competitive with Company's products or services.\n\n7.3 Acknowledgment. Executive acknowledges that: (a) the restrictions are reasonable; (b) Executive has had opportunity to consult counsel; and (c) Executive receives adequate consideration.\n\n8. NON-SOLICITATION\n8.1 Employees. For two (2) years after termination, Executive shall not solicit or hire Company employees.\n8.2 Customers. For two (2) years after termination, Executive shall not solicit Company customers or prospective customers.\n\n9. NON-DISPARAGEMENT\nExecutive shall not make disparaging statements about Company, its products, or its personnel.\n\n10. DISPUTE RESOLUTION\n10.1 Arbitration. All disputes shall be resolved by binding arbitration in San Francisco under JAMS rules.\n10.2 Injunctive Relief. Company may seek injunctive relief in any court for breaches of Sections 5-9.\n\n11. GOVERNING LAW\nThis Agreement is governed by California law, except that the enforceability of restrictive covenants shall be governed by Delaware law.\n\n12. GENERAL\n12.1 Entire Agreement. This Agreement supersedes all prior agreements.\n12.2 Amendment. Amendments require writing signed by both parties.\n12.3 Severability. Unenforceable provisions shall be modified to minimum extent necessary.\n12.4 Clawback. Compensation is subject to Company clawback policies.\n\nIN WITNESS WHEREOF:\n\nTECHGIANT CORP.\nBy: _________________________\nName: CEO\n\nEXECUTIVE\n_________________________\nJohn Executive"
+}

@@ -1,0 +1,23 @@
+{
+    "id": "nda_002",
+    "name": "One-Sided NDA - Investor Disclosure",
+    "type": "NDA",
+    "jurisdiction": "US",
+    "industry": "finance",
+    "effective_date": "2024-01-15",
+    "parties": [
+        "Venture Capital Partners LP",
+        "TechStartup Inc."
+    ],
+    "expected_risk": "medium",
+    "expected_findings": {
+        "power_asymmetry": "investor_dominant",
+        "social_concerns": [
+            "one_sided_protection"
+        ],
+        "ambiguity": [
+            "residuals_clause"
+        ]
+    },
+    "text": "NON-DISCLOSURE AGREEMENT\n\nThis Non-Disclosure Agreement (\"Agreement\") is made as of January 15, 2024 by TechStartup Inc. (\"Discloser\") for the benefit of Venture Capital Partners LP and its affiliates (\"Recipient\").\n\n1. BACKGROUND\nDiscloser wishes to disclose certain confidential information to Recipient in connection with Recipient's evaluation of a potential investment in Discloser.\n\n2. CONFIDENTIAL INFORMATION\n\"Confidential Information\" means all information disclosed by Discloser to Recipient, including but not limited to: business plans, financial projections, customer data, technology, trade secrets, and any other non-public information.\n\n3. RECIPIENT OBLIGATIONS\n3.1 Recipient shall hold Confidential Information in reasonable confidence.\n3.2 Recipient may use Confidential Information solely to evaluate a potential investment.\n3.3 Recipient may disclose to its partners, employees, advisors, and potential co-investors who need to know, provided they are bound by confidentiality.\n\n4. EXCLUSIONS\nRecipient's obligations do not apply to information that: (a) is public; (b) was known to Recipient; (c) is received from third parties; or (d) is independently developed.\n\n5. RESIDUALS\nNothing in this Agreement shall prevent Recipient or its personnel from using Residuals. \"Residuals\" means information retained in the unaided memories of Recipient's personnel who have had access to Confidential Information, excluding any specific customer data or trade secrets.\n\n6. NO OBLIGATION\nRecipient is not obligated to proceed with any transaction. Recipient may invest in or advise companies that compete with Discloser.\n\n7. TERM\nThis Agreement shall terminate three (3) years from the date hereof. Obligations shall survive only for two (2) years following any disclosure.\n\n8. RETURN\nRecipient shall not be required to return or destroy Confidential Information except upon Discloser's written request.\n\n9. LIMITATIONS\n9.1 Discloser shall have no claim against Recipient for any incidental, consequential, or indirect damages.\n9.2 This Agreement does not create an agency, partnership, or other relationship.\n\n10. MISCELLANEOUS\n10.1 This Agreement is governed by Delaware law.\n10.2 Disputes shall be resolved in Delaware courts.\n10.3 Discloser may not assign this Agreement.\n\nAGREED:\n\nTECHSTARTUP INC.\nBy: _________________________\nName: Sarah Chen\nTitle: CEO"
+}
