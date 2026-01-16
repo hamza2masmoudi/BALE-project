@@ -1,227 +1,163 @@
 import { useState } from 'react'
-import { Settings as SettingsIcon, Key, Globe, Cpu, Database, Bell, Shield } from 'lucide-react'
-import clsx from 'clsx'
 
-type TabId = 'inference' | 'api' | 'notifications' | 'security'
-
-const tabs = [
-    { id: 'inference' as const, label: 'Inference', icon: Cpu },
-    { id: 'api' as const, label: 'API Keys', icon: Key },
-    { id: 'notifications' as const, label: 'Notifications', icon: Bell },
-    { id: 'security' as const, label: 'Security', icon: Shield },
-]
-
-function ToggleSwitch({ enabled, onChange }: { enabled: boolean; onChange: (v: boolean) => void }) {
-    return (
-        <button
-            onClick={() => onChange(!enabled)}
-            className={clsx(
-                'relative w-11 h-6 rounded-full transition-colors',
-                enabled ? 'bg-white' : 'bg-bale-border'
-            )}
-        >
-            <div className={clsx(
-                'absolute top-1 w-4 h-4 rounded-full transition-all',
-                enabled ? 'left-6 bg-black' : 'left-1 bg-bale-muted'
-            )} />
-        </button>
-    )
-}
-
-function SettingRow({
-    title,
-    description,
-    children
-}: {
-    title: string
-    description: string
-    children: React.ReactNode
-}) {
-    return (
-        <div className="flex items-center justify-between py-4 border-b border-bale-border last:border-0">
-            <div>
-                <h4 className="font-medium">{title}</h4>
-                <p className="text-sm text-bale-muted mt-1">{description}</p>
-            </div>
-            <div>{children}</div>
-        </div>
-    )
-}
-
-export default function Settings() {
-    const [activeTab, setActiveTab] = useState<TabId>('inference')
-    const [localEnabled, setLocalEnabled] = useState(true)
-    const [mistralEnabled, setMistralEnabled] = useState(false)
+function Settings() {
+    const [llmMode, setLlmMode] = useState('auto')
 
     return (
-        <div className="p-8 animate-slide-up">
-            {/* Header */}
-            <div className="mb-8">
-                <h1 className="text-2xl font-bold gradient-text">Settings</h1>
-                <p className="text-bale-muted mt-1">Configure your BALE instance</p>
+        <div className="fade-in max-w-3xl">
+            <div className="page-header">
+                <h1 className="page-title">Settings</h1>
+                <p className="page-description">Configure BALE to your preferences</p>
             </div>
 
-            <div className="flex gap-8">
-                {/* Sidebar */}
-                <div className="w-56 shrink-0">
-                    <nav className="space-y-1">
-                        {tabs.map((tab) => {
-                            const Icon = tab.icon
-                            return (
-                                <button
-                                    key={tab.id}
-                                    onClick={() => setActiveTab(tab.id)}
-                                    className={clsx(
-                                        'w-full flex items-center gap-3 px-4 py-3 rounded-lg text-left transition-all',
-                                        activeTab === tab.id
-                                            ? 'bg-white text-black'
-                                            : 'text-bale-muted hover:text-white hover:bg-bale-card'
-                                    )}
-                                >
-                                    <Icon size={18} />
-                                    <span className="font-medium">{tab.label}</span>
-                                </button>
-                            )
-                        })}
-                    </nav>
-                </div>
-
-                {/* Content */}
-                <div className="flex-1 glass-card rounded-xl p-6">
-                    {activeTab === 'inference' && (
+            <div className="space-y-6">
+                {/* LLM Configuration */}
+                <div className="card">
+                    <h3 className="text-title mb-6">LLM Configuration</h3>
+                    <div className="space-y-4">
                         <div>
-                            <h2 className="text-lg font-semibold mb-6">Inference Configuration</h2>
-
-                            <div className="space-y-0">
-                                <SettingRow
-                                    title="Local LLM (Ollama)"
-                                    description="Use locally running Qwen/Llama models"
-                                >
-                                    <ToggleSwitch enabled={localEnabled} onChange={setLocalEnabled} />
-                                </SettingRow>
-
-                                {localEnabled && (
-                                    <div className="py-4 pl-4 border-b border-bale-border">
-                                        <label className="text-sm text-bale-muted block mb-2">Endpoint URL</label>
-                                        <input
-                                            type="text"
-                                            defaultValue="http://localhost:11434/v1/chat/completions"
-                                            className="w-full px-4 py-2 bg-bale-card border border-bale-border rounded-lg text-sm"
-                                        />
-                                        <label className="text-sm text-bale-muted block mb-2 mt-4">Model Name</label>
-                                        <input
-                                            type="text"
-                                            defaultValue="qwen2.5:32b"
-                                            className="w-full px-4 py-2 bg-bale-card border border-bale-border rounded-lg text-sm"
-                                        />
-                                    </div>
-                                )}
-
-                                <SettingRow
-                                    title="Mistral API"
-                                    description="Use Mistral cloud API as fallback"
-                                >
-                                    <ToggleSwitch enabled={mistralEnabled} onChange={setMistralEnabled} />
-                                </SettingRow>
-
-                                {mistralEnabled && (
-                                    <div className="py-4 pl-4 border-b border-bale-border">
-                                        <label className="text-sm text-bale-muted block mb-2">API Key</label>
-                                        <input
-                                            type="password"
-                                            placeholder="sk-..."
-                                            className="w-full px-4 py-2 bg-bale-card border border-bale-border rounded-lg text-sm"
-                                        />
-                                    </div>
-                                )}
-
-                                <SettingRow
-                                    title="Default Mode"
-                                    description="Which inference backend to prefer"
-                                >
-                                    <select className="px-4 py-2 bg-bale-card border border-bale-border rounded-lg text-sm">
-                                        <option value="auto">Auto (Local → Cloud)</option>
-                                        <option value="local">Local Only</option>
-                                        <option value="cloud">Cloud Only</option>
-                                    </select>
-                                </SettingRow>
-                            </div>
-
-                            <div className="mt-6 pt-6 border-t border-bale-border flex justify-end">
-                                <button className="px-6 py-2 bg-white text-black rounded-lg font-medium hover:opacity-90 transition-opacity">
-                                    Save Changes
-                                </button>
+                            <label className="label">Inference Mode</label>
+                            <div className="grid grid-cols-3 gap-3">
+                                {[
+                                    { value: 'auto', label: 'Auto', desc: 'Smart fallback' },
+                                    { value: 'local', label: 'Local', desc: 'Ollama/vLLM' },
+                                    { value: 'mistral', label: 'Cloud', desc: 'Mistral API' },
+                                ].map(opt => (
+                                    <button
+                                        key={opt.value}
+                                        onClick={() => setLlmMode(opt.value)}
+                                        className={`p-4 rounded-lg border text-left ${llmMode === opt.value
+                                                ? 'border-[var(--bale-accent)] bg-[var(--bale-surface-elevated)]'
+                                                : 'border-[var(--bale-border)]'
+                                            }`}
+                                    >
+                                        <div className="font-medium">{opt.label}</div>
+                                        <div className="text-small text-[var(--bale-text-muted)]">{opt.desc}</div>
+                                    </button>
+                                ))}
                             </div>
                         </div>
-                    )}
 
-                    {activeTab === 'api' && (
                         <div>
-                            <h2 className="text-lg font-semibold mb-6">API Keys</h2>
-                            <div className="bg-bale-card rounded-lg p-4 mb-4">
-                                <div className="flex items-center justify-between">
-                                    <div>
-                                        <p className="font-medium">Production Key</p>
-                                        <p className="text-sm text-bale-muted font-mono mt-1">bale_pk_****...****7f3a</p>
-                                    </div>
-                                    <button className="px-3 py-1.5 bg-bale-border rounded text-sm hover:bg-white/10 transition-colors">
-                                        Regenerate
-                                    </button>
+                            <label className="label">Local LLM Endpoint</label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="http://localhost:11434"
+                                disabled={llmMode === 'mistral'}
+                            />
+                        </div>
+
+                        <div>
+                            <label className="label">Mistral API Key</label>
+                            <input
+                                type="password"
+                                className="input"
+                                placeholder="••••••••••••••••"
+                                disabled={llmMode === 'local'}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Analysis Defaults */}
+                <div className="card">
+                    <h3 className="text-title mb-6">Analysis Defaults</h3>
+                    <div className="space-y-4">
+                        <div className="grid grid-cols-2 gap-4">
+                            <div>
+                                <label className="label">Default Jurisdiction</label>
+                                <select className="input select">
+                                    <option value="US">United States</option>
+                                    <option value="UK">United Kingdom</option>
+                                    <option value="EU">European Union</option>
+                                    <option value="INTERNATIONAL">International</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="label">Default Industry</label>
+                                <select className="input select">
+                                    <option value="technology">Technology</option>
+                                    <option value="finance">Financial Services</option>
+                                    <option value="healthcare">Healthcare</option>
+                                    <option value="general">General</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label className="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" className="w-5 h-5 accent-[var(--bale-accent)]" defaultChecked />
+                            <div>
+                                <div className="font-medium">Always run Frontier Analysis</div>
+                                <div className="text-small text-[var(--bale-text-muted)]">
+                                    Include all 10 capabilities by default
                                 </div>
                             </div>
-                            <button className="text-sm text-bale-muted hover:text-white transition-colors">
-                                + Create new API key
-                            </button>
-                        </div>
-                    )}
+                        </label>
 
-                    {activeTab === 'notifications' && (
-                        <div>
-                            <h2 className="text-lg font-semibold mb-6">Notifications</h2>
-                            <SettingRow
-                                title="Email Alerts"
-                                description="Receive email for high-risk analyses"
-                            >
-                                <ToggleSwitch enabled={true} onChange={() => { }} />
-                            </SettingRow>
-                            <SettingRow
-                                title="Risk Threshold"
-                                description="Alert when risk exceeds this value"
-                            >
-                                <select className="px-4 py-2 bg-bale-card border border-bale-border rounded-lg text-sm">
-                                    <option value="50">50%</option>
-                                    <option value="60">60%</option>
-                                    <option value="70">70%</option>
-                                    <option value="80">80%</option>
-                                </select>
-                            </SettingRow>
-                        </div>
-                    )}
+                        <label className="flex items-center gap-3 cursor-pointer">
+                            <input type="checkbox" className="w-5 h-5 accent-[var(--bale-accent)]" defaultChecked />
+                            <div>
+                                <div className="font-medium">Auto-save to library</div>
+                                <div className="text-small text-[var(--bale-text-muted)]">
+                                    Save analyzed contracts automatically
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
 
-                    {activeTab === 'security' && (
+                {/* Risk Thresholds */}
+                <div className="card">
+                    <h3 className="text-title mb-6">Risk Thresholds</h3>
+                    <div className="space-y-4">
                         <div>
-                            <h2 className="text-lg font-semibold mb-6">Security</h2>
-                            <SettingRow
-                                title="Two-Factor Authentication"
-                                description="Require 2FA for all users"
-                            >
-                                <ToggleSwitch enabled={false} onChange={() => { }} />
-                            </SettingRow>
-                            <SettingRow
-                                title="Session Timeout"
-                                description="Auto-logout after inactivity"
-                            >
-                                <select className="px-4 py-2 bg-bale-card border border-bale-border rounded-lg text-sm">
-                                    <option value="30">30 minutes</option>
-                                    <option value="60">1 hour</option>
-                                    <option value="240">4 hours</option>
-                                    <option value="0">Never</option>
-                                </select>
-                            </SettingRow>
+                            <label className="label">Low Risk Threshold</label>
+                            <input type="range" min="0" max="100" defaultValue="30" className="w-full" />
+                            <div className="flex justify-between text-small text-[var(--bale-text-muted)]">
+                                <span>0%</span>
+                                <span className="risk-low">30%</span>
+                                <span>100%</span>
+                            </div>
                         </div>
-                    )}
+                        <div>
+                            <label className="label">High Risk Threshold</label>
+                            <input type="range" min="0" max="100" defaultValue="60" className="w-full" />
+                            <div className="flex justify-between text-small text-[var(--bale-text-muted)]">
+                                <span>0%</span>
+                                <span className="risk-high">60%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Account */}
+                <div className="card">
+                    <h3 className="text-title mb-6">Account</h3>
+                    <div className="space-y-4">
+                        <div className="flex items-center gap-4">
+                            <div className="w-16 h-16 rounded-full bg-[var(--bale-accent)] flex items-center justify-center text-2xl font-bold text-white">
+                                U
+                            </div>
+                            <div>
+                                <div className="font-medium">User</div>
+                                <div className="text-small text-[var(--bale-text-muted)]">user@company.com</div>
+                            </div>
+                        </div>
+                        <div className="flex gap-3">
+                            <button className="btn btn-secondary">Change Password</button>
+                            <button className="btn btn-ghost">Sign Out</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="flex justify-end">
+                    <button className="btn btn-primary btn-lg">Save Settings</button>
                 </div>
             </div>
         </div>
     )
 }
+
+export default Settings

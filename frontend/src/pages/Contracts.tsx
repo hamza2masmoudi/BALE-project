@@ -1,191 +1,121 @@
 import { useState } from 'react'
-import { FileText, Plus, Search, Filter, MoreVertical, TrendingUp, TrendingDown, Minus } from 'lucide-react'
-import clsx from 'clsx'
+import { Link } from 'react-router-dom'
 
-// Mock data
 const mockContracts = [
-    {
-        id: '1',
-        name: 'SaaS Master Agreement',
-        jurisdiction: 'UK',
-        status: 'active',
-        risk: 45,
-        riskTrend: 'down',
-        lastAnalyzed: '2 hours ago',
-        clauseCount: 24
-    },
-    {
-        id: '2',
-        name: 'NDA - TechCorp',
-        jurisdiction: 'US',
-        status: 'active',
-        risk: 28,
-        riskTrend: 'stable',
-        lastAnalyzed: '1 day ago',
-        clauseCount: 12
-    },
-    {
-        id: '3',
-        name: 'IP License Agreement',
-        jurisdiction: 'FRANCE',
-        status: 'active',
-        risk: 72,
-        riskTrend: 'up',
-        lastAnalyzed: '3 days ago',
-        clauseCount: 18
-    },
-    {
-        id: '4',
-        name: 'Employment Contract',
-        jurisdiction: 'GERMANY',
-        status: 'archived',
-        risk: 35,
-        riskTrend: 'stable',
-        lastAnalyzed: '1 week ago',
-        clauseCount: 32
-    },
+    { id: '1', name: 'TechCorp MSA 2024', type: 'MSA', jurisdiction: 'US', risk: 45, status: 'review', date: '2024-01-15', parties: ['TechCorp Inc.', 'AcmeCo LLC'] },
+    { id: '2', name: 'Vendor SLA - CloudHost', type: 'SLA', jurisdiction: 'US', risk: 23, status: 'complete', date: '2024-01-14', parties: ['CloudHost', 'Your Company'] },
+    { id: '3', name: 'NDA - Acme Industries', type: 'NDA', jurisdiction: 'UK', risk: 12, status: 'complete', date: '2024-01-12', parties: ['Acme Industries', 'Your Company'] },
+    { id: '4', name: 'License Agreement - DataCo', type: 'License', jurisdiction: 'EU', risk: 67, status: 'critical', date: '2024-01-10', parties: ['DataCo', 'Your Company'] },
+    { id: '5', name: 'Employment - Senior Counsel', type: 'Employment', jurisdiction: 'US', risk: 28, status: 'complete', date: '2024-01-08', parties: ['Your Company', 'John Doe'] },
+    { id: '6', name: 'Partnership - InnovateCo', type: 'Partnership', jurisdiction: 'SINGAPORE', risk: 34, status: 'review', date: '2024-01-05', parties: ['InnovateCo', 'Your Company'] },
 ]
 
-function RiskIndicator({ risk, trend }: { risk: number; trend: string }) {
-    const riskColor = risk > 60 ? 'text-bale-danger' : risk > 40 ? 'text-bale-warning' : 'text-bale-success'
-    const bgColor = risk > 60 ? 'bg-red-500/10' : risk > 40 ? 'bg-yellow-500/10' : 'bg-green-500/10'
-
-    const TrendIcon = trend === 'up' ? TrendingUp : trend === 'down' ? TrendingDown : Minus
-    const trendColor = trend === 'up' ? 'text-bale-danger' : trend === 'down' ? 'text-bale-success' : 'text-bale-muted'
-
-    return (
-        <div className="flex items-center gap-2">
-            <span className={`px-3 py-1 rounded-lg text-sm font-medium ${bgColor} ${riskColor}`}>
-                {risk}%
-            </span>
-            <TrendIcon size={16} className={trendColor} />
-        </div>
-    )
+function getRiskColor(risk: number): string {
+    if (risk < 30) return 'risk-low'
+    if (risk < 60) return 'risk-medium'
+    return 'risk-high'
 }
 
-function JurisdictionBadge({ jurisdiction }: { jurisdiction: string }) {
-    const colors: Record<string, string> = {
-        UK: 'bg-blue-500/20 text-blue-400',
-        US: 'bg-purple-500/20 text-purple-400',
-        FRANCE: 'bg-indigo-500/20 text-indigo-400',
-        GERMANY: 'bg-amber-500/20 text-amber-400',
-        EU: 'bg-cyan-500/20 text-cyan-400',
+function getStatusBadge(status: string) {
+    const styles: Record<string, string> = {
+        complete: 'badge-success',
+        review: 'badge-warning',
+        critical: 'badge-danger',
     }
-    return (
-        <span className={`px-2 py-1 rounded text-xs font-medium ${colors[jurisdiction] || 'bg-bale-card text-bale-muted'}`}>
-            {jurisdiction}
-        </span>
-    )
+    return styles[status] || 'badge-info'
 }
 
-export default function Contracts() {
+function Contracts() {
     const [search, setSearch] = useState('')
-    const [statusFilter, setStatusFilter] = useState<'all' | 'active' | 'archived'>('all')
+    const [filter, setFilter] = useState('all')
 
-    const filteredContracts = mockContracts.filter(c => {
-        if (statusFilter !== 'all' && c.status !== statusFilter) return false
-        if (search && !c.name.toLowerCase().includes(search.toLowerCase())) return false
-        return true
+    const filtered = mockContracts.filter(c => {
+        const matchesSearch = c.name.toLowerCase().includes(search.toLowerCase()) ||
+            c.type.toLowerCase().includes(search.toLowerCase())
+        const matchesFilter = filter === 'all' || c.status === filter
+        return matchesSearch && matchesFilter
     })
 
     return (
-        <div className="p-8 animate-slide-up">
-            {/* Header */}
-            <div className="flex items-center justify-between mb-8">
+        <div className="fade-in">
+            <div className="page-header flex items-center justify-between">
                 <div>
-                    <h1 className="text-2xl font-bold gradient-text">Contracts</h1>
-                    <p className="text-bale-muted mt-1">Manage and monitor your contract portfolio</p>
+                    <h1 className="page-title">Contract Library</h1>
+                    <p className="page-description">{mockContracts.length} contracts analyzed</p>
                 </div>
-                <button className="px-4 py-2 bg-white text-black rounded-lg font-medium flex items-center gap-2 hover:opacity-90 transition-opacity">
-                    <Plus size={20} />
-                    Add Contract
-                </button>
+                <Link to="/analyze" className="btn btn-primary">
+                    + New Analysis
+                </Link>
             </div>
 
             {/* Filters */}
-            <div className="flex items-center gap-4 mb-6">
-                <div className="relative flex-1 max-w-md">
-                    <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-bale-muted" />
-                    <input
-                        type="text"
-                        placeholder="Search contracts..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 bg-bale-card border border-bale-border rounded-lg text-sm focus:border-white/20 transition-colors"
-                    />
-                </div>
-                <div className="flex items-center gap-2 bg-bale-card rounded-lg p-1">
-                    {(['all', 'active', 'archived'] as const).map((status) => (
-                        <button
-                            key={status}
-                            onClick={() => setStatusFilter(status)}
-                            className={clsx(
-                                'px-4 py-1.5 rounded-md text-sm font-medium transition-colors capitalize',
-                                statusFilter === status ? 'bg-white text-black' : 'text-bale-muted hover:text-white'
-                            )}
-                        >
-                            {status}
-                        </button>
-                    ))}
-                </div>
+            <div className="flex gap-4 mb-6">
+                <input
+                    type="text"
+                    className="input max-w-xs"
+                    placeholder="Search contracts..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+                <select
+                    className="input select max-w-[200px]"
+                    value={filter}
+                    onChange={(e) => setFilter(e.target.value)}
+                >
+                    <option value="all">All Status</option>
+                    <option value="complete">Complete</option>
+                    <option value="review">Needs Review</option>
+                    <option value="critical">Critical</option>
+                </select>
             </div>
 
             {/* Table */}
-            <div className="glass-card rounded-xl overflow-hidden">
+            <div className="card overflow-hidden p-0">
                 <table className="w-full">
                     <thead>
-                        <tr className="border-b border-bale-border">
-                            <th className="text-left p-4 text-sm font-medium text-bale-muted">Contract</th>
-                            <th className="text-left p-4 text-sm font-medium text-bale-muted">Jurisdiction</th>
-                            <th className="text-left p-4 text-sm font-medium text-bale-muted">Risk Score</th>
-                            <th className="text-left p-4 text-sm font-medium text-bale-muted">Clauses</th>
-                            <th className="text-left p-4 text-sm font-medium text-bale-muted">Last Analyzed</th>
-                            <th className="w-12"></th>
+                        <tr className="border-b border-[var(--bale-border)]">
+                            <th className="text-left p-4 text-small font-medium text-[var(--bale-text-muted)]">Name</th>
+                            <th className="text-left p-4 text-small font-medium text-[var(--bale-text-muted)]">Type</th>
+                            <th className="text-left p-4 text-small font-medium text-[var(--bale-text-muted)]">Jurisdiction</th>
+                            <th className="text-left p-4 text-small font-medium text-[var(--bale-text-muted)]">Risk</th>
+                            <th className="text-left p-4 text-small font-medium text-[var(--bale-text-muted)]">Status</th>
+                            <th className="text-left p-4 text-small font-medium text-[var(--bale-text-muted)]">Date</th>
+                            <th className="p-4"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {filteredContracts.map((contract) => (
+                        {filtered.map((contract) => (
                             <tr
                                 key={contract.id}
-                                className="border-b border-bale-border last:border-0 hover:bg-bale-card/50 transition-colors cursor-pointer"
+                                className="border-b border-[var(--bale-border)] hover:bg-[var(--bale-surface-elevated)] transition-colors"
                             >
                                 <td className="p-4">
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-bale-card rounded-lg flex items-center justify-center">
-                                            <FileText size={18} className="text-bale-muted" />
-                                        </div>
-                                        <div>
-                                            <p className="font-medium">{contract.name}</p>
-                                            <p className="text-xs text-bale-muted capitalize">{contract.status}</p>
-                                        </div>
-                                    </div>
+                                    <Link
+                                        to={`/frontier/${contract.id}`}
+                                        className="font-medium hover:text-[var(--bale-accent)]"
+                                    >
+                                        {contract.name}
+                                    </Link>
+                                </td>
+                                <td className="p-4 text-small text-[var(--bale-text-secondary)]">{contract.type}</td>
+                                <td className="p-4 text-small text-[var(--bale-text-secondary)]">{contract.jurisdiction}</td>
+                                <td className="p-4">
+                                    <span className={`font-bold ${getRiskColor(contract.risk)}`}>{contract.risk}%</span>
                                 </td>
                                 <td className="p-4">
-                                    <JurisdictionBadge jurisdiction={contract.jurisdiction} />
+                                    <span className={`badge ${getStatusBadge(contract.status)}`}>{contract.status}</span>
                                 </td>
+                                <td className="p-4 text-small text-[var(--bale-text-muted)]">{contract.date}</td>
                                 <td className="p-4">
-                                    <RiskIndicator risk={contract.risk} trend={contract.riskTrend} />
-                                </td>
-                                <td className="p-4 text-sm">{contract.clauseCount}</td>
-                                <td className="p-4 text-sm text-bale-muted">{contract.lastAnalyzed}</td>
-                                <td className="p-4">
-                                    <button className="p-2 hover:bg-bale-card rounded-lg transition-colors">
-                                        <MoreVertical size={16} className="text-bale-muted" />
-                                    </button>
+                                    <button className="btn btn-ghost btn-sm">⋮</button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-
-                {filteredContracts.length === 0 && (
-                    <div className="p-12 text-center">
-                        <FileText size={48} className="mx-auto text-bale-muted mb-4" />
-                        <h3 className="font-semibold mb-2">No contracts found</h3>
-                        <p className="text-sm text-bale-muted">Try adjusting your filters</p>
-                    </div>
-                )}
             </div>
         </div>
     )
 }
+
+export default Contracts

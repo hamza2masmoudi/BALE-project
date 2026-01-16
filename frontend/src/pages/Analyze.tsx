@@ -1,305 +1,281 @@
 import { useState } from 'react'
-import { useMutation } from '@tanstack/react-query'
-import { Scale, Play, Loader2, AlertCircle, CheckCircle2, ChevronDown } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
-import clsx from 'clsx'
+import { useNavigate } from 'react-router-dom'
 
-// Types
-interface AnalysisResult {
-    id: string
-    verdict: {
-        risk_score: number
-        verdict: string
-        confidence: number
-        factors_applied: Array<{
-            rule: string
-            triggered: boolean
-            impact: number
-            evidence: string
-        }>
-        interpretive_gap: number
-        civilist_summary: string
-        commonist_summary: string
-        synthesis: string
-    }
-    harmonization?: {
-        golden_clause: string
-        rationale: string
-        risk_reduction: number
-    }
-    processing_time_ms: number
-}
-
-const JURISDICTIONS = ['INTERNATIONAL', 'UK', 'FRANCE', 'US', 'GERMANY', 'EU']
-
-const SAMPLE_CLAUSES = [
-    {
-        name: 'Liability Exclusion',
-        text: 'The Supplier shall not be liable for any indirect, consequential, or incidental damages arising from this Agreement, including but not limited to lost profits, data loss, or business interruption.'
-    },
-    {
-        name: 'Force Majeure',
-        text: 'Neither party shall be liable for failure to perform due to acts of God, war, terrorism, or government action beyond the reasonable control of the affected party.'
-    },
-    {
-        name: 'IP Assignment',
-        text: 'All intellectual property created by Contractor under this Agreement shall belong exclusively to Client, including all moral rights which are hereby waived to the maximum extent permitted by law.'
-    }
+const contractTypes = [
+    { value: 'msa', label: 'Master Services Agreement' },
+    { value: 'nda', label: 'Non-Disclosure Agreement' },
+    { value: 'sla', label: 'Service Level Agreement' },
+    { value: 'license', label: 'License Agreement' },
+    { value: 'employment', label: 'Employment Agreement' },
+    { value: 'vendor', label: 'Vendor Agreement' },
+    { value: 'partnership', label: 'Partnership Agreement' },
+    { value: 'consulting', label: 'Consulting Agreement' },
 ]
 
-function RiskGauge({ risk }: { risk: number }) {
-    const rotation = (risk / 100) * 180 - 90 // -90 to 90 degrees
-    return (
-        <div className="relative w-48 h-24 mx-auto">
-            {/* Background arc */}
-            <svg className="w-full h-full" viewBox="0 0 200 100">
-                <defs>
-                    <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#10b981" />
-                        <stop offset="50%" stopColor="#f59e0b" />
-                        <stop offset="100%" stopColor="#ef4444" />
-                    </linearGradient>
-                </defs>
-                <path
-                    d="M 20 90 A 80 80 0 0 1 180 90"
-                    fill="none"
-                    stroke="url(#gaugeGradient)"
-                    strokeWidth="12"
-                    strokeLinecap="round"
-                />
-            </svg>
-            {/* Needle */}
-            <div
-                className="absolute bottom-0 left-1/2 w-1 h-16 bg-white origin-bottom rounded-full transition-transform duration-700"
-                style={{ transform: `translateX(-50%) rotate(${rotation}deg)` }}
-            />
-            {/* Value */}
-            <div className="absolute bottom-2 left-1/2 -translate-x-1/2">
-                <span className="text-3xl font-bold">{risk}%</span>
-            </div>
-        </div>
-    )
-}
+const jurisdictions = [
+    { value: 'US', label: 'United States' },
+    { value: 'UK', label: 'United Kingdom' },
+    { value: 'EU', label: 'European Union' },
+    { value: 'GERMANY', label: 'Germany' },
+    { value: 'FRANCE', label: 'France' },
+    { value: 'SINGAPORE', label: 'Singapore' },
+    { value: 'INTERNATIONAL', label: 'International' },
+]
 
-function FactorCard({ factor }: { factor: AnalysisResult['verdict']['factors_applied'][0] }) {
-    return (
-        <div className={clsx(
-            'p-4 rounded-lg border transition-colors',
-            factor.triggered
-                ? factor.impact > 0
-                    ? 'bg-red-500/10 border-red-500/30'
-                    : 'bg-green-500/10 border-green-500/30'
-                : 'bg-bale-card border-bale-border'
-        )}>
-            <div className="flex items-start justify-between mb-2">
-                <span className="font-medium">{factor.rule}</span>
-                <span className={clsx(
-                    'text-sm font-mono',
-                    factor.impact > 0 ? 'text-bale-danger' : factor.impact < 0 ? 'text-bale-success' : 'text-bale-muted'
-                )}>
-                    {factor.impact > 0 ? '+' : ''}{factor.impact}%
-                </span>
-            </div>
-            <p className="text-sm text-bale-muted">{factor.evidence}</p>
-        </div>
-    )
-}
+const industries = [
+    { value: 'technology', label: 'Technology' },
+    { value: 'finance', label: 'Financial Services' },
+    { value: 'healthcare', label: 'Healthcare' },
+    { value: 'manufacturing', label: 'Manufacturing' },
+    { value: 'retail', label: 'Retail' },
+    { value: 'legal', label: 'Legal Services' },
+    { value: 'general', label: 'General' },
+]
 
-export default function Analyze() {
-    const [clauseText, setClauseText] = useState('')
-    const [jurisdiction, setJurisdiction] = useState('INTERNATIONAL')
-    const [showSamples, setShowSamples] = useState(false)
+function Analyze() {
+    const navigate = useNavigate()
+    const [isAnalyzing, setIsAnalyzing] = useState(false)
+    const [activeTab, setActiveTab] = useState<'paste' | 'upload'>('paste')
 
-    const analyzeMutation = useMutation({
-        mutationFn: async () => {
-            const response = await fetch('/api/v1/analyze', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    clause_text: clauseText,
-                    jurisdiction,
-                    depth: 'standard',
-                    include_harmonization: true
-                })
-            })
-            if (!response.ok) throw new Error('Analysis failed')
-            return response.json() as Promise<AnalysisResult>
-        }
+    const [formData, setFormData] = useState({
+        contractText: '',
+        contractType: 'msa',
+        jurisdiction: 'US',
+        industry: 'technology',
+        partyA: '',
+        partyB: '',
+        effectiveDate: '',
+        runFrontier: true,
     })
 
-    const result = analyzeMutation.data
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault()
+        setIsAnalyzing(true)
+
+        // Simulate analysis
+        await new Promise(resolve => setTimeout(resolve, 2000))
+
+        // Navigate to results
+        navigate('/frontier/new-analysis')
+    }
 
     return (
-        <div className="p-8 animate-slide-up">
+        <div className="fade-in max-w-4xl mx-auto">
             {/* Header */}
-            <div className="mb-8">
-                <h1 className="text-2xl font-bold gradient-text">Analyze Clause</h1>
-                <p className="text-bale-muted mt-1">Run AI-powered legal analysis on contract clauses</p>
+            <div className="page-header">
+                <h1 className="page-title">Analyze Contract</h1>
+                <p className="page-description">
+                    Run comprehensive analysis including all 10 frontier capabilities
+                </p>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                {/* Input Panel */}
-                <div className="space-y-6">
-                    {/* Clause Input */}
-                    <div className="glass-card rounded-xl p-6">
-                        <div className="flex items-center justify-between mb-4">
-                            <label className="font-semibold">Contract Clause</label>
-                            <button
-                                onClick={() => setShowSamples(!showSamples)}
-                                className="text-sm text-bale-muted hover:text-white flex items-center gap-1"
-                            >
-                                Sample Clauses
-                                <ChevronDown size={14} className={clsx('transition-transform', showSamples && 'rotate-180')} />
+            {/* Input Method Tabs */}
+            <div className="flex gap-2 mb-6">
+                <button
+                    onClick={() => setActiveTab('paste')}
+                    className={`btn ${activeTab === 'paste' ? 'btn-primary' : 'btn-secondary'}`}
+                >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    Paste Text
+                </button>
+                <button
+                    onClick={() => setActiveTab('upload')}
+                    className={`btn ${activeTab === 'upload' ? 'btn-primary' : 'btn-secondary'}`}
+                >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                    </svg>
+                    Upload File
+                </button>
+            </div>
+
+            <form onSubmit={handleSubmit}>
+                <div className="card mb-6">
+                    {activeTab === 'paste' ? (
+                        <div>
+                            <label className="label">Contract Text</label>
+                            <textarea
+                                className="input textarea font-mono text-sm"
+                                placeholder="Paste your contract text here..."
+                                value={formData.contractText}
+                                onChange={(e) => setFormData({ ...formData, contractText: e.target.value })}
+                                rows={16}
+                                required
+                            />
+                            <p className="text-small text-[var(--bale-text-muted)] mt-2">
+                                {formData.contractText.length} characters • {formData.contractText.split(/\s+/).filter(Boolean).length} words
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="border-2 border-dashed border-[var(--bale-border)] rounded-lg p-12 text-center">
+                            <svg className="w-12 h-12 mx-auto mb-4 text-[var(--bale-text-muted)]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                            </svg>
+                            <p className="text-[var(--bale-text-secondary)] mb-2">
+                                Drag and drop your contract file here
+                            </p>
+                            <p className="text-small text-[var(--bale-text-muted)] mb-4">
+                                Supports PDF, DOCX, TXT (Max 10MB)
+                            </p>
+                            <button type="button" className="btn btn-secondary">
+                                Browse Files
                             </button>
                         </div>
+                    )}
+                </div>
 
-                        <AnimatePresence>
-                            {showSamples && (
-                                <motion.div
-                                    initial={{ height: 0, opacity: 0 }}
-                                    animate={{ height: 'auto', opacity: 1 }}
-                                    exit={{ height: 0, opacity: 0 }}
-                                    className="overflow-hidden mb-4"
-                                >
-                                    <div className="space-y-2 pb-4 border-b border-bale-border">
-                                        {SAMPLE_CLAUSES.map((sample) => (
-                                            <button
-                                                key={sample.name}
-                                                onClick={() => setClauseText(sample.text)}
-                                                className="w-full text-left p-3 rounded-lg bg-bale-card hover:bg-bale-border transition-colors text-sm"
-                                            >
-                                                <span className="font-medium">{sample.name}</span>
-                                            </button>
-                                        ))}
-                                    </div>
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                {/* Metadata */}
+                <div className="card mb-6">
+                    <h3 className="text-title mb-6">Contract Details</h3>
 
-                        <textarea
-                            value={clauseText}
-                            onChange={(e) => setClauseText(e.target.value)}
-                            placeholder="Paste your contract clause here..."
-                            className="w-full h-48 bg-bale-card border border-bale-border rounded-lg p-4 text-sm resize-none focus:border-white/20 transition-colors"
-                        />
-                        <p className="text-xs text-bale-muted mt-2">{clauseText.length} characters</p>
-                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label className="label">Contract Type</label>
+                            <select
+                                className="input select"
+                                value={formData.contractType}
+                                onChange={(e) => setFormData({ ...formData, contractType: e.target.value })}
+                            >
+                                {contractTypes.map(t => (
+                                    <option key={t.value} value={t.value}>{t.label}</option>
+                                ))}
+                            </select>
+                        </div>
 
-                    {/* Options */}
-                    <div className="glass-card rounded-xl p-6">
-                        <label className="font-semibold block mb-4">Jurisdiction</label>
-                        <div className="grid grid-cols-3 gap-2">
-                            {JURISDICTIONS.map((j) => (
-                                <button
-                                    key={j}
-                                    onClick={() => setJurisdiction(j)}
-                                    className={clsx(
-                                        'px-4 py-2 rounded-lg text-sm font-medium transition-colors',
-                                        jurisdiction === j
-                                            ? 'bg-white text-black'
-                                            : 'bg-bale-card hover:bg-bale-border'
-                                    )}
-                                >
-                                    {j}
-                                </button>
-                            ))}
+                        <div>
+                            <label className="label">Jurisdiction</label>
+                            <select
+                                className="input select"
+                                value={formData.jurisdiction}
+                                onChange={(e) => setFormData({ ...formData, jurisdiction: e.target.value })}
+                            >
+                                {jurisdictions.map(j => (
+                                    <option key={j.value} value={j.value}>{j.label}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="label">Industry</label>
+                            <select
+                                className="input select"
+                                value={formData.industry}
+                                onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                            >
+                                {industries.map(i => (
+                                    <option key={i.value} value={i.value}>{i.label}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="label">Effective Date</label>
+                            <input
+                                type="date"
+                                className="input"
+                                value={formData.effectiveDate}
+                                onChange={(e) => setFormData({ ...formData, effectiveDate: e.target.value })}
+                            />
+                        </div>
+
+                        <div>
+                            <label className="label">Party A (Your Side)</label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="e.g., Your Company Inc."
+                                value={formData.partyA}
+                                onChange={(e) => setFormData({ ...formData, partyA: e.target.value })}
+                            />
+                        </div>
+
+                        <div>
+                            <label className="label">Party B (Counterparty)</label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="e.g., Vendor Corp."
+                                value={formData.partyB}
+                                onChange={(e) => setFormData({ ...formData, partyB: e.target.value })}
+                            />
                         </div>
                     </div>
+                </div>
 
-                    {/* Analyze Button */}
+                {/* Analysis Options */}
+                <div className="card mb-6">
+                    <h3 className="text-title mb-6">Analysis Options</h3>
+
+                    <label className="flex items-center gap-3 cursor-pointer">
+                        <input
+                            type="checkbox"
+                            checked={formData.runFrontier}
+                            onChange={(e) => setFormData({ ...formData, runFrontier: e.target.checked })}
+                            className="w-5 h-5 rounded border-[var(--bale-border)] bg-[var(--bale-surface)] accent-[var(--bale-accent)]"
+                        />
+                        <div>
+                            <div className="font-medium">Include Frontier Analysis</div>
+                            <div className="text-small text-[var(--bale-text-muted)]">
+                                Run all 10 second-order legal intelligence capabilities
+                            </div>
+                        </div>
+                    </label>
+
+                    {formData.runFrontier && (
+                        <div className="mt-4 p-4 bg-[var(--bale-surface-elevated)] rounded-lg">
+                            <div className="grid grid-cols-2 md:grid-cols-5 gap-2 text-center">
+                                {[
+                                    { num: 'I', name: 'Silence' },
+                                    { num: 'II', name: 'Archaeology' },
+                                    { num: 'III', name: 'Temporal' },
+                                    { num: 'IV', name: 'Network' },
+                                    { num: 'V', name: 'Strain' },
+                                    { num: 'VI', name: 'Social' },
+                                    { num: 'VII', name: 'Ambiguity' },
+                                    { num: 'VIII', name: 'Dispute' },
+                                    { num: 'IX', name: 'Imagination' },
+                                    { num: 'X', name: 'Reflexive' },
+                                ].map(f => (
+                                    <div key={f.num} className="p-2 rounded bg-[var(--bale-surface)] text-small">
+                                        <span className="text-caption text-[var(--bale-accent)]">{f.num}</span>
+                                        <span className="text-[var(--bale-text-muted)]"> {f.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                {/* Submit */}
+                <div className="flex justify-end gap-4">
+                    <button type="button" className="btn btn-secondary">
+                        Save as Draft
+                    </button>
                     <button
-                        onClick={() => analyzeMutation.mutate()}
-                        disabled={!clauseText || clauseText.length < 20 || analyzeMutation.isPending}
-                        className={clsx(
-                            'w-full py-4 rounded-xl font-semibold flex items-center justify-center gap-2 transition-all',
-                            !clauseText || clauseText.length < 20
-                                ? 'bg-bale-card text-bale-muted cursor-not-allowed'
-                                : 'bg-white text-black hover:opacity-90'
-                        )}
+                        type="submit"
+                        className="btn btn-primary btn-lg"
+                        disabled={isAnalyzing || !formData.contractText}
                     >
-                        {analyzeMutation.isPending ? (
+                        {isAnalyzing ? (
                             <>
-                                <Loader2 size={20} className="animate-spin" />
+                                <div className="spinner"></div>
                                 Analyzing...
                             </>
                         ) : (
                             <>
-                                <Play size={20} />
+                                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
                                 Run Analysis
                             </>
                         )}
                     </button>
-
-                    {analyzeMutation.isError && (
-                        <div className="flex items-center gap-2 p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-bale-danger">
-                            <AlertCircle size={20} />
-                            <span>Analysis failed. Check API connection.</span>
-                        </div>
-                    )}
                 </div>
-
-                {/* Results Panel */}
-                <div className="space-y-6">
-                    {result ? (
-                        <>
-                            {/* Risk Score */}
-                            <div className="glass-card rounded-xl p-6">
-                                <h3 className="font-semibold text-center mb-4">Litigation Risk</h3>
-                                <RiskGauge risk={result.verdict.risk_score} />
-                                <div className="text-center mt-4">
-                                    <span className={clsx(
-                                        'px-4 py-2 rounded-full text-sm font-semibold',
-                                        result.verdict.verdict === 'PLAINTIFF_FAVOR'
-                                            ? 'bg-red-500/20 text-bale-danger'
-                                            : 'bg-green-500/20 text-bale-success'
-                                    )}>
-                                        {result.verdict.verdict.replace('_', ' ')}
-                                    </span>
-                                </div>
-                                <p className="text-center text-sm text-bale-muted mt-2">
-                                    Confidence: {Math.round(result.verdict.confidence * 100)}% •
-                                    Gap: {result.verdict.interpretive_gap}%
-                                </p>
-                            </div>
-
-                            {/* Decision Factors */}
-                            <div className="glass-card rounded-xl p-6">
-                                <h3 className="font-semibold mb-4">Decision Factors</h3>
-                                <div className="space-y-3">
-                                    {result.verdict.factors_applied.map((factor, i) => (
-                                        <FactorCard key={i} factor={factor} />
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Harmonization */}
-                            {result.harmonization && (
-                                <div className="glass-card rounded-xl p-6">
-                                    <div className="flex items-center gap-2 mb-4">
-                                        <CheckCircle2 size={20} className="text-bale-success" />
-                                        <h3 className="font-semibold">Suggested Improvement</h3>
-                                    </div>
-                                    <div className="bg-bale-card p-4 rounded-lg mb-4">
-                                        <p className="text-sm font-mono">{result.harmonization.golden_clause}</p>
-                                    </div>
-                                    <p className="text-sm text-bale-muted">{result.harmonization.rationale}</p>
-                                    <p className="text-sm text-bale-success mt-2">
-                                        Estimated risk reduction: {result.harmonization.risk_reduction}%
-                                    </p>
-                                </div>
-                            )}
-                        </>
-                    ) : (
-                        <div className="glass-card rounded-xl p-12 text-center">
-                            <Scale size={48} className="mx-auto text-bale-muted mb-4" />
-                            <h3 className="font-semibold mb-2">Ready to Analyze</h3>
-                            <p className="text-sm text-bale-muted">
-                                Paste a contract clause and click "Run Analysis" to get started
-                            </p>
-                        </div>
-                    )}
-                </div>
-            </div>
+            </form>
         </div>
     )
 }
+
+export default Analyze

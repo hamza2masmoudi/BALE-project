@@ -1,218 +1,272 @@
-import { BarChart3, TrendingUp, AlertTriangle, CheckCircle, ArrowUp, ArrowDown } from 'lucide-react'
-import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-// Mock data
-const riskTrendData = [
-    { date: 'Jan 10', risk: 45 },
-    { date: 'Jan 11', risk: 52 },
-    { date: 'Jan 12', risk: 48 },
-    { date: 'Jan 13', risk: 55 },
-    { date: 'Jan 14', risk: 42 },
-    { date: 'Jan 15', risk: 38 },
-    { date: 'Jan 16', risk: 35 },
-]
-
-const jurisdictionData = [
-    { name: 'UK', value: 35, color: '#3b82f6' },
-    { name: 'France', value: 25, color: '#8b5cf6' },
-    { name: 'US', value: 22, color: '#10b981' },
-    { name: 'Germany', value: 12, color: '#f59e0b' },
-    { name: 'Other', value: 6, color: '#6b7280' },
-]
+// Mock data for dashboard
+const mockStats = {
+    contractsAnalyzed: 247,
+    avgRiskScore: 32,
+    criticalFindings: 18,
+    pendingReview: 5,
+}
 
 const recentAnalyses = [
-    { id: 1, name: 'Force Majeure Clause', risk: 72, verdict: 'PLAINTIFF', time: '2m ago' },
-    { id: 2, name: 'Liability Limitation', risk: 35, verdict: 'DEFENSE', time: '15m ago' },
-    { id: 3, name: 'IP Assignment', risk: 58, verdict: 'PLAINTIFF', time: '1h ago' },
-    { id: 4, name: 'Termination Terms', risk: 28, verdict: 'DEFENSE', time: '2h ago' },
+    { id: '1', name: 'TechCorp MSA 2024', type: 'MSA', risk: 45, status: 'review', date: '2h ago' },
+    { id: '2', name: 'Vendor SLA - CloudHost', type: 'SLA', risk: 23, status: 'complete', date: '4h ago' },
+    { id: '3', name: 'NDA - Acme Industries', type: 'NDA', risk: 12, status: 'complete', date: '1d ago' },
+    { id: '4', name: 'License Agreement - DataCo', type: 'License', risk: 67, status: 'critical', date: '1d ago' },
+    { id: '5', name: 'Employment - Senior Counsel', type: 'Employment', risk: 28, status: 'complete', date: '2d ago' },
 ]
 
-function StatCard({
-    title,
-    value,
-    change,
-    changeType,
-    icon: Icon
-}: {
-    title: string
-    value: string
-    change: string
-    changeType: 'up' | 'down' | 'neutral'
-    icon: any
-}) {
-    return (
-        <div className="glass-card rounded-xl p-6">
-            <div className="flex items-start justify-between">
-                <div>
-                    <p className="text-bale-muted text-sm">{title}</p>
-                    <p className="text-3xl font-bold mt-2">{value}</p>
-                    <div className={`flex items-center gap-1 mt-2 text-sm ${changeType === 'up' ? 'text-bale-success' :
-                            changeType === 'down' ? 'text-bale-danger' : 'text-bale-muted'
-                        }`}>
-                        {changeType === 'up' ? <ArrowUp size={14} /> :
-                            changeType === 'down' ? <ArrowDown size={14} /> : null}
-                        <span>{change}</span>
-                    </div>
-                </div>
-                <div className="w-12 h-12 bg-bale-card rounded-lg flex items-center justify-center">
-                    <Icon size={24} className="text-bale-muted" />
-                </div>
-            </div>
-        </div>
-    )
+const frontierInsights = [
+    { frontier: 'III', name: 'Temporal Decay', finding: '12 contracts need review due to doctrine shifts', severity: 'warning' },
+    { frontier: 'V', name: 'Strain', finding: 'Non-compete clauses at high regulatory risk', severity: 'danger' },
+    { frontier: 'VI', name: 'Social', finding: '3 contracts show power imbalance', severity: 'warning' },
+    { frontier: 'IX', name: 'Imagination', finding: 'AI liability gaps detected in 7 contracts', severity: 'info' },
+]
+
+function getRiskColor(risk: number): string {
+    if (risk < 30) return 'risk-low'
+    if (risk < 60) return 'risk-medium'
+    return 'risk-high'
 }
 
-function RiskBadge({ risk }: { risk: number }) {
-    const color = risk > 60 ? 'text-bale-danger bg-red-500/10' :
-        risk > 40 ? 'text-bale-warning bg-yellow-500/10' :
-            'text-bale-success bg-green-500/10'
-    return (
-        <span className={`px-2 py-1 rounded text-xs font-medium ${color}`}>
-            {risk}%
-        </span>
-    )
+function getRiskBg(risk: number): string {
+    if (risk < 30) return 'risk-bg-low'
+    if (risk < 60) return 'risk-bg-medium'
+    return 'risk-bg-high'
 }
 
-export default function Dashboard() {
+function getStatusBadge(status: string) {
+    const styles: Record<string, string> = {
+        complete: 'badge-success',
+        review: 'badge-warning',
+        critical: 'badge-danger',
+    }
+    return styles[status] || 'badge-info'
+}
+
+function Dashboard() {
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        setTimeout(() => setIsLoading(false), 500)
+    }, [])
+
     return (
-        <div className="p-8 animate-slide-up">
+        <div className="fade-in">
             {/* Header */}
-            <div className="mb-8">
-                <h1 className="text-2xl font-bold gradient-text">Dashboard</h1>
-                <p className="text-bale-muted mt-1">Overview of your legal intelligence operations</p>
+            <div className="page-header flex items-center justify-between">
+                <div>
+                    <h1 className="page-title">Dashboard</h1>
+                    <p className="page-description">Overview of your legal intelligence</p>
+                </div>
+                <Link to="/analyze" className="btn btn-primary btn-lg">
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    New Analysis
+                </Link>
             </div>
 
             {/* Stats Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <StatCard
-                    title="Analyses Today"
-                    value="24"
-                    change="+12% from yesterday"
-                    changeType="up"
-                    icon={BarChart3}
+                    label="Contracts Analyzed"
+                    value={mockStats.contractsAnalyzed}
+                    change="+12 this week"
+                    icon="📄"
+                    loading={isLoading}
                 />
                 <StatCard
-                    title="Avg Risk Score"
-                    value="42%"
-                    change="-8% from last week"
-                    changeType="down"
-                    icon={TrendingUp}
+                    label="Avg Risk Score"
+                    value={`${mockStats.avgRiskScore}%`}
+                    change="-5% vs last month"
+                    icon="📊"
+                    positive
+                    loading={isLoading}
                 />
                 <StatCard
-                    title="High Risk Clauses"
-                    value="7"
-                    change="3 require attention"
-                    changeType="neutral"
-                    icon={AlertTriangle}
+                    label="Critical Findings"
+                    value={mockStats.criticalFindings}
+                    change="Across all contracts"
+                    icon="⚠️"
+                    loading={isLoading}
                 />
                 <StatCard
-                    title="Contracts Reviewed"
-                    value="156"
-                    change="+23 this month"
-                    changeType="up"
-                    icon={CheckCircle}
+                    label="Pending Review"
+                    value={mockStats.pendingReview}
+                    change="Due this week"
+                    icon="⏰"
+                    loading={isLoading}
                 />
             </div>
 
-            {/* Charts Row */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-                {/* Risk Trend */}
-                <div className="lg:col-span-2 glass-card rounded-xl p-6">
-                    <h3 className="font-semibold mb-4">Risk Trend (7 Days)</h3>
-                    <ResponsiveContainer width="100%" height={250}>
-                        <AreaChart data={riskTrendData}>
-                            <defs>
-                                <linearGradient id="riskGradient" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#ffffff" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#ffffff" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <XAxis dataKey="date" stroke="#6b7280" fontSize={12} />
-                            <YAxis stroke="#6b7280" fontSize={12} domain={[0, 100]} />
-                            <Tooltip
-                                contentStyle={{
-                                    backgroundColor: '#111',
-                                    border: '1px solid #374151',
-                                    borderRadius: '8px'
-                                }}
-                            />
-                            <Area
-                                type="monotone"
-                                dataKey="risk"
-                                stroke="#ffffff"
-                                strokeWidth={2}
-                                fill="url(#riskGradient)"
-                            />
-                        </AreaChart>
-                    </ResponsiveContainer>
+            {/* Main Content Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                {/* Recent Analyses */}
+                <div className="lg:col-span-2">
+                    <div className="card">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-title">Recent Analyses</h2>
+                            <Link to="/contracts" className="btn btn-ghost text-small">
+                                View All →
+                            </Link>
+                        </div>
+
+                        <div className="space-y-3">
+                            {recentAnalyses.map((analysis) => (
+                                <Link
+                                    key={analysis.id}
+                                    to={`/frontier/${analysis.id}`}
+                                    className="flex items-center justify-between p-4 bg-[var(--bale-surface-elevated)] rounded-lg hover:bg-[var(--bale-border)] transition-colors"
+                                >
+                                    <div className="flex items-center gap-4">
+                                        <div className={`w-12 h-12 rounded-lg ${getRiskBg(analysis.risk)} flex items-center justify-center`}>
+                                            <span className={`text-lg font-bold ${getRiskColor(analysis.risk)}`}>
+                                                {analysis.risk}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <div className="font-medium">{analysis.name}</div>
+                                            <div className="text-small text-[var(--bale-text-muted)]">
+                                                {analysis.type} • {analysis.date}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span className={`badge ${getStatusBadge(analysis.status)}`}>
+                                        {analysis.status}
+                                    </span>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
                 </div>
 
-                {/* Jurisdiction Distribution */}
-                <div className="glass-card rounded-xl p-6">
-                    <h3 className="font-semibold mb-4">By Jurisdiction</h3>
-                    <ResponsiveContainer width="100%" height={180}>
-                        <PieChart>
-                            <Pie
-                                data={jurisdictionData}
-                                cx="50%"
-                                cy="50%"
-                                innerRadius={50}
-                                outerRadius={70}
-                                paddingAngle={2}
-                                dataKey="value"
-                            >
-                                {jurisdictionData.map((entry, index) => (
-                                    <Cell key={`cell-${index}`} fill={entry.color} />
-                                ))}
-                            </Pie>
-                        </PieChart>
-                    </ResponsiveContainer>
-                    <div className="grid grid-cols-2 gap-2 mt-4">
-                        {jurisdictionData.map((item) => (
-                            <div key={item.name} className="flex items-center gap-2 text-sm">
-                                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: item.color }} />
-                                <span className="text-bale-muted">{item.name}</span>
-                                <span className="ml-auto">{item.value}%</span>
-                            </div>
-                        ))}
+                {/* Frontier Insights */}
+                <div className="lg:col-span-1">
+                    <div className="card">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-title">Frontier Insights</h2>
+                            <span className="badge badge-info">Live</span>
+                        </div>
+
+                        <div className="space-y-4">
+                            {frontierInsights.map((insight, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`p-4 rounded-lg border-l-4 ${insight.severity === 'danger'
+                                            ? 'risk-bg-high border-[var(--risk-high)]'
+                                            : insight.severity === 'warning'
+                                                ? 'risk-bg-medium border-[var(--risk-medium)]'
+                                                : 'bg-[var(--bale-surface-elevated)] border-[var(--bale-accent)]'
+                                        }`}
+                                >
+                                    <div className="flex items-center gap-2 mb-2">
+                                        <span className="text-caption px-2 py-0.5 bg-[var(--bale-surface)] rounded">
+                                            {insight.frontier}
+                                        </span>
+                                        <span className="text-small font-medium">{insight.name}</span>
+                                    </div>
+                                    <p className="text-small text-[var(--bale-text-secondary)]">
+                                        {insight.finding}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+
+                        <Link
+                            to="/frontier"
+                            className="btn btn-secondary w-full mt-6"
+                        >
+                            View All Frontiers
+                        </Link>
                     </div>
                 </div>
             </div>
 
-            {/* Recent Analyses */}
-            <div className="glass-card rounded-xl p-6">
-                <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold">Recent Analyses</h3>
-                    <button className="text-sm text-bale-muted hover:text-white transition-colors">
-                        View All →
-                    </button>
-                </div>
-                <div className="space-y-3">
-                    {recentAnalyses.map((analysis) => (
-                        <div
-                            key={analysis.id}
-                            className="flex items-center justify-between p-4 bg-bale-card rounded-lg hover:bg-bale-border transition-colors cursor-pointer"
-                        >
-                            <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 bg-bale-dark rounded-lg flex items-center justify-center">
-                                    <BarChart3 size={18} className="text-bale-muted" />
-                                </div>
-                                <div>
-                                    <p className="font-medium">{analysis.name}</p>
-                                    <p className="text-sm text-bale-muted">{analysis.time}</p>
-                                </div>
-                            </div>
-                            <div className="flex items-center gap-4">
-                                <span className={`text-sm ${analysis.verdict === 'PLAINTIFF' ? 'text-bale-danger' : 'text-bale-success'
-                                    }`}>
-                                    {analysis.verdict}
-                                </span>
-                                <RiskBadge risk={analysis.risk} />
-                            </div>
-                        </div>
-                    ))}
+            {/* Risk Distribution */}
+            <div className="mt-8">
+                <div className="card">
+                    <h2 className="text-title mb-6">Risk Distribution</h2>
+                    <RiskDistributionChart />
                 </div>
             </div>
         </div>
     )
 }
+
+// Stat Card Component
+function StatCard({
+    label,
+    value,
+    change,
+    icon,
+    positive = false,
+    loading = false
+}: {
+    label: string
+    value: string | number
+    change: string
+    icon: string
+    positive?: boolean
+    loading?: boolean
+}) {
+    if (loading) {
+        return (
+            <div className="card">
+                <div className="skeleton h-4 w-20 mb-3"></div>
+                <div className="skeleton h-8 w-16 mb-2"></div>
+                <div className="skeleton h-3 w-24"></div>
+            </div>
+        )
+    }
+
+    return (
+        <div className="card hover:border-[var(--bale-border-strong)] transition-colors">
+            <div className="flex items-center justify-between mb-2">
+                <span className="text-small text-[var(--bale-text-muted)]">{label}</span>
+                <span className="text-xl">{icon}</span>
+            </div>
+            <div className="text-display mb-1">{value}</div>
+            <div className={`text-small ${positive ? 'text-[var(--risk-low)]' : 'text-[var(--bale-text-muted)]'}`}>
+                {change}
+            </div>
+        </div>
+    )
+}
+
+// Risk Distribution Chart
+function RiskDistributionChart() {
+    const data = [
+        { range: '0-20%', count: 45, color: 'var(--risk-low)' },
+        { range: '21-40%', count: 78, color: 'var(--risk-low)' },
+        { range: '41-60%', count: 52, color: 'var(--risk-medium)' },
+        { range: '61-80%', count: 28, color: 'var(--risk-high)' },
+        { range: '81-100%', count: 8, color: 'var(--risk-critical)' },
+    ]
+
+    const max = Math.max(...data.map(d => d.count))
+
+    return (
+        <div className="flex items-end justify-between gap-4 h-48">
+            {data.map((d, idx) => (
+                <div key={idx} className="flex-1 flex flex-col items-center">
+                    <div
+                        className="w-full rounded-t-md transition-all hover:opacity-80"
+                        style={{
+                            height: `${(d.count / max) * 100}%`,
+                            backgroundColor: d.color,
+                            minHeight: '20px'
+                        }}
+                    ></div>
+                    <div className="mt-2 text-center">
+                        <div className="font-bold">{d.count}</div>
+                        <div className="text-caption text-[var(--bale-text-muted)]">{d.range}</div>
+                    </div>
+                </div>
+            ))}
+        </div>
+    )
+}
+
+export default Dashboard

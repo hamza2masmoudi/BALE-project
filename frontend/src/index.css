@@ -2,12 +2,87 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================
+   BALE ENTERPRISE DESIGN SYSTEM
+   Legal Intelligence Platform
+   ============================================ */
+
 :root {
+    /* Primary Colors */
     --bale-dark: #0a0a0a;
     --bale-darker: #050505;
-    --bale-accent: #ffffff;
-    --bale-muted: #6b7280;
+    --bale-surface: #111111;
+    --bale-surface-elevated: #1a1a1a;
+    --bale-border: rgba(255, 255, 255, 0.08);
+    --bale-border-strong: rgba(255, 255, 255, 0.15);
+
+    /* Text Colors */
+    --bale-text: #ffffff;
+    --bale-text-secondary: #9ca3af;
+    --bale-text-muted: #6b7280;
+
+    /* Accent Colors */
+    --bale-accent: #3b82f6;
+    --bale-accent-hover: #2563eb;
+
+    /* Risk Colors */
+    --risk-low: #10b981;
+    --risk-medium: #f59e0b;
+    --risk-high: #ef4444;
+    --risk-critical: #dc2626;
+
+    /* Frontier Colors - Each frontier has its own accent */
+    --frontier-silence: #8b5cf6;
+    /* Purple - what's missing */
+    --frontier-archaeology: #d97706;
+    /* Amber - history layers */
+    --frontier-temporal: #0ea5e9;
+    /* Sky - time drift */
+    --frontier-network: #14b8a6;
+    /* Teal - connections */
+    --frontier-strain: #f43f5e;
+    /* Rose - stress points */
+    --frontier-social: #a855f7;
+    /* Violet - power dynamics */
+    --frontier-ambiguity: #6366f1;
+    /* Indigo - vagueness */
+    --frontier-dispute: #ec4899;
+    /* Pink - contestation */
+    --frontier-imagination: #22c55e;
+    /* Green - new frontiers */
+    --frontier-reflexive: #64748b;
+    /* Slate - meta effects */
+
+    /* Spacing */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 32px;
+    --space-2xl: 48px;
+
+    /* Radius */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.4);
+    --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.5);
+    --shadow-glow: 0 0 20px rgba(59, 130, 246, 0.3);
+
+    /* Transitions */
+    --transition-fast: 150ms;
+    --transition-base: 200ms;
+    --transition-slow: 300ms;
 }
+
+/* ============================================
+   BASE STYLES
+   ============================================ */
 
 * {
     margin: 0;
@@ -15,15 +90,70 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background-color: var(--bale-dark);
-    color: var(--bale-accent);
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+html {
+    font-size: 16px;
 }
 
-/* Custom scrollbar */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    background-color: var(--bale-dark);
+    color: var(--bale-text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+}
+
+/* ============================================
+   TYPOGRAPHY
+   ============================================ */
+
+.text-display {
+    font-size: 2.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+}
+
+.text-headline {
+    font-size: 1.75rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+}
+
+.text-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.text-body {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+}
+
+.text-small {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+.text-caption {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.text-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+/* ============================================
+   SCROLLBAR
+   ============================================ */
+
 ::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -35,21 +165,43 @@ body {
 
 ::-webkit-scrollbar-thumb {
     background: #374151;
-    border-radius: 4px;
+    border-radius: var(--radius-sm);
 }
 
 ::-webkit-scrollbar-thumb:hover {
     background: #4b5563;
 }
 
-/* Glass card effect */
+/* ============================================
+   GLASS EFFECTS
+   ============================================ */
+
+.glass {
+    background: rgba(17, 17, 17, 0.7);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--bale-border);
+}
+
 .glass-card {
     background: rgba(17, 17, 17, 0.8);
     backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--bale-border);
+    border-radius: var(--radius-lg);
 }
 
-/* Gradient text */
+.glass-elevated {
+    background: rgba(26, 26, 26, 0.9);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--bale-border-strong);
+}
+
+/* ============================================
+   GRADIENTS
+   ============================================ */
+
 .gradient-text {
     background: linear-gradient(135deg, #ffffff 0%, #9ca3af 100%);
     -webkit-background-clip: text;
@@ -57,20 +209,700 @@ body {
     background-clip: text;
 }
 
-/* Risk score colors */
+.gradient-accent {
+    background: linear-gradient(135deg, var(--bale-accent) 0%, #8b5cf6 100%);
+}
+
+.gradient-risk {
+    background: linear-gradient(90deg, var(--risk-low) 0%, var(--risk-medium) 50%, var(--risk-high) 100%);
+}
+
+.gradient-frontier {
+    background: linear-gradient(135deg,
+            var(--frontier-silence) 0%,
+            var(--frontier-ambiguity) 25%,
+            var(--frontier-dispute) 50%,
+            var(--frontier-imagination) 75%,
+            var(--frontier-temporal) 100%);
+}
+
+/* ============================================
+   RISK INDICATORS
+   ============================================ */
+
 .risk-low {
-    color: #10b981;
+    color: var(--risk-low);
 }
 
 .risk-medium {
-    color: #f59e0b;
+    color: var(--risk-medium);
 }
 
 .risk-high {
-    color: #ef4444;
+    color: var(--risk-high);
 }
 
-/* Pulse animation for live indicator */
+.risk-critical {
+    color: var(--risk-critical);
+}
+
+.risk-bg-low {
+    background-color: rgba(16, 185, 129, 0.15);
+}
+
+.risk-bg-medium {
+    background-color: rgba(245, 158, 11, 0.15);
+}
+
+.risk-bg-high {
+    background-color: rgba(239, 68, 68, 0.15);
+}
+
+.risk-bg-critical {
+    background-color: rgba(220, 38, 38, 0.15);
+}
+
+.risk-border-low {
+    border-color: var(--risk-low);
+}
+
+.risk-border-medium {
+    border-color: var(--risk-medium);
+}
+
+.risk-border-high {
+    border-color: var(--risk-high);
+}
+
+.risk-border-critical {
+    border-color: var(--risk-critical);
+}
+
+/* ============================================
+   FRONTIER COLORS
+   ============================================ */
+
+.frontier-silence {
+    color: var(--frontier-silence);
+}
+
+.frontier-archaeology {
+    color: var(--frontier-archaeology);
+}
+
+.frontier-temporal {
+    color: var(--frontier-temporal);
+}
+
+.frontier-network {
+    color: var(--frontier-network);
+}
+
+.frontier-strain {
+    color: var(--frontier-strain);
+}
+
+.frontier-social {
+    color: var(--frontier-social);
+}
+
+.frontier-ambiguity {
+    color: var(--frontier-ambiguity);
+}
+
+.frontier-dispute {
+    color: var(--frontier-dispute);
+}
+
+.frontier-imagination {
+    color: var(--frontier-imagination);
+}
+
+.frontier-reflexive {
+    color: var(--frontier-reflexive);
+}
+
+.frontier-bg-silence {
+    background-color: rgba(139, 92, 246, 0.15);
+}
+
+.frontier-bg-archaeology {
+    background-color: rgba(217, 119, 6, 0.15);
+}
+
+.frontier-bg-temporal {
+    background-color: rgba(14, 165, 233, 0.15);
+}
+
+.frontier-bg-network {
+    background-color: rgba(20, 184, 166, 0.15);
+}
+
+.frontier-bg-strain {
+    background-color: rgba(244, 63, 94, 0.15);
+}
+
+.frontier-bg-social {
+    background-color: rgba(168, 85, 247, 0.15);
+}
+
+.frontier-bg-ambiguity {
+    background-color: rgba(99, 102, 241, 0.15);
+}
+
+.frontier-bg-dispute {
+    background-color: rgba(236, 72, 153, 0.15);
+}
+
+.frontier-bg-imagination {
+    background-color: rgba(34, 197, 94, 0.15);
+}
+
+.frontier-bg-reflexive {
+    background-color: rgba(100, 116, 139, 0.15);
+}
+
+/* ============================================
+   BUTTONS
+   ============================================ */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    font-size: 0.875rem;
+    font-weight: 500;
+    border-radius: var(--radius-md);
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.btn-primary {
+    background: var(--bale-accent);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--bale-accent-hover);
+    box-shadow: var(--shadow-glow);
+}
+
+.btn-secondary {
+    background: var(--bale-surface-elevated);
+    color: var(--bale-text);
+    border: 1px solid var(--bale-border);
+}
+
+.btn-secondary:hover {
+    background: var(--bale-surface);
+    border-color: var(--bale-border-strong);
+}
+
+.btn-ghost {
+    background: transparent;
+    color: var(--bale-text-secondary);
+}
+
+.btn-ghost:hover {
+    background: var(--bale-surface);
+    color: var(--bale-text);
+}
+
+.btn-danger {
+    background: var(--risk-high);
+    color: white;
+}
+
+.btn-danger:hover {
+    background: var(--risk-critical);
+}
+
+.btn-lg {
+    padding: var(--space-md) var(--space-lg);
+    font-size: 1rem;
+}
+
+.btn-sm {
+    padding: var(--space-xs) var(--space-sm);
+    font-size: 0.75rem;
+}
+
+/* ============================================
+   CARDS
+   ============================================ */
+
+.card {
+    background: var(--bale-surface);
+    border: 1px solid var(--bale-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+}
+
+.card-elevated {
+    background: var(--bale-surface-elevated);
+    border: 1px solid var(--bale-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    box-shadow: var(--shadow-md);
+}
+
+.card-interactive {
+    cursor: pointer;
+    transition: all var(--transition-base);
+}
+
+.card-interactive:hover {
+    border-color: var(--bale-border-strong);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ============================================
+   FRONTIER CARD
+   ============================================ */
+
+.frontier-card {
+    background: var(--bale-surface);
+    border: 1px solid var(--bale-border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg);
+    transition: all var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.frontier-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: var(--frontier-color, var(--bale-accent));
+}
+
+.frontier-card:hover {
+    border-color: var(--bale-border-strong);
+}
+
+.frontier-card-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-md);
+}
+
+.frontier-card-number {
+    font-size: 0.625rem;
+    font-weight: 700;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    background: var(--frontier-color, var(--bale-accent));
+    color: white;
+}
+
+.frontier-card-title {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--bale-text);
+}
+
+.frontier-card-metric {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--bale-text);
+    line-height: 1;
+    margin-bottom: var(--space-sm);
+}
+
+.frontier-card-insight {
+    font-size: 0.875rem;
+    color: var(--bale-text-secondary);
+}
+
+/* ============================================
+   RISK GAUGE
+   ============================================ */
+
+.risk-gauge {
+    position: relative;
+    width: 200px;
+    height: 100px;
+    overflow: hidden;
+}
+
+.risk-gauge-arc {
+    fill: none;
+    stroke-width: 20;
+}
+
+.risk-gauge-bg {
+    stroke: var(--bale-surface-elevated);
+}
+
+.risk-gauge-fill {
+    stroke-linecap: round;
+    transition: stroke-dashoffset var(--transition-slow);
+}
+
+.risk-gauge-value {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    font-weight: 700;
+}
+
+.risk-gauge-label {
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.75rem;
+    color: var(--bale-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* ============================================
+   POWER ASYMMETRY DIAGRAM
+   ============================================ */
+
+.power-diagram {
+    display: flex;
+    align-items: center;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+}
+
+.power-party {
+    flex: 1;
+    text-align: center;
+}
+
+.power-party-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin-bottom: var(--space-xs);
+}
+
+.power-party-role {
+    font-size: 0.75rem;
+    color: var(--bale-text-muted);
+}
+
+.power-scale {
+    flex: 2;
+    position: relative;
+}
+
+.power-scale-bar {
+    height: 8px;
+    background: var(--bale-surface-elevated);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.power-scale-indicator {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: var(--bale-accent);
+    border-radius: 50%;
+    border: 3px solid var(--bale-surface);
+    box-shadow: var(--shadow-md);
+    transition: left var(--transition-slow);
+}
+
+/* ============================================
+   DISPUTE PROBABILITY CHART
+   ============================================ */
+
+.dispute-bar {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    padding: var(--space-sm) 0;
+}
+
+.dispute-bar-label {
+    flex: 0 0 140px;
+    font-size: 0.875rem;
+    color: var(--bale-text-secondary);
+}
+
+.dispute-bar-track {
+    flex: 1;
+    height: 8px;
+    background: var(--bale-surface-elevated);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.dispute-bar-fill {
+    height: 100%;
+    border-radius: var(--radius-full);
+    transition: width var(--transition-slow);
+}
+
+.dispute-bar-value {
+    flex: 0 0 50px;
+    text-align: right;
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+/* ============================================
+   TIMELINE
+   ============================================ */
+
+.timeline {
+    position: relative;
+    padding-left: var(--space-xl);
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--bale-border);
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: var(--space-lg);
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: calc(-24px - 4px);
+    top: 4px;
+    width: 10px;
+    height: 10px;
+    background: var(--bale-surface-elevated);
+    border: 2px solid var(--bale-border-strong);
+    border-radius: 50%;
+}
+
+.timeline-item.active::before {
+    background: var(--bale-accent);
+    border-color: var(--bale-accent);
+}
+
+.timeline-item.warning::before {
+    background: var(--risk-medium);
+    border-color: var(--risk-medium);
+}
+
+.timeline-item.danger::before {
+    background: var(--risk-high);
+    border-color: var(--risk-high);
+}
+
+/* ============================================
+   SIDEBAR NAV
+   ============================================ */
+
+.sidebar {
+    width: 260px;
+    height: 100vh;
+    background: var(--bale-darker);
+    border-right: 1px solid var(--bale-border);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+.sidebar-header {
+    padding: var(--space-lg);
+    border-bottom: 1px solid var(--bale-border);
+}
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.sidebar-nav {
+    flex: 1;
+    padding: var(--space-md);
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    margin-bottom: var(--space-lg);
+}
+
+.sidebar-section-title {
+    font-size: 0.625rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--bale-text-muted);
+    margin-bottom: var(--space-sm);
+    padding: 0 var(--space-sm);
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-md);
+    color: var(--bale-text-secondary);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all var(--transition-fast);
+}
+
+.sidebar-link:hover {
+    background: var(--bale-surface);
+    color: var(--bale-text);
+}
+
+.sidebar-link.active {
+    background: var(--bale-accent);
+    color: white;
+}
+
+.sidebar-link-icon {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+}
+
+.sidebar-link.active .sidebar-link-icon {
+    opacity: 1;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+
+.main-content {
+    margin-left: 260px;
+    min-height: 100vh;
+    padding: var(--space-xl);
+}
+
+.page-header {
+    margin-bottom: var(--space-xl);
+}
+
+.page-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: var(--space-xs);
+}
+
+.page-description {
+    font-size: 1rem;
+    color: var(--bale-text-secondary);
+}
+
+/* ============================================
+   FORMS
+   ============================================ */
+
+.input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-md);
+    background: var(--bale-surface);
+    border: 1px solid var(--bale-border);
+    border-radius: var(--radius-md);
+    color: var(--bale-text);
+    font-size: 0.875rem;
+    transition: all var(--transition-fast);
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--bale-accent);
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+.input::placeholder {
+    color: var(--bale-text-muted);
+}
+
+.textarea {
+    min-height: 200px;
+    resize: vertical;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+}
+
+.select {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--bale-text-secondary);
+    margin-bottom: var(--space-xs);
+}
+
+/* ============================================
+   BADGES
+   ============================================ */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 2px 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    border-radius: var(--radius-full);
+}
+
+.badge-success {
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--risk-low);
+}
+
+.badge-warning {
+    background: rgba(245, 158, 11, 0.15);
+    color: var(--risk-medium);
+}
+
+.badge-danger {
+    background: rgba(239, 68, 68, 0.15);
+    color: var(--risk-high);
+}
+
+.badge-info {
+    background: rgba(59, 130, 246, 0.15);
+    color: var(--bale-accent);
+}
+
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+
 .live-pulse {
     animation: livePulse 2s ease-in-out infinite;
 }
@@ -87,11 +919,139 @@ body {
     }
 }
 
-/* Focus states */
-input:focus,
-textarea:focus,
-button:focus {
+.fade-in {
+    animation: fadeIn var(--transition-base) ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.slide-in {
+    animation: slideIn var(--transition-slow) ease-out;
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.scale-in {
+    animation: scaleIn var(--transition-base) ease-out;
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* ============================================
+   LOADING
+   ============================================ */
+
+.skeleton {
+    background: linear-gradient(90deg,
+            var(--bale-surface) 25%,
+            var(--bale-surface-elevated) 50%,
+            var(--bale-surface) 75%);
+    background-size: 200% 100%;
+    animation: skeleton 1.5s ease-in-out infinite;
+    border-radius: var(--radius-md);
+}
+
+@keyframes skeleton {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--bale-border);
+    border-top-color: var(--bale-accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* ============================================
+   FOCUS STATES
+   ============================================ */
+
+*:focus-visible {
+    outline: 2px solid var(--bale-accent);
+    outline-offset: 2px;
+}
+
+button:focus:not(:focus-visible),
+a:focus:not(:focus-visible) {
     outline: none;
-    ring: 2px;
-    ring-color: rgba(255, 255, 255, 0.2);
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 1024px) {
+    .sidebar {
+        width: 80px;
+    }
+
+    .sidebar-link span,
+    .sidebar-section-title,
+    .sidebar-logo span {
+        display: none;
+    }
+
+    .sidebar-link {
+        justify-content: center;
+        padding: var(--space-sm);
+    }
+
+    .main-content {
+        margin-left: 80px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        margin-left: 0;
+        padding: var(--space-md);
+    }
 }
