@@ -6,9 +6,9 @@ services:
     image: postgres:16-alpine
     container_name: bale-postgres
     environment:
-      POSTGRES_USER: bale
-      POSTGRES_PASSWORD: bale_dev
-      POSTGRES_DB: bale
+      POSTGRES_USER: ${POSTGRES_USER:-bale}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-changeme}
+      POSTGRES_DB: ${POSTGRES_DB:-bale}
     ports:
       - "5432:5432"
     volumes:
@@ -48,7 +48,7 @@ services:
     image: neo4j:5-community
     container_name: bale-neo4j
     environment:
-      NEO4J_AUTH: neo4j/bale_dev
+      NEO4J_AUTH: ${NEO4J_USER:-neo4j}/${NEO4J_PASSWORD:-changeme}
       NEO4J_PLUGINS: '["apoc"]'
     ports:
       - "7474:7474" # HTTP
@@ -81,7 +81,7 @@ services:
       dockerfile: Dockerfile.api
     container_name: bale-api
     environment:
-      - DATABASE_URL=postgresql://bale:bale_dev@postgres:5432/bale
+      - DATABASE_URL=postgresql://${POSTGRES_USER:-bale}:${POSTGRES_PASSWORD:-changeme}@postgres:5432/${POSTGRES_DB:-bale}
       - REDIS_URL=redis://redis:6379/0
       - LOCAL_LLM_ENDPOINT=http://host.docker.internal:11434/v1/chat/completions
       - LOCAL_LLM_MODEL=qwen2.5:32b
