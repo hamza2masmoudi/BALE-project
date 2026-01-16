@@ -1,0 +1,38 @@
+"""BALE Ontology Module."""
+from src.ontology.legal_ontology import (
+    PartyRole,
+    ObligationType,
+    RightType,
+    ClauseCategory,
+    RiskFactor,
+    Jurisdiction,
+    Obligation,
+    Right,
+    Clause,
+    Party,
+    ContractOntology,
+    CLAUSE_EXPECTATIONS,
+    RISK_FACTOR_WEIGHTS,
+    LEGAL_REGIME_CHANGES,
+    get_clause_expectations,
+    get_risk_weight,
+)
+
+__all__ = [
+    "PartyRole",
+    "ObligationType", 
+    "RightType",
+    "ClauseCategory",
+    "RiskFactor",
+    "Jurisdiction",
+    "Obligation",
+    "Right",
+    "Clause",
+    "Party",
+    "ContractOntology",
+    "CLAUSE_EXPECTATIONS",
+    "RISK_FACTOR_WEIGHTS",
+    "LEGAL_REGIME_CHANGES",
+    "get_clause_expectations",
+    "get_risk_weight",
+]

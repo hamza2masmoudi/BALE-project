@@ -1,0 +1,36 @@
+# BALE Legal Model LoRA Configuration
+# Optimized for Apple Silicon M-series
+
+# Model to finetune
+model: "mlx-community/Mistral-7B-Instruct-v0.3-4bit"
+
+# Training parameters
+train:
+  iters: 1000
+  batch_size: 2
+  learning_rate: 1e-5
+  grad_checkpoint: true
+
+# LoRA parameters  
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules:
+    - q_proj
+    - v_proj
+    - k_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+
+# Data
+data:
+  train: "data/mlx_training/train.jsonl"
+  valid: "data/mlx_training/valid.jsonl"
+
+# Output
+output:
+  adapter_path: "models/bale-legal-lora"
+  checkpoint_every: 100
