@@ -1,43 +1,9 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { baleApi, useCorpusStats, useAnalysisList, StoredAnalysis, CorpusStats } from '../api/client'
-
-function getRiskColor(risk: number): string {
-    if (risk < 30) return 'risk-low'
-    if (risk < 60) return 'risk-medium'
-    return 'risk-high'
-}
-
-function getRiskBg(risk: number): string {
-    if (risk < 30) return 'risk-bg-low'
-    if (risk < 60) return 'risk-bg-medium'
-    return 'risk-bg-high'
-}
-
-function getStatusBadge(risk: number) {
-    if (risk < 30) return 'badge-success'
-    if (risk < 60) return 'badge-warning'
-    return 'badge-danger'
-}
-
-function getStatus(risk: number): string {
-    if (risk < 30) return 'complete'
-    if (risk < 60) return 'review'
-    return 'critical'
-}
-
-function timeAgo(dateString: string): string {
-    const date = new Date(dateString)
-    const now = new Date()
-    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
-
-    if (seconds < 60) return 'Just now'
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`
-    return `${Math.floor(seconds / 86400)}d ago`
-}
+import { Link, useNavigate } from 'react-router-dom'
+import { useCorpusStats, useAnalysisList } from '../api/client'
 
 function Dashboard() {
+    const navigate = useNavigate()
     const { stats, loading: statsLoading, refresh: refreshStats } = useCorpusStats()
     const { analyses, loading: analysesLoading, load: loadAnalyses } = useAnalysisList()
     const [isLoading, setIsLoading] = useState(true)
@@ -45,12 +11,9 @@ function Dashboard() {
     useEffect(() => {
         const loadData = async () => {
             try {
-                await Promise.all([
-                    refreshStats(),
-                    loadAnalyses({ limit: 5 })
-                ])
+                await Promise.all([refreshStats(), loadAnalyses({ limit: 5 })])
             } catch (e) {
-                console.error('Failed to load dashboard data:', e)
+                console.error('Failed to load:', e)
             } finally {
                 setIsLoading(false)
             }
@@ -58,251 +21,321 @@ function Dashboard() {
         loadData()
     }, [])
 
-    const displayStats = stats || {
-        total_analyses: 0,
-        avg_risk_score: 0,
-        risk_distribution: { low: 0, medium: 0, high: 0 },
-        total_entities: 0,
-        jurisdiction_distribution: {},
-        type_distribution: {},
-    }
-
-    const criticalCount = displayStats.risk_distribution.high || 0
-    const pendingReview = displayStats.risk_distribution.medium || 0
+    const hasData = stats && stats.total_analyses > 0
 
     return (
-        <div className="fade-in">
-            {/* Header */}
-            <div className="page-header flex items-center justify-between">
-                <div>
-                    <h1 className="page-title">Dashboard</h1>
-                    <p className="page-description">Overview of your legal intelligence</p>
+        <div className="fade-in max-w-5xl mx-auto">
+            {/* Hero Section - Clean Entry Point */}
+            <div className="text-center py-12">
+                <h1 className="text-4xl font-bold text-[var(--bale-text)] mb-3">
+                    Welcome to BALE
+                </h1>
+                <p className="text-lg text-[var(--bale-text-muted)] mb-8 max-w-xl mx-auto">
+                    Your AI-powered legal intelligence assistant. Analyze contracts,
+                    get insights, and make informed decisions.
+                </p>
+
+                {/* Primary CTA */}
+                <div className="flex items-center justify-center gap-4">
+                    <button
+                        onClick={() => navigate('/chat')}
+                        className="px-8 py-4 bg-[var(--bale-accent)] text-white rounded-2xl font-medium text-lg hover:opacity-90 transition-all flex items-center gap-3 shadow-lg shadow-[var(--bale-accent)]/20"
+                    >
+                        <span className="text-2xl">💬</span>
+                        Ask BALE Anything
+                    </button>
+                    <button
+                        onClick={() => navigate('/analyze')}
+                        className="px-6 py-4 bg-[var(--bale-surface-elevated)] text-[var(--bale-text-secondary)] rounded-2xl font-medium hover:bg-[var(--bale-border)] transition-all border border-[var(--bale-border)]"
+                    >
+                        Upload Contract
+                    </button>
                 </div>
-                <Link to="/analyze" className="btn btn-primary btn-lg">
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                    </svg>
-                    New Analysis
-                </Link>
             </div>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <StatCard
-                    label="Contracts Analyzed"
-                    value={displayStats.total_analyses}
-                    change="Total in corpus"
-                    icon="📄"
-                    loading={isLoading}
+            {/* Quick Actions - Natural Next Steps */}
+            <div className="grid grid-cols-3 gap-4 mb-12">
+                <QuickAction
+                    icon="📝"
+                    label="Generate Contract"
+                    description="Create from scratch"
+                    onClick={() => navigate('/generate')}
                 />
-                <StatCard
-                    label="Avg Risk Score"
-                    value={`${displayStats.avg_risk_score.toFixed(0)}%`}
-                    change={displayStats.avg_risk_score < 40 ? "Good standing" : "Needs attention"}
+                <QuickAction
                     icon="📊"
-                    positive={displayStats.avg_risk_score < 40}
-                    loading={isLoading}
+                    label="View Reports"
+                    description="Analysis summaries"
+                    onClick={() => navigate('/reports')}
                 />
-                <StatCard
-                    label="Critical Findings"
-                    value={criticalCount}
-                    change="High-risk contracts"
-                    icon="⚠️"
-                    loading={isLoading}
-                />
-                <StatCard
-                    label="Pending Review"
-                    value={pendingReview}
-                    change="Medium-risk contracts"
-                    icon="⏰"
-                    loading={isLoading}
+                <QuickAction
+                    icon="📁"
+                    label="Browse Contracts"
+                    description="Your library"
+                    onClick={() => navigate('/contracts')}
                 />
             </div>
 
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                {/* Recent Analyses */}
-                <div className="lg:col-span-2">
-                    <div className="card">
-                        <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-title">Recent Analyses</h2>
-                            <Link to="/contracts" className="btn btn-ghost text-small">
-                                View All →
-                            </Link>
-                        </div>
-
-                        {analysesLoading ? (
-                            <div className="space-y-3">
-                                {[...Array(3)].map((_, i) => (
-                                    <div key={i} className="skeleton h-20"></div>
-                                ))}
-                            </div>
-                        ) : analyses.length === 0 ? (
-                            <div className="text-center py-12 text-[var(--bale-text-muted)]">
-                                <div className="text-4xl mb-4">📄</div>
-                                <p>No analyses yet</p>
-                                <Link to="/analyze" className="btn btn-primary mt-4">
-                                    Analyze Your First Contract
-                                </Link>
-                            </div>
-                        ) : (
-                            <div className="space-y-3">
-                                {analyses.map((analysis) => (
-                                    <Link
-                                        key={analysis.analysis_id}
-                                        to={`/frontier/${analysis.analysis_id}`}
-                                        className="flex items-center justify-between p-4 bg-[var(--bale-surface-elevated)] rounded-lg hover:bg-[var(--bale-border)] transition-colors"
-                                    >
-                                        <div className="flex items-center gap-4">
-                                            <div className={`w-12 h-12 rounded-lg ${getRiskBg(analysis.risk_score)} flex items-center justify-center`}>
-                                                <span className={`text-lg font-bold ${getRiskColor(analysis.risk_score)}`}>
-                                                    {analysis.risk_score}
-                                                </span>
-                                            </div>
-                                            <div>
-                                                <div className="font-medium">{analysis.contract_name}</div>
-                                                <div className="text-small text-[var(--bale-text-muted)]">
-                                                    {analysis.contract_type.toUpperCase()} • {timeAgo(analysis.analyzed_at)}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <span className={`badge ${getStatusBadge(analysis.risk_score)}`}>
-                                            {getStatus(analysis.risk_score)}
-                                        </span>
-                                    </Link>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </div>
-
-                {/* Quick Stats */}
-                <div className="lg:col-span-1">
-                    <div className="card">
-                        <h2 className="text-title mb-6">Corpus Overview</h2>
-
-                        <div className="space-y-4">
-                            <div className="p-4 bg-[var(--bale-surface-elevated)] rounded-lg">
-                                <div className="text-2xl font-bold">{displayStats.total_entities}</div>
-                                <div className="text-small text-[var(--bale-text-muted)]">
-                                    Tracked Entities
-                                </div>
-                            </div>
-
-                            {Object.keys(displayStats.jurisdiction_distribution).length > 0 && (
-                                <div className="p-4 bg-[var(--bale-surface-elevated)] rounded-lg">
-                                    <div className="text-small font-medium mb-2">By Jurisdiction</div>
-                                    {Object.entries(displayStats.jurisdiction_distribution).slice(0, 3).map(([jur, count]) => (
-                                        <div key={jur} className="flex justify-between text-small text-[var(--bale-text-muted)]">
-                                            <span>{jur}</span>
-                                            <span>{count}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-
-                            {Object.keys(displayStats.type_distribution).length > 0 && (
-                                <div className="p-4 bg-[var(--bale-surface-elevated)] rounded-lg">
-                                    <div className="text-small font-medium mb-2">By Type</div>
-                                    {Object.entries(displayStats.type_distribution).slice(0, 3).map(([type, count]) => (
-                                        <div key={type} className="flex justify-between text-small text-[var(--bale-text-muted)]">
-                                            <span>{type.toUpperCase()}</span>
-                                            <span>{count}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                        </div>
-
-                        <Link
-                            to="/frontier"
-                            className="btn btn-secondary w-full mt-6"
-                        >
-                            View All Frontiers
-                        </Link>
-                    </div>
-                </div>
-            </div>
-
-            {/* Risk Distribution */}
-            <div className="mt-8">
-                <div className="card">
-                    <h2 className="text-title mb-6">Risk Distribution</h2>
-                    <RiskDistributionChart distribution={displayStats.risk_distribution} />
-                </div>
-            </div>
+            {/* Content Based on State */}
+            {isLoading ? (
+                <LoadingState />
+            ) : hasData ? (
+                <DataView stats={stats!} analyses={analyses} />
+            ) : (
+                <EmptyState onUpload={() => navigate('/analyze')} />
+            )}
         </div>
     )
 }
 
-// Stat Card Component
-function StatCard({
-    label,
-    value,
-    change,
-    icon,
-    positive = false,
-    loading = false
-}: {
-    label: string
-    value: string | number
-    change: string
+// Quick Action Card
+function QuickAction({ icon, label, description, onClick }: {
     icon: string
-    positive?: boolean
-    loading?: boolean
+    label: string
+    description: string
+    onClick: () => void
 }) {
-    if (loading) {
-        return (
-            <div className="card">
-                <div className="skeleton h-4 w-20 mb-3"></div>
-                <div className="skeleton h-8 w-16 mb-2"></div>
-                <div className="skeleton h-3 w-24"></div>
-            </div>
-        )
-    }
-
     return (
-        <div className="card hover:border-[var(--bale-border-strong)] transition-colors">
-            <div className="flex items-center justify-between mb-2">
-                <span className="text-small text-[var(--bale-text-muted)]">{label}</span>
-                <span className="text-xl">{icon}</span>
+        <button
+            onClick={onClick}
+            className="p-5 bg-[var(--bale-surface)] border border-[var(--bale-border)] rounded-2xl text-left hover:border-[var(--bale-accent)] hover:bg-[var(--bale-surface-elevated)] transition-all group"
+        >
+            <span className="text-2xl">{icon}</span>
+            <div className="mt-3 font-medium text-[var(--bale-text)] group-hover:text-[var(--bale-accent)]">
+                {label}
             </div>
-            <div className="text-display mb-1">{value}</div>
-            <div className={`text-small ${positive ? 'text-[var(--risk-low)]' : 'text-[var(--bale-text-muted)]'}`}>
-                {change}
+            <div className="text-sm text-[var(--bale-text-muted)]">{description}</div>
+        </button>
+    )
+}
+
+// Empty State - Guides new users
+function EmptyState({ onUpload }: { onUpload: () => void }) {
+    return (
+        <div className="bg-[var(--bale-surface)] border border-[var(--bale-border)] rounded-3xl p-12 text-center">
+            <div className="w-16 h-16 bg-[var(--bale-surface-elevated)] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <span className="text-3xl">📄</span>
+            </div>
+            <h3 className="text-xl font-semibold text-[var(--bale-text)] mb-2">
+                No contracts yet
+            </h3>
+            <p className="text-[var(--bale-text-muted)] mb-6 max-w-sm mx-auto">
+                Upload your first contract to start discovering insights and managing risk.
+            </p>
+            <button
+                onClick={onUpload}
+                className="px-6 py-3 bg-[var(--bale-accent)] text-white rounded-xl font-medium hover:opacity-90 transition-all"
+            >
+                Upload Your First Contract
+            </button>
+        </div>
+    )
+}
+
+// Loading State
+function LoadingState() {
+    return (
+        <div className="grid grid-cols-2 gap-6">
+            <div className="bg-[var(--bale-surface)] border border-[var(--bale-border)] rounded-2xl p-6 h-64 animate-pulse" />
+            <div className="bg-[var(--bale-surface)] border border-[var(--bale-border)] rounded-2xl p-6 h-64 animate-pulse" />
+        </div>
+    )
+}
+
+// Data View - Shows when user has contracts
+function DataView({ stats, analyses }: { stats: any; analyses: any[] }) {
+    return (
+        <div className="grid grid-cols-2 gap-6">
+            {/* Risk Overview Chart */}
+            <div className="bg-[var(--bale-surface)] border border-[var(--bale-border)] rounded-2xl p-6">
+                <h3 className="text-lg font-semibold text-[var(--bale-text)] mb-6">
+                    Risk Overview
+                </h3>
+                <RiskDonutChart distribution={stats.risk_distribution || {}} />
+                <div className="grid grid-cols-3 gap-4 mt-6">
+                    <RiskLegend color="var(--risk-low)" label="Low" count={stats.risk_distribution?.low || 0} />
+                    <RiskLegend color="var(--risk-medium)" label="Medium" count={stats.risk_distribution?.medium || 0} />
+                    <RiskLegend color="var(--risk-high)" label="High" count={stats.risk_distribution?.high || 0} />
+                </div>
+            </div>
+
+            {/* Portfolio Stats */}
+            <div className="bg-[var(--bale-surface)] border border-[var(--bale-border)] rounded-2xl p-6">
+                <h3 className="text-lg font-semibold text-[var(--bale-text)] mb-6">
+                    Portfolio Summary
+                </h3>
+                <div className="space-y-4">
+                    <StatRow label="Total Contracts" value={stats.total_analyses} />
+                    <StatRow label="Entities Tracked" value={stats.total_entities} />
+                    <StatRow
+                        label="Average Risk"
+                        value={`${stats.avg_risk_score?.toFixed(0) || 0}%`}
+                        color={stats.avg_risk_score < 40 ? 'var(--risk-low)' : stats.avg_risk_score < 60 ? 'var(--risk-medium)' : 'var(--risk-high)'}
+                    />
+                </div>
+
+                {/* Mini Bar Chart */}
+                <div className="mt-6">
+                    <div className="text-sm text-[var(--bale-text-muted)] mb-2">By Type</div>
+                    <div className="space-y-2">
+                        {Object.entries(stats.type_distribution || {}).slice(0, 4).map(([type, count]: [string, any]) => (
+                            <div key={type} className="flex items-center gap-3">
+                                <div className="w-16 text-xs text-[var(--bale-text-muted)] uppercase">{type}</div>
+                                <div className="flex-1 bg-[var(--bale-surface-elevated)] rounded-full h-2">
+                                    <div
+                                        className="bg-[var(--bale-accent)] h-2 rounded-full transition-all"
+                                        style={{ width: `${Math.min((count / stats.total_analyses) * 100, 100)}%` }}
+                                    />
+                                </div>
+                                <div className="w-8 text-sm text-[var(--bale-text-secondary)] text-right">{count}</div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Recent Activity */}
+            <div className="col-span-2 bg-[var(--bale-surface)] border border-[var(--bale-border)] rounded-2xl p-6">
+                <div className="flex items-center justify-between mb-6">
+                    <h3 className="text-lg font-semibold text-[var(--bale-text)]">
+                        Recent Activity
+                    </h3>
+                    <Link to="/contracts" className="text-sm text-[var(--bale-accent)] hover:underline">
+                        View all →
+                    </Link>
+                </div>
+
+                {analyses.length === 0 ? (
+                    <p className="text-[var(--bale-text-muted)] text-center py-8">No recent activity</p>
+                ) : (
+                    <div className="space-y-3">
+                        {analyses.map((a: any) => (
+                            <Link
+                                key={a.analysis_id}
+                                to={`/frontier/${a.analysis_id}`}
+                                className="flex items-center gap-4 p-4 rounded-xl hover:bg-[var(--bale-surface-elevated)] transition-all"
+                            >
+                                <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${a.risk_score < 30 ? 'bg-green-500/10' : a.risk_score < 60 ? 'bg-yellow-500/10' : 'bg-red-500/10'
+                                    }`}>
+                                    <span className={`text-sm font-bold ${a.risk_score < 30 ? 'text-green-400' : a.risk_score < 60 ? 'text-yellow-400' : 'text-red-400'
+                                        }`}>
+                                        {a.risk_score}
+                                    </span>
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <div className="font-medium text-[var(--bale-text)] truncate">{a.contract_name}</div>
+                                    <div className="text-sm text-[var(--bale-text-muted)]">{a.contract_type?.toUpperCase()}</div>
+                                </div>
+                                <div className="text-sm text-[var(--bale-text-muted)]">
+                                    {new Date(a.analyzed_at).toLocaleDateString()}
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     )
 }
 
-// Risk Distribution Chart
-function RiskDistributionChart({ distribution }: { distribution: Record<string, number> }) {
-    const data = [
-        { range: 'Low (0-30%)', count: distribution.low || 0, color: 'var(--risk-low)' },
-        { range: 'Medium (30-60%)', count: distribution.medium || 0, color: 'var(--risk-medium)' },
-        { range: 'High (60%+)', count: distribution.high || 0, color: 'var(--risk-high)' },
-    ]
+// Donut Chart Component
+function RiskDonutChart({ distribution }: { distribution: Record<string, number> }) {
+    const low = distribution.low || 0
+    const medium = distribution.medium || 0
+    const high = distribution.high || 0
+    const total = low + medium + high || 1
 
-    const max = Math.max(...data.map(d => d.count), 1)
+    const lowPct = (low / total) * 100
+    const mediumPct = (medium / total) * 100
+    const highPct = (high / total) * 100
+
+    // SVG donut chart
+    const size = 160
+    const strokeWidth = 24
+    const radius = (size - strokeWidth) / 2
+    const circumference = 2 * Math.PI * radius
+
+    const lowDash = (lowPct / 100) * circumference
+    const mediumDash = (mediumPct / 100) * circumference
+    const highDash = (highPct / 100) * circumference
+
+    let offset = 0
 
     return (
-        <div className="flex items-end justify-around gap-8 h-48">
-            {data.map((d, idx) => (
-                <div key={idx} className="flex-1 flex flex-col items-center max-w-32">
-                    <div
-                        className="w-full rounded-t-md transition-all hover:opacity-80"
-                        style={{
-                            height: `${Math.max((d.count / max) * 100, 5)}%`,
-                            backgroundColor: d.color,
-                            minHeight: '20px'
-                        }}
-                    ></div>
-                    <div className="mt-2 text-center">
-                        <div className="font-bold text-xl">{d.count}</div>
-                        <div className="text-caption text-[var(--bale-text-muted)]">{d.range}</div>
+        <div className="flex justify-center">
+            <div className="relative">
+                <svg width={size} height={size} className="transform -rotate-90">
+                    {/* Low */}
+                    <circle
+                        cx={size / 2}
+                        cy={size / 2}
+                        r={radius}
+                        fill="none"
+                        stroke="var(--risk-low)"
+                        strokeWidth={strokeWidth}
+                        strokeDasharray={`${lowDash} ${circumference}`}
+                        strokeDashoffset={-offset}
+                        className="transition-all duration-500"
+                    />
+                    {/* Medium */}
+                    <circle
+                        cx={size / 2}
+                        cy={size / 2}
+                        r={radius}
+                        fill="none"
+                        stroke="var(--risk-medium)"
+                        strokeWidth={strokeWidth}
+                        strokeDasharray={`${mediumDash} ${circumference}`}
+                        strokeDashoffset={-(offset + lowDash)}
+                        className="transition-all duration-500"
+                    />
+                    {/* High */}
+                    <circle
+                        cx={size / 2}
+                        cy={size / 2}
+                        r={radius}
+                        fill="none"
+                        stroke="var(--risk-high)"
+                        strokeWidth={strokeWidth}
+                        strokeDasharray={`${highDash} ${circumference}`}
+                        strokeDashoffset={-(offset + lowDash + mediumDash)}
+                        className="transition-all duration-500"
+                    />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                        <div className="text-3xl font-bold text-[var(--bale-text)]">{total}</div>
+                        <div className="text-sm text-[var(--bale-text-muted)]">Contracts</div>
                     </div>
                 </div>
-            ))}
+            </div>
+        </div>
+    )
+}
+
+// Risk Legend
+function RiskLegend({ color, label, count }: { color: string; label: string; count: number }) {
+    return (
+        <div className="text-center">
+            <div className="flex items-center justify-center gap-2 mb-1">
+                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: color }} />
+                <span className="text-sm text-[var(--bale-text-muted)]">{label}</span>
+            </div>
+            <div className="text-xl font-bold text-[var(--bale-text)]">{count}</div>
+        </div>
+    )
+}
+
+// Stat Row
+function StatRow({ label, value, color }: { label: string; value: string | number; color?: string }) {
+    return (
+        <div className="flex items-center justify-between py-2 border-b border-[var(--bale-border)] last:border-0">
+            <span className="text-[var(--bale-text-muted)]">{label}</span>
+            <span
+                className="font-semibold text-lg"
+                style={{ color: color || 'var(--bale-text)' }}
+            >
+                {value}
+            </span>
         </div>
     )
 }
