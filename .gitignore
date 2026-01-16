@@ -38,3 +38,5 @@ training/output/
 *.log
 data/
 
+frontend/node_modules/
+nginx/logs/

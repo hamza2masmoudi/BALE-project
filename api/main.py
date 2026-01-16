@@ -47,6 +47,23 @@ async def lifespan(app: FastAPI):
     logger.info(f"Local LLM: {'✅' if app.state.local_available else '❌'}")
     logger.info(f"Mistral API: {'✅' if app.state.mistral_available else '❌'}")
     
+    # Initialize cache
+    try:
+        from api.cache import init_cache
+        if init_cache():
+            logger.info("Redis cache: ✅")
+        else:
+            logger.info("Redis cache: ❌ (running without cache)")
+    except Exception as e:
+        logger.warning(f"Cache init failed: {e}")
+    
+    # Register extended routes
+    try:
+        from api.routes import register_routes
+        register_routes(app)
+    except Exception as e:
+        logger.warning(f"Extended routes not loaded: {e}")
+    
     yield
     
     logger.info("👋 BALE API Shutting down...")
