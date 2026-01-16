@@ -1,0 +1,41 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools-scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bale-sdk"
+version = "1.0.0"
+description = "Python SDK for BALE - Binary Adjudication & Litigation Engine"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "BALE Team", email = "team@bale.dev"}
+]
+requires-python = ">=3.9"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+    "httpx>=0.24.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-asyncio>=0.21",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourorg/bale-project"
+Documentation = "https://docs.bale.dev"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["bale_sdk*"]
