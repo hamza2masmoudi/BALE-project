@@ -64,6 +64,14 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"Extended routes not loaded: {e}")
     
+    # Register frontier routes
+    try:
+        from api.frontier_routes import router as frontier_router
+        app.include_router(frontier_router, prefix="/api")
+        logger.info("Frontier routes: ✅")
+    except Exception as e:
+        logger.warning(f"Frontier routes not loaded: {e}")
+    
     yield
     
     logger.info("👋 BALE API Shutting down...")

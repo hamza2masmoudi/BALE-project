@@ -1,225 +1,355 @@
 /**
- * BALE API Client
- * TypeScript client for interacting with the BALE backend.
+ * BALE Frontend API Client
+ * Connects to the real backend API for frontier analysis, negotiation, and export.
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || '/api';
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api'
 
 // ==================== TYPES ====================
 
-export interface AnalysisRequest {
-    clause_text: string;
-    jurisdiction?: string;
-    depth?: 'quick' | 'standard' | 'deep';
-    include_harmonization?: boolean;
-    inference_mode?: 'auto' | 'local' | 'mistral';
+export interface FrontierAnalyzeRequest {
+    contract_text: string
+    contract_type: string
+    jurisdiction: string
+    industry: string
+    effective_date?: string
+    party_a: string
+    party_b: string
+    parties?: string[]
+    contract_name: string
+    include_negotiation: boolean
+    your_position: string
+    save_to_corpus: boolean
 }
 
-export interface AnalysisResult {
-    id: string;
-    verdict: {
-        risk_score: number;
-        verdict: string;
-        confidence: number;
-        factors_applied: DecisionFactor[];
-        interpretive_gap: number;
-        civilist_summary: string;
-        commonist_summary: string;
-        synthesis: string;
-    };
-    harmonization?: {
-        golden_clause: string;
-        rationale: string;
-        risk_reduction: number;
-    };
-    processing_time_ms: number;
-    inference_mode_used: string;
+export interface FrontierAnalyzeResponse {
+    analysis_id: string
+    contract_id: string
+    analyzed_at: string
+    overall_frontier_risk: number
+    risk_level: string
+    critical_findings: string[]
+    recommended_actions: string[]
+    frontiers: FrontierResults
+    negotiation_playbook?: NegotiationPlaybook
 }
 
-export interface DecisionFactor {
-    rule_name: string;
-    rule_description: string;
-    triggered: boolean;
-    impact_on_risk: number;
-    evidence: string;
+export interface FrontierResults {
+    silence?: {
+        silence_score: number
+        total_expected: number
+        total_present: number
+        missing_clauses: string[]
+    }
+    archaeology?: {
+        negotiation_intensity_score: number
+        estimated_draft_layers: number
+        template_vs_custom_ratio: number
+        placeholder_scars: any[]
+    }
+    temporal?: {
+        time_elapsed_days: number
+        meaning_stability_index: number
+        risk_delta: number
+        applicable_doctrine_shifts: any[]
+        review_urgency: string
+    }
+    strain?: {
+        total_strain_score: number
+        strain_points: any[]
+        unstable_clauses: any[]
+        litigation_landmines: string[]
+    }
+    social?: {
+        relationship_type: string
+        power_asymmetry_score: number
+        dominant_party: string
+        monitoring_intensity: number
+        relationship_narrative: string
+        structural_concerns: string[]
+    }
+    ambiguity?: {
+        total_ambiguity_score: number
+        interpretation_risk_score: number
+        ambiguous_terms: any[]
+        likely_intentional: string[]
+    }
+    dispute?: {
+        total_dispute_probability: number
+        high_risk_clause_count: number
+        clause_predictions: DisputePrediction[]
+        dispute_attractors: string[]
+    }
+    imagination?: {
+        total_gap_exposure: number
+        imagination_gaps: any[]
+        novel_concepts: any[]
+        needs_pioneering_attention: boolean
+    }
+    reflexive?: {
+        contract_homogeneity_index: number
+        term_convergence_rate: number
+        alerts: string[]
+    }
 }
 
-export interface Contract {
-    id: string;
-    name: string;
-    jurisdiction: string;
-    status: 'active' | 'archived';
-    risk_score?: number;
-    clause_count?: number;
-    created_at: string;
-    updated_at: string;
+export interface DisputePrediction {
+    clause_type: string
+    dispute_probability: number
+    expected_timeframe: string
 }
 
-export interface DashboardData {
-    summary: {
-        total_analyses: number;
-        avg_risk_score: number;
-        high_risk_count: number;
-        low_risk_count: number;
-        by_jurisdiction: Record<string, number>;
-    };
-    risk_trend: Array<{ date: string; risk: number }>;
-    jurisdiction_breakdown: Record<string, { count: number; avg_risk: number }>;
-    recent_high_risk: Array<{ id: string; risk_score: number; jurisdiction: string }>;
+export interface NegotiationPlaybook {
+    contract_id: string
+    your_position: string
+    counterparty_power: number
+    recommended_stance: string
+    must_have: NegotiationSuggestion[]
+    should_have: NegotiationSuggestion[]
+    nice_to_have: NegotiationSuggestion[]
+    walk_away_triggers: string[]
+    concession_order: string[]
+    total_risk_reduction: number
+    estimated_difficulty: string
 }
 
-export interface JobStatus {
-    id: string;
-    task_name: string;
-    status: 'pending' | 'running' | 'completed' | 'failed' | 'cancelled';
-    progress: number;
-    created_at: string;
-    completed_at?: string;
-    result?: unknown;
-    error?: string;
+export interface NegotiationSuggestion {
+    clause_type: string
+    current_text: string
+    suggested_text: string
+    mitigation_type: string
+    rationale: string
+    market_comparison: string
+    risk_reduction: number
+    negotiation_difficulty: string
+    priority: string
+}
+
+export interface CorpusStats {
+    total_analyses: number
+    total_entities: number
+    avg_risk_score: number
+    risk_distribution: Record<string, number>
+    jurisdiction_distribution: Record<string, number>
+    type_distribution: Record<string, number>
+}
+
+export interface StoredAnalysis {
+    analysis_id: string
+    contract_id: string
+    contract_name: string
+    contract_type: string
+    jurisdiction: string
+    industry: string
+    risk_score: number
+    frontier_risk: number
+    analyzed_at: string
+    parties: string[]
+}
+
+export interface EntityProfile {
+    entity_id: string
+    entity_name: string
+    total_contracts: number
+    avg_risk_score: number
+    risk_trend: string
+    last_updated: string
 }
 
 // ==================== API CLIENT ====================
 
-class BaleAPIClient {
-    private baseUrl: string;
-    private token: string | null = null;
+class BaleApiClient {
+    private baseUrl: string
 
     constructor(baseUrl: string = API_BASE) {
-        this.baseUrl = baseUrl;
-    }
-
-    setToken(token: string) {
-        this.token = token;
+        this.baseUrl = baseUrl
     }
 
     private async request<T>(
         endpoint: string,
         options: RequestInit = {}
     ): Promise<T> {
-        const headers: Record<string, string> = {
-            'Content-Type': 'application/json',
-            ...(options.headers as Record<string, string> || {})
-        };
+        const url = `${this.baseUrl}${endpoint}`
 
-        if (this.token) {
-            headers['Authorization'] = `Bearer ${this.token}`;
-        }
-
-        const response = await fetch(`${this.baseUrl}${endpoint}`, {
+        const response = await fetch(url, {
+            headers: {
+                'Content-Type': 'application/json',
+                ...options.headers,
+            },
             ...options,
-            headers
-        });
+        })
 
         if (!response.ok) {
-            const error = await response.json().catch(() => ({}));
-            throw new Error(error.error || `HTTP ${response.status}`);
+            const error = await response.json().catch(() => ({ detail: 'Unknown error' }))
+            throw new Error(error.detail || `API error: ${response.status}`)
         }
 
-        return response.json();
+        return response.json()
     }
 
-    // Health
-    async health() {
-        return this.request<{ status: string; version: string }>('/health');
-    }
+    // ==================== FRONTIER ANALYSIS ====================
 
-    // Analysis
-    async analyze(request: AnalysisRequest): Promise<AnalysisResult> {
-        return this.request<AnalysisResult>('/v1/analyze', {
+    async analyzeFrontier(request: FrontierAnalyzeRequest): Promise<FrontierAnalyzeResponse> {
+        return this.request<FrontierAnalyzeResponse>('/frontier/analyze', {
             method: 'POST',
-            body: JSON.stringify(request)
-        });
+            body: JSON.stringify(request),
+        })
     }
 
-    async simulate(clause_text: string, jurisdiction?: string) {
-        return this.request('/v1/simulate', {
+    async getAnalysis(analysisId: string): Promise<StoredAnalysis> {
+        return this.request<StoredAnalysis>(`/frontier/analysis/${analysisId}`)
+    }
+
+    async listAnalyses(params?: {
+        limit?: number
+        contract_type?: string
+        jurisdiction?: string
+        min_risk?: number
+    }): Promise<StoredAnalysis[]> {
+        const searchParams = new URLSearchParams()
+        if (params?.limit) searchParams.set('limit', params.limit.toString())
+        if (params?.contract_type) searchParams.set('contract_type', params.contract_type)
+        if (params?.jurisdiction) searchParams.set('jurisdiction', params.jurisdiction)
+        if (params?.min_risk) searchParams.set('min_risk', params.min_risk.toString())
+
+        const query = searchParams.toString()
+        return this.request<StoredAnalysis[]>(`/frontier/analyses${query ? `?${query}` : ''}`)
+    }
+
+    // ==================== NEGOTIATION ====================
+
+    async generateNegotiationPlaybook(
+        contractText: string,
+        jurisdiction: string = 'US',
+        industry: string = 'technology',
+        yourPosition: string = 'buyer'
+    ): Promise<NegotiationPlaybook> {
+        return this.request<NegotiationPlaybook>('/frontier/negotiate', {
             method: 'POST',
-            body: JSON.stringify({ clause_text, jurisdiction })
-        });
+            body: JSON.stringify({
+                contract_text: contractText,
+                jurisdiction,
+                industry,
+                your_position: yourPosition,
+            }),
+        })
     }
 
-    // Contracts
-    async listContracts(params?: { page?: number; limit?: number; status?: string }) {
-        const query = new URLSearchParams(params as Record<string, string>).toString();
-        return this.request<{ items: Contract[]; total: number }>(`/v1/contracts?${query}`);
-    }
+    // ==================== EXPORT ====================
 
-    async getContract(id: string): Promise<Contract> {
-        return this.request<Contract>(`/v1/contracts/${id}`);
-    }
-
-    async createContract(data: { name: string; content: string; jurisdiction: string }) {
-        return this.request<Contract>('/v1/contracts', {
+    async exportAnalysis(
+        analysisId: string,
+        format: 'markdown' | 'html' | 'json' = 'markdown',
+        options?: {
+            include_executive_summary?: boolean
+            include_risk_analysis?: boolean
+            include_frontier_insights?: boolean
+            include_negotiation_playbook?: boolean
+        }
+    ): Promise<{ format: string; content: string; analysis_id: string }> {
+        return this.request('/frontier/export', {
             method: 'POST',
-            body: JSON.stringify(data)
-        });
+            body: JSON.stringify({
+                analysis_id: analysisId,
+                format,
+                ...options,
+            }),
+        })
     }
 
-    async updateContract(id: string, data: Partial<Contract>) {
-        return this.request<Contract>(`/v1/contracts/${id}`, {
-            method: 'PATCH',
-            body: JSON.stringify(data)
-        });
+    // ==================== CORPUS ====================
+
+    async getCorpusStats(): Promise<CorpusStats> {
+        return this.request<CorpusStats>('/frontier/stats')
     }
 
-    async deleteContract(id: string) {
-        return this.request(`/v1/contracts/${id}`, { method: 'DELETE' });
+    async listEntities(limit: number = 50): Promise<EntityProfile[]> {
+        return this.request<EntityProfile[]>(`/frontier/entities?limit=${limit}`)
     }
 
-    // Analytics
-    async getDashboard(): Promise<DashboardData> {
-        return this.request<DashboardData>('/v1/analytics/dashboard');
+    async getEntity(entityId: string): Promise<EntityProfile> {
+        return this.request<EntityProfile>(`/frontier/entity/${entityId}`)
     }
 
-    async getAnalyticsSummary(timeRange: string = '7d') {
-        return this.request(`/v1/analytics/summary?time_range=${timeRange}`);
+    // ==================== BENCHMARKS ====================
+
+    async getMarketBenchmarks(): Promise<Record<string, any>> {
+        return this.request<Record<string, any>>('/frontier/benchmarks')
     }
 
-    async getRiskTrend(days: number = 30) {
-        return this.request<Array<{ date: string; risk: number }>>(
-            `/v1/analytics/risk-trend?days=${days}`
-        );
-    }
+    // ==================== HEALTH ====================
 
-    // Jobs
-    async startBulkAnalysis(contractId: string, clauses: string[], jurisdiction?: string) {
-        return this.request<JobStatus>('/v1/jobs/bulk-analysis', {
-            method: 'POST',
-            body: JSON.stringify({ contract_id: contractId, clauses, jurisdiction })
-        });
-    }
-
-    async getJobStatus(jobId: string): Promise<JobStatus> {
-        return this.request<JobStatus>(`/v1/jobs/${jobId}`);
-    }
-
-    async cancelJob(jobId: string) {
-        return this.request(`/v1/jobs/${jobId}`, { method: 'DELETE' });
-    }
-
-    // Reports
-    async generateReport(format: 'html' | 'json' | 'markdown', timeRange: string = '7d') {
-        return this.request('/v1/reports/generate', {
-            method: 'POST',
-            body: JSON.stringify({ format, time_range: timeRange })
-        });
-    }
-
-    // WebSocket
-    createWebSocket(userId: string): WebSocket {
-        const wsUrl = this.baseUrl.replace('http', 'ws') + `/ws/${userId}`;
-        return new WebSocket(wsUrl);
-    }
-
-    // SSE
-    createAnalysisStream(analysisId: string): EventSource {
-        return new EventSource(`${this.baseUrl}/v1/analyze/${analysisId}/stream`);
+    async health(): Promise<{ status: string }> {
+        return this.request<{ status: string }>('/health')
     }
 }
 
-// Export singleton instance
-export const api = new BaleAPIClient();
+// Singleton instance
+export const baleApi = new BaleApiClient()
 
-// Export class for custom instances
-export { BaleAPIClient };
+// ==================== REACT HOOKS ====================
+
+import { useState, useCallback } from 'react'
+
+export function useFrontierAnalysis() {
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [result, setResult] = useState<FrontierAnalyzeResponse | null>(null)
+
+    const analyze = useCallback(async (request: FrontierAnalyzeRequest) => {
+        setLoading(true)
+        setError(null)
+
+        try {
+            const response = await baleApi.analyzeFrontier(request)
+            setResult(response)
+            return response
+        } catch (e) {
+            const message = e instanceof Error ? e.message : 'Analysis failed'
+            setError(message)
+            throw e
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    return { analyze, loading, error, result }
+}
+
+export function useCorpusStats() {
+    const [loading, setLoading] = useState(false)
+    const [stats, setStats] = useState<CorpusStats | null>(null)
+
+    const refresh = useCallback(async () => {
+        setLoading(true)
+        try {
+            const data = await baleApi.getCorpusStats()
+            setStats(data)
+        } catch (e) {
+            console.error('Failed to load corpus stats:', e)
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    return { stats, loading, refresh }
+}
+
+export function useAnalysisList() {
+    const [loading, setLoading] = useState(false)
+    const [analyses, setAnalyses] = useState<StoredAnalysis[]>([])
+
+    const load = useCallback(async (params?: Parameters<typeof baleApi.listAnalyses>[0]) => {
+        setLoading(true)
+        try {
+            const data = await baleApi.listAnalyses(params)
+            setAnalyses(data)
+        } catch (e) {
+            console.error('Failed to load analyses:', e)
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    return { analyses, loading, load }
+}

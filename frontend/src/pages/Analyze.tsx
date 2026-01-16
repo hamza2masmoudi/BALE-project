@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { baleApi, useFrontierAnalysis, FrontierAnalyzeRequest } from '../api/client'
 
 const contractTypes = [
     { value: 'msa', label: 'Master Services Agreement' },
@@ -34,7 +35,7 @@ const industries = [
 
 function Analyze() {
     const navigate = useNavigate()
-    const [isAnalyzing, setIsAnalyzing] = useState(false)
+    const { analyze, loading: isAnalyzing, error, result } = useFrontierAnalysis()
     const [activeTab, setActiveTab] = useState<'paste' | 'upload'>('paste')
 
     const [formData, setFormData] = useState({
@@ -45,18 +46,41 @@ function Analyze() {
         partyA: '',
         partyB: '',
         effectiveDate: '',
+        contractName: '',
         runFrontier: true,
+        yourPosition: 'buyer',
     })
+
+    // Navigate to results when analysis completes
+    useEffect(() => {
+        if (result) {
+            navigate(`/frontier/${result.analysis_id}`)
+        }
+    }, [result, navigate])
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
-        setIsAnalyzing(true)
 
-        // Simulate analysis
-        await new Promise(resolve => setTimeout(resolve, 2000))
+        const request: FrontierAnalyzeRequest = {
+            contract_text: formData.contractText,
+            contract_type: formData.contractType,
+            jurisdiction: formData.jurisdiction,
+            industry: formData.industry,
+            effective_date: formData.effectiveDate || undefined,
+            party_a: formData.partyA || 'Party A',
+            party_b: formData.partyB || 'Party B',
+            parties: [formData.partyA || 'Party A', formData.partyB || 'Party B'],
+            contract_name: formData.contractName || 'Untitled Contract',
+            include_negotiation: formData.runFrontier,
+            your_position: formData.yourPosition,
+            save_to_corpus: true,
+        }
 
-        // Navigate to results
-        navigate('/frontier/new-analysis')
+        try {
+            await analyze(request)
+        } catch (err) {
+            console.error('Analysis failed:', err)
+        }
     }
 
     return (
@@ -68,6 +92,14 @@ function Analyze() {
                     Run comprehensive analysis including all 10 frontier capabilities
                 </p>
             </div>
+
+            {/* Error Display */}
+            {error && (
+                <div className="mb-6 p-4 bg-[var(--risk-bg-high)] rounded-lg border border-[var(--risk-high)]">
+                    <div className="font-medium text-[var(--risk-high)]">Analysis Failed</div>
+                    <div className="text-small text-[var(--bale-text-secondary)]">{error}</div>
+                </div>
+            )}
 
             {/* Input Method Tabs */}
             <div className="flex gap-2 mb-6">
@@ -132,6 +164,17 @@ function Analyze() {
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
+                            <label className="label">Contract Name</label>
+                            <input
+                                type="text"
+                                className="input"
+                                placeholder="e.g., TechCorp MSA 2024"
+                                value={formData.contractName}
+                                onChange={(e) => setFormData({ ...formData, contractName: e.target.value })}
+                            />
+                        </div>
+
+                        <div>
                             <label className="label">Contract Type</label>
                             <select
                                 className="input select"
@@ -181,7 +224,21 @@ function Analyze() {
                         </div>
 
                         <div>
-                            <label className="label">Party A (Your Side)</label>
+                            <label className="label">Your Position</label>
+                            <select
+                                className="input select"
+                                value={formData.yourPosition}
+                                onChange={(e) => setFormData({ ...formData, yourPosition: e.target.value })}
+                            >
+                                <option value="buyer">Buyer / Customer</option>
+                                <option value="seller">Seller / Vendor</option>
+                                <option value="licensor">Licensor</option>
+                                <option value="licensee">Licensee</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label className="label">Your Company</label>
                             <input
                                 type="text"
                                 className="input"
@@ -192,7 +249,7 @@ function Analyze() {
                         </div>
 
                         <div>
-                            <label className="label">Party B (Counterparty)</label>
+                            <label className="label">Counterparty</label>
                             <input
                                 type="text"
                                 className="input"
@@ -216,9 +273,9 @@ function Analyze() {
                             className="w-5 h-5 rounded border-[var(--bale-border)] bg-[var(--bale-surface)] accent-[var(--bale-accent)]"
                         />
                         <div>
-                            <div className="font-medium">Include Frontier Analysis</div>
+                            <div className="font-medium">Include Frontier Analysis & Negotiation Playbook</div>
                             <div className="text-small text-[var(--bale-text-muted)]">
-                                Run all 10 second-order legal intelligence capabilities
+                                Run all 10 capabilities + generate AI negotiation suggestions
                             </div>
                         </div>
                     </label>
@@ -256,7 +313,7 @@ function Analyze() {
                     <button
                         type="submit"
                         className="btn btn-primary btn-lg"
-                        disabled={isAnalyzing || !formData.contractText}
+                        disabled={isAnalyzing || !formData.contractText || formData.contractText.length < 100}
                     >
                         {isAnalyzing ? (
                             <>

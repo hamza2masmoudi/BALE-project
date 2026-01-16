@@ -1,28 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-
-// Mock data for dashboard
-const mockStats = {
-    contractsAnalyzed: 247,
-    avgRiskScore: 32,
-    criticalFindings: 18,
-    pendingReview: 5,
-}
-
-const recentAnalyses = [
-    { id: '1', name: 'TechCorp MSA 2024', type: 'MSA', risk: 45, status: 'review', date: '2h ago' },
-    { id: '2', name: 'Vendor SLA - CloudHost', type: 'SLA', risk: 23, status: 'complete', date: '4h ago' },
-    { id: '3', name: 'NDA - Acme Industries', type: 'NDA', risk: 12, status: 'complete', date: '1d ago' },
-    { id: '4', name: 'License Agreement - DataCo', type: 'License', risk: 67, status: 'critical', date: '1d ago' },
-    { id: '5', name: 'Employment - Senior Counsel', type: 'Employment', risk: 28, status: 'complete', date: '2d ago' },
-]
-
-const frontierInsights = [
-    { frontier: 'III', name: 'Temporal Decay', finding: '12 contracts need review due to doctrine shifts', severity: 'warning' },
-    { frontier: 'V', name: 'Strain', finding: 'Non-compete clauses at high regulatory risk', severity: 'danger' },
-    { frontier: 'VI', name: 'Social', finding: '3 contracts show power imbalance', severity: 'warning' },
-    { frontier: 'IX', name: 'Imagination', finding: 'AI liability gaps detected in 7 contracts', severity: 'info' },
-]
+import { baleApi, useCorpusStats, useAnalysisList, StoredAnalysis, CorpusStats } from '../api/client'
 
 function getRiskColor(risk: number): string {
     if (risk < 30) return 'risk-low'
@@ -36,21 +14,61 @@ function getRiskBg(risk: number): string {
     return 'risk-bg-high'
 }
 
-function getStatusBadge(status: string) {
-    const styles: Record<string, string> = {
-        complete: 'badge-success',
-        review: 'badge-warning',
-        critical: 'badge-danger',
-    }
-    return styles[status] || 'badge-info'
+function getStatusBadge(risk: number) {
+    if (risk < 30) return 'badge-success'
+    if (risk < 60) return 'badge-warning'
+    return 'badge-danger'
+}
+
+function getStatus(risk: number): string {
+    if (risk < 30) return 'complete'
+    if (risk < 60) return 'review'
+    return 'critical'
+}
+
+function timeAgo(dateString: string): string {
+    const date = new Date(dateString)
+    const now = new Date()
+    const seconds = Math.floor((now.getTime() - date.getTime()) / 1000)
+
+    if (seconds < 60) return 'Just now'
+    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`
+    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`
+    return `${Math.floor(seconds / 86400)}d ago`
 }
 
 function Dashboard() {
+    const { stats, loading: statsLoading, refresh: refreshStats } = useCorpusStats()
+    const { analyses, loading: analysesLoading, load: loadAnalyses } = useAnalysisList()
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        setTimeout(() => setIsLoading(false), 500)
+        const loadData = async () => {
+            try {
+                await Promise.all([
+                    refreshStats(),
+                    loadAnalyses({ limit: 5 })
+                ])
+            } catch (e) {
+                console.error('Failed to load dashboard data:', e)
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        loadData()
     }, [])
+
+    const displayStats = stats || {
+        total_analyses: 0,
+        avg_risk_score: 0,
+        risk_distribution: { low: 0, medium: 0, high: 0 },
+        total_entities: 0,
+        jurisdiction_distribution: {},
+        type_distribution: {},
+    }
+
+    const criticalCount = displayStats.risk_distribution.high || 0
+    const pendingReview = displayStats.risk_distribution.medium || 0
 
     return (
         <div className="fade-in">
@@ -72,30 +90,30 @@ function Dashboard() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                 <StatCard
                     label="Contracts Analyzed"
-                    value={mockStats.contractsAnalyzed}
-                    change="+12 this week"
+                    value={displayStats.total_analyses}
+                    change="Total in corpus"
                     icon="📄"
                     loading={isLoading}
                 />
                 <StatCard
                     label="Avg Risk Score"
-                    value={`${mockStats.avgRiskScore}%`}
-                    change="-5% vs last month"
+                    value={`${displayStats.avg_risk_score.toFixed(0)}%`}
+                    change={displayStats.avg_risk_score < 40 ? "Good standing" : "Needs attention"}
                     icon="📊"
-                    positive
+                    positive={displayStats.avg_risk_score < 40}
                     loading={isLoading}
                 />
                 <StatCard
                     label="Critical Findings"
-                    value={mockStats.criticalFindings}
-                    change="Across all contracts"
+                    value={criticalCount}
+                    change="High-risk contracts"
                     icon="⚠️"
                     loading={isLoading}
                 />
                 <StatCard
                     label="Pending Review"
-                    value={mockStats.pendingReview}
-                    change="Due this week"
+                    value={pendingReview}
+                    change="Medium-risk contracts"
                     icon="⏰"
                     loading={isLoading}
                 />
@@ -113,65 +131,87 @@ function Dashboard() {
                             </Link>
                         </div>
 
-                        <div className="space-y-3">
-                            {recentAnalyses.map((analysis) => (
-                                <Link
-                                    key={analysis.id}
-                                    to={`/frontier/${analysis.id}`}
-                                    className="flex items-center justify-between p-4 bg-[var(--bale-surface-elevated)] rounded-lg hover:bg-[var(--bale-border)] transition-colors"
-                                >
-                                    <div className="flex items-center gap-4">
-                                        <div className={`w-12 h-12 rounded-lg ${getRiskBg(analysis.risk)} flex items-center justify-center`}>
-                                            <span className={`text-lg font-bold ${getRiskColor(analysis.risk)}`}>
-                                                {analysis.risk}
-                                            </span>
-                                        </div>
-                                        <div>
-                                            <div className="font-medium">{analysis.name}</div>
-                                            <div className="text-small text-[var(--bale-text-muted)]">
-                                                {analysis.type} • {analysis.date}
+                        {analysesLoading ? (
+                            <div className="space-y-3">
+                                {[...Array(3)].map((_, i) => (
+                                    <div key={i} className="skeleton h-20"></div>
+                                ))}
+                            </div>
+                        ) : analyses.length === 0 ? (
+                            <div className="text-center py-12 text-[var(--bale-text-muted)]">
+                                <div className="text-4xl mb-4">📄</div>
+                                <p>No analyses yet</p>
+                                <Link to="/analyze" className="btn btn-primary mt-4">
+                                    Analyze Your First Contract
+                                </Link>
+                            </div>
+                        ) : (
+                            <div className="space-y-3">
+                                {analyses.map((analysis) => (
+                                    <Link
+                                        key={analysis.analysis_id}
+                                        to={`/frontier/${analysis.analysis_id}`}
+                                        className="flex items-center justify-between p-4 bg-[var(--bale-surface-elevated)] rounded-lg hover:bg-[var(--bale-border)] transition-colors"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <div className={`w-12 h-12 rounded-lg ${getRiskBg(analysis.risk_score)} flex items-center justify-center`}>
+                                                <span className={`text-lg font-bold ${getRiskColor(analysis.risk_score)}`}>
+                                                    {analysis.risk_score}
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <div className="font-medium">{analysis.contract_name}</div>
+                                                <div className="text-small text-[var(--bale-text-muted)]">
+                                                    {analysis.contract_type.toUpperCase()} • {timeAgo(analysis.analyzed_at)}
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <span className={`badge ${getStatusBadge(analysis.status)}`}>
-                                        {analysis.status}
-                                    </span>
-                                </Link>
-                            ))}
-                        </div>
+                                        <span className={`badge ${getStatusBadge(analysis.risk_score)}`}>
+                                            {getStatus(analysis.risk_score)}
+                                        </span>
+                                    </Link>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 
-                {/* Frontier Insights */}
+                {/* Quick Stats */}
                 <div className="lg:col-span-1">
                     <div className="card">
-                        <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-title">Frontier Insights</h2>
-                            <span className="badge badge-info">Live</span>
-                        </div>
+                        <h2 className="text-title mb-6">Corpus Overview</h2>
 
                         <div className="space-y-4">
-                            {frontierInsights.map((insight, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`p-4 rounded-lg border-l-4 ${insight.severity === 'danger'
-                                            ? 'risk-bg-high border-[var(--risk-high)]'
-                                            : insight.severity === 'warning'
-                                                ? 'risk-bg-medium border-[var(--risk-medium)]'
-                                                : 'bg-[var(--bale-surface-elevated)] border-[var(--bale-accent)]'
-                                        }`}
-                                >
-                                    <div className="flex items-center gap-2 mb-2">
-                                        <span className="text-caption px-2 py-0.5 bg-[var(--bale-surface)] rounded">
-                                            {insight.frontier}
-                                        </span>
-                                        <span className="text-small font-medium">{insight.name}</span>
-                                    </div>
-                                    <p className="text-small text-[var(--bale-text-secondary)]">
-                                        {insight.finding}
-                                    </p>
+                            <div className="p-4 bg-[var(--bale-surface-elevated)] rounded-lg">
+                                <div className="text-2xl font-bold">{displayStats.total_entities}</div>
+                                <div className="text-small text-[var(--bale-text-muted)]">
+                                    Tracked Entities
                                 </div>
-                            ))}
+                            </div>
+
+                            {Object.keys(displayStats.jurisdiction_distribution).length > 0 && (
+                                <div className="p-4 bg-[var(--bale-surface-elevated)] rounded-lg">
+                                    <div className="text-small font-medium mb-2">By Jurisdiction</div>
+                                    {Object.entries(displayStats.jurisdiction_distribution).slice(0, 3).map(([jur, count]) => (
+                                        <div key={jur} className="flex justify-between text-small text-[var(--bale-text-muted)]">
+                                            <span>{jur}</span>
+                                            <span>{count}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
+                            {Object.keys(displayStats.type_distribution).length > 0 && (
+                                <div className="p-4 bg-[var(--bale-surface-elevated)] rounded-lg">
+                                    <div className="text-small font-medium mb-2">By Type</div>
+                                    {Object.entries(displayStats.type_distribution).slice(0, 3).map(([type, count]) => (
+                                        <div key={type} className="flex justify-between text-small text-[var(--bale-text-muted)]">
+                                            <span>{type.toUpperCase()}</span>
+                                            <span>{count}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
                         </div>
 
                         <Link
@@ -188,7 +228,7 @@ function Dashboard() {
             <div className="mt-8">
                 <div className="card">
                     <h2 className="text-title mb-6">Risk Distribution</h2>
-                    <RiskDistributionChart />
+                    <RiskDistributionChart distribution={displayStats.risk_distribution} />
                 </div>
             </div>
         </div>
@@ -236,31 +276,29 @@ function StatCard({
 }
 
 // Risk Distribution Chart
-function RiskDistributionChart() {
+function RiskDistributionChart({ distribution }: { distribution: Record<string, number> }) {
     const data = [
-        { range: '0-20%', count: 45, color: 'var(--risk-low)' },
-        { range: '21-40%', count: 78, color: 'var(--risk-low)' },
-        { range: '41-60%', count: 52, color: 'var(--risk-medium)' },
-        { range: '61-80%', count: 28, color: 'var(--risk-high)' },
-        { range: '81-100%', count: 8, color: 'var(--risk-critical)' },
+        { range: 'Low (0-30%)', count: distribution.low || 0, color: 'var(--risk-low)' },
+        { range: 'Medium (30-60%)', count: distribution.medium || 0, color: 'var(--risk-medium)' },
+        { range: 'High (60%+)', count: distribution.high || 0, color: 'var(--risk-high)' },
     ]
 
-    const max = Math.max(...data.map(d => d.count))
+    const max = Math.max(...data.map(d => d.count), 1)
 
     return (
-        <div className="flex items-end justify-between gap-4 h-48">
+        <div className="flex items-end justify-around gap-8 h-48">
             {data.map((d, idx) => (
-                <div key={idx} className="flex-1 flex flex-col items-center">
+                <div key={idx} className="flex-1 flex flex-col items-center max-w-32">
                     <div
                         className="w-full rounded-t-md transition-all hover:opacity-80"
                         style={{
-                            height: `${(d.count / max) * 100}%`,
+                            height: `${Math.max((d.count / max) * 100, 5)}%`,
                             backgroundColor: d.color,
                             minHeight: '20px'
                         }}
                     ></div>
                     <div className="mt-2 text-center">
-                        <div className="font-bold">{d.count}</div>
+                        <div className="font-bold text-xl">{d.count}</div>
                         <div className="text-caption text-[var(--bale-text-muted)]">{d.range}</div>
                     </div>
                 </div>
