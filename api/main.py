@@ -72,6 +72,14 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"Frontier routes not loaded: {e}")
     
+    # Register NLQ and generation routes
+    try:
+        from api.nlq_routes import router as nlq_router
+        app.include_router(nlq_router, prefix="/api")
+        logger.info("NLQ & Generation routes: ✅")
+    except Exception as e:
+        logger.warning(f"NLQ routes not loaded: {e}")
+    
     yield
     
     logger.info("👋 BALE API Shutting down...")

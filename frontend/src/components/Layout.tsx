@@ -82,6 +82,26 @@ function Layout() {
                             <span>Dashboard</span>
                         </NavLink>
                         <NavLink
+                            to="/chat"
+                            className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+                        >
+                            <svg className="sidebar-link-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                            </svg>
+                            <span>Chat</span>
+                            <span className="ml-auto px-1.5 py-0.5 text-[10px] font-bold bg-[var(--bale-accent)] text-white rounded">NEW</span>
+                        </NavLink>
+                        <NavLink
+                            to="/generate"
+                            className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+                        >
+                            <svg className="sidebar-link-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                            <span>Generate</span>
+                            <span className="ml-auto px-1.5 py-0.5 text-[10px] font-bold bg-[var(--frontier-imagination)] text-white rounded">NEW</span>
+                        </NavLink>
+                        <NavLink
                             to="/analyze"
                             className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
                         >

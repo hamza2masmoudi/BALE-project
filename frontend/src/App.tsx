@@ -8,6 +8,8 @@ import Network from './pages/Network'
 import Temporal from './pages/Temporal'
 import Reports from './pages/Reports'
 import Settings from './pages/Settings'
+import Chat from './pages/Chat'
+import Generate from './pages/Generate'
 
 function App() {
     return (
@@ -23,6 +25,8 @@ function App() {
                     <Route path="temporal" element={<Temporal />} />
                     <Route path="reports" element={<Reports />} />
                     <Route path="settings" element={<Settings />} />
+                    <Route path="chat" element={<Chat />} />
+                    <Route path="generate" element={<Generate />} />
                 </Route>
             </Routes>
         </BrowserRouter>
