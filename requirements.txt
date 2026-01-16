@@ -1,15 +1,43 @@
-langgraph
-langchain
-langchain-community
-langchain-openai
-streamlit
-chromadb
-pypdf
-pdfplumber
-sentence-transformers
-rank_bm25
-python-dotenv
-openai
-tenacity
-fpdf
-requests
+# API Module
+fastapi>=0.109.0
+uvicorn[standard]>=0.27.0
+python-multipart>=0.0.6
+
+# Database  
+sqlalchemy>=2.0.25
+psycopg2-binary>=2.9.9
+alembic>=1.13.1
+
+# Authentication
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+
+# Caching
+redis>=5.0.1
+
+# Async HTTP (webhooks)
+aiohttp>=3.9.1
+aiosmtplib>=3.0.1
+
+# Knowledge Graph
+neo4j>=5.15.0
+
+# Existing deps (updated)
+pdfplumber>=0.10.3
+chromadb>=0.4.22
+sentence-transformers>=2.2.2
+rank-bm25>=0.2.2
+langgraph>=0.0.64
+langchain-core>=0.1.23
+pydantic>=2.5.3
+python-dotenv>=1.0.0
+requests>=2.31.0
+tenacity>=8.2.3
+plotly>=5.18.0
+streamlit>=1.30.0
+numpy>=1.26.3
+
+# Testing
+pytest>=8.0.0
+pytest-asyncio>=0.23.3
+httpx>=0.26.0

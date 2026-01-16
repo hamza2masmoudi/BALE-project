@@ -18,22 +18,25 @@ class BaleAgents:
     def __init__(self):
         self.vector_engine = VectorEngine()
         
-        # BALE 2.1: Open Neural Validation
-        # STRICT RULE: No proprietary wrappers. Raw HTTP to local inference.
+        # BALE 2.1: Local Config
         self.local_endpoint = os.getenv("LOCAL_LLM_ENDPOINT", "http://localhost:8000/v1/chat/completions")
-        self.model_name = os.getenv("LOCAL_LLM_MODEL", "qwen2.5-32b-instruct")
+        self.local_model = os.getenv("LOCAL_LLM_MODEL", "qwen2.5-32b-instruct")
         
-        logger.info(f"BALE 2.1 Initialized. Open Neural Slot: {self.model_name} @ {self.local_endpoint}")
+        # BALE 2.2: Cloud Config
+        self.mistral_key = os.getenv("MISTRAL_API_KEY")
+        self.mistral_model = "mistral-large-latest"
+        
+        logger.info(f"BALE Agents Initialized. Local: {self.local_model}. Mistral Key Present: {bool(self.mistral_key)}")
 
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=2, max=10))
-    def _call_local_model(self, messages, temperature=0.1):
+    def _call_model(self, messages, temperature=0.1, mode="local"):
         """
-        No abstraction. Raw POST to local inference server.
+        Unified Inference Caller.
+        mode: 'local' (Ollama/vLLM) or 'mistral' (Mistral API).
         """
         headers = {"Content-Type": "application/json"}
-        
-        # Convert LangChain messages to dicts
         formatted_messages = []
+        
         for m in messages:
             if hasattr(m, "content"):
                 role = "user" if isinstance(m, HumanMessage) else "system"
@@ -41,21 +44,33 @@ class BaleAgents:
             else:
                 formatted_messages.append(m)
 
+        if mode == "mistral":
+            if not self.mistral_key:
+                raise ValueError("Mistral Mode selected but MISTRAL_API_KEY not found.")
+            
+            endpoint = "https://api.mistral.ai/v1/chat/completions"
+            headers["Authorization"] = f"Bearer {self.mistral_key}"
+            model = self.mistral_model
+        else:
+            # Default to Local
+            endpoint = self.local_endpoint
+            model = self.local_model
+
         payload = {
-            "model": self.model_name,
+            "model": model,
             "messages": formatted_messages,
             "temperature": temperature,
             "max_tokens": 2048
         }
 
         try:
-            # logger.debug(f"Calling Inference Endpoint: {self.local_endpoint}")
-            response = requests.post(self.local_endpoint, headers=headers, json=payload, timeout=120)
+            # logger.debug(f"Calling {mode} endpoint: {endpoint}")
+            response = requests.post(endpoint, headers=headers, json=payload, timeout=120)
             response.raise_for_status()
             data = response.json()
             return data["choices"][0]["message"]["content"]
         except Exception as e:
-            logger.error(f"Inference Error: {e}")
+            logger.error(f"Inference Error ({mode}): {e}")
             raise e
 
     def civilist_node(self, state: BaleState) -> Dict:
@@ -63,7 +78,8 @@ class BaleAgents:
         Civilist: Strict interpretation via Napoleonic Code.
         """
         content = state.get("content", "")
-        logger.info("[Civilist] Interpreting via Civil Law")
+        mode = state.get("execution_mode", "local")
+        logger.info(f"[Civilist] Interpreting via Civil Law ({mode})")
 
         sys_msg = """You are 'The Civilist', an orthodox French legal scholar. 
         Interpret the text STRICTLY through the lens of the French Civil Code (Napoleonic Code).
@@ -72,10 +88,10 @@ class BaleAgents:
         - Reject 'implied' terms not in the statute.
         """
         try:
-            output = self._call_local_model([
+            output = self._call_model([
                 SystemMessage(content=sys_msg),
                 HumanMessage(content=f"Interpret this text:\n{content}")
-            ], temperature=0.1)
+            ], temperature=0.1, mode=mode)
         except Exception as e:
             logger.error(f"Error Civilist: {e}")
             output = f"Error: {e}"
@@ -87,7 +103,8 @@ class BaleAgents:
         Commonist: Pragmatic interpretation via Case Law.
         """
         content = state.get("content", "")
-        logger.info("[Commonist] Interpreting via Common Law")
+        mode = state.get("execution_mode", "local")
+        logger.info(f"[Commonist] Interpreting via Common Law ({mode})")
 
         sys_msg = """You are 'The Commonist', a pragmatic English commercial judge.
         Interpret the text through the lens of English Common Law.
@@ -96,10 +113,10 @@ class BaleAgents:
         - Accept 'Economic Hardship' if successfully negotiated in the clause.
         """
         try:
-            output = self._call_local_model([
+            output = self._call_model([
                 SystemMessage(content=sys_msg),
                 HumanMessage(content=f"Interpret this text:\n{content}")
-            ], temperature=0.1)
+            ], temperature=0.1, mode=mode)
         except Exception as e:
             logger.error(f"Error Commonist: {e}")
             output = f"Error: {e}"
@@ -111,14 +128,16 @@ class BaleAgents:
         IP Specialist: Analysis via WIPO / Copyright / Patent Law.
         """
         content = state.get("content", "")
-        # Basic keyword check to save resources
+        mode = state.get("execution_mode", "local")
+        
+        # Basic keyword check
         is_ip_relevant = any(kw in content.lower() for kw in ["copyright", "patent", "intellectual property", "trademark", "license", "moral right", "royalty", "proprietary"])
         
         if not is_ip_relevant:
             logger.info("[IP Specialist] No IP terms found. Skipping.")
             return {"ip_opinion": "N/A - No IP content detected."}
 
-        logger.info("[IP Specialist] Analyzing Intellectual Property clauses")
+        logger.info(f"[IP Specialist] Analyzing IP clauses ({mode})")
         
         sys_msg = """You are 'The IP Specialist', an expert in International Intellectual Property Law (WIPO/Berne/TRIPS).
         Analyze the text specifically for IP risks:
@@ -127,10 +146,10 @@ class BaleAgents:
         - Flag strict liability in IP indemnities.
         """
         try:
-            output = self._call_local_model([
+            output = self._call_model([
                 SystemMessage(content=sys_msg),
                 HumanMessage(content=f"Analyze IP risks in this text:\n{content}")
-            ], temperature=0.1)
+            ], temperature=0.1, mode=mode)
         except Exception as e:
             logger.error(f"Error IP Specialist: {e}")
             output = f"Error: {e}"
@@ -143,7 +162,8 @@ class BaleAgents:
         """
         civilist = state.get("civilist_opinion", "")
         commonist = state.get("commonist_opinion", "")
-        logger.info("[Synthesizer] Measuring Interpretive Gap")
+        mode = state.get("execution_mode", "local")
+        logger.info(f"[Synthesizer] Measuring Interpretive Gap ({mode})")
 
         sys_msg = """You are the Supreme Dialectic Judge. 
         Compare the Civilist and Commonist opinions.
@@ -161,10 +181,10 @@ class BaleAgents:
         }
         """
         try:
-            response_content = self._call_local_model([
+            response_content = self._call_model([
                 SystemMessage(content=sys_msg),
                 HumanMessage(content=f"Civilist: {civilist}\n\nCommonist: {commonist}")
-            ], temperature=0.1)
+            ], temperature=0.1, mode=mode)
             
             content_str = response_content
             if "```json" in content_str:
@@ -202,9 +222,9 @@ class BaleAgents:
         Harmonizer: Drafts a 'Golden Clause' to resolve the conflict.
         """
         gap = state.get("interpretive_gap", 0)
-        logger.info(f"[Harmonizer] Gap is {gap}. Drafting solution.")
+        mode = state.get("execution_mode", "local")
+        logger.info(f"[Harmonizer] Gap is {gap}. Drafting solution ({mode}).")
         
-        # Only harmonize if there is a conflict
         if gap < 10:
              return {
                  "harmonized_clause": "N/A - No significant conflict.",
@@ -223,10 +243,10 @@ class BaleAgents:
         - "rationale": Explanation of how it satisfies both sides (e.g. 'Uses Good Faith to please Civilist, but allows Reasonable Endeavors for Commonist').
         """
         try:
-            response_content = self._call_local_model([
+            response_content = self._call_model([
                 SystemMessage(content=sys_msg),
                 HumanMessage(content=f"Civilist: {civilist}\nCommonist: {commonist}\nSynthesis: {synthesis}")
-            ], temperature=0.1)
+            ], temperature=0.1, mode=mode)
             
             content_str = response_content
             if "```json" in content_str:
@@ -236,6 +256,8 @@ class BaleAgents:
             
             data = json.loads(content_str, strict=False)
             clause = data.get("golden_clause", "Drafting failed.")
+            if isinstance(clause, dict):
+                 clause = str(clause)
             rationale = data.get("rationale", "No rationale.")
         except Exception as e:
             logger.error(f"Error Harmonizer: {e}")
@@ -253,58 +275,55 @@ class BaleAgents:
         """
         clause = state.get("content", "")
         synthesis = state.get("synthesizer_comparison", "")
-        logger.info("[Simulation] Starting Adversarial Mock Trial")
+        mode = state.get("execution_mode", "local")
+        logger.info(f"[Simulation] Starting Adversarial Mock Trial ({mode})")
 
         transcript = []
         
-        # 1. Plaintiff Agent (Maximalist Interpretation)
+        # 1. Plaintiff Agent
         plaintiff_arg = "N/A"
         try:
             msg = f"""You are the Plaintiff's Counsel. 
             Your goal is to interpret this clause to MAXIMIZE liability for the counterparty.
             Clause: {clause}
             Context: {synthesis}
-            
             Draft a brief, aggressive legal argument (1 paragraph)."""
-            resp_content = self._call_local_model([HumanMessage(content=msg)], temperature=0.7)
+            resp_content = self._call_model([HumanMessage(content=msg)], temperature=0.7, mode=mode)
             plaintiff_arg = resp_content
             transcript.append(f"👨‍⚖️ **Plaintiff**: {plaintiff_arg}")
         except Exception as e:
             logger.error(f"Plaintiff Error: {e}")
 
-        # 2. Defense Agent (Minimalist Interpretation)
+        # 2. Defense Agent
         defense_arg = "N/A"
         try:
             msg = f"""You are the Defense Counsel.
             Your goal is to MINIMIZE liability and dismiss the Plaintiff's claim.
             Clause: {clause}
             Plaintiff Argument: {plaintiff_arg}
-            
             Draft a brief, defensive rebuttal (1 paragraph)."""
-            resp_content = self._call_local_model([HumanMessage(content=msg)], temperature=0.7)
+            resp_content = self._call_model([HumanMessage(content=msg)], temperature=0.7, mode=mode)
             defense_arg = resp_content
             transcript.append(f"🛡️ **Defense**: {defense_arg}")
         except Exception as e:
             logger.error(f"Defense Error: {e}")
 
-        # 3. Judge Agent (Verdict)
+        # 3. Judge Agent
         risk_score = 50
         try:
             msg = f"""You are the Fact-Finding Clerk for the Judge.
             Analyze the arguments and extract the BOOLEAN FACTS required for the decision matrix.
-            
             Plaintiff Arg: {plaintiff_arg}
             Defense Arg: {defense_arg}
-            
             Return JSON matching this schema:
             {{
-                "is_ambiguous": boolean, // Is there ANY ambiguity?
-                "is_exclusion_clear": boolean, // Is the exclusion unequivocal? True if YES (Good for Defense).
-                "authority_is_mandatory": boolean, // Does Plaintiff cite Statutes/Codes?
-                "plaintiff_plausible": boolean // Is the claim logical?
+                "is_ambiguous": boolean, 
+                "is_exclusion_clear": boolean, 
+                "authority_is_mandatory": boolean, 
+                "plaintiff_plausible": boolean 
             }}
             """
-            resp_content = self._call_local_model([HumanMessage(content=msg)], temperature=0.1)
+            resp_content = self._call_model([HumanMessage(content=msg)], temperature=0.1, mode=mode)
             
             content_str = resp_content
             if "```json" in content_str:
@@ -337,7 +356,10 @@ class BaleAgents:
         Gatekeeper: Verifies citations against VectorDB.
         """
         synthesis = state.get("synthesizer_comparison", "")
-        logger.info("[Gatekeeper] Verifying Citations")
+        # Gatekeeper uses embeddings, so uses self.vector_engine (Local Embeddings usually)
+        # We don't need to switch this since VectorEngine handles embedding model separately
+        # But if we wanted to log mode:
+        # logger.info("[Gatekeeper] Verifying Citations")
         
         citations = re.findall(r"(?:Article|Section)\s+\w+", synthesis)
         
@@ -356,9 +378,8 @@ class BaleAgents:
 
                 formatted_cit = f"{cit} [{level_str} - {binding}]"
                 verified.append(formatted_cit)
-                logger.info(f"Verified citation: {formatted_cit}")
             else:
-                logger.warning(f"Could not verify: {cit}")
+                pass
 
         return {
             "verified_citations": verified,
@@ -368,6 +389,7 @@ class BaleAgents:
                 "synthesis": synthesis,
                 "gap": state.get("interpretive_gap"),
                 "logic": state.get("reasoning_steps", [])[0] if state.get("reasoning_steps") else "N/A",
+                "metrics": state.get("metrics", {}),
                 "verified": verified,
                 "golden_clause": state.get("harmonized_clause"),
                 "rationale": state.get("harmonization_rationale"),

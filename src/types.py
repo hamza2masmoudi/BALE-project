@@ -4,6 +4,7 @@ class BaleState(TypedDict):
     content: str
     fr_civil_text: Optional[str]
     en_common_text: Optional[str]
+    execution_mode: str # 'local' or 'mistral'
     
     # Dialectic Outputs
     civilist_opinion: Optional[str]

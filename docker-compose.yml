@@ -1,23 +1,126 @@
 version: '3.8'
 
 services:
-  bale-app:
-    build: .
-    container_name: bale_engine
+  # PostgreSQL Database
+  postgres:
+    image: postgres:16-alpine
+    container_name: bale-postgres
+    environment:
+      POSTGRES_USER: bale
+      POSTGRES_PASSWORD: bale_dev
+      POSTGRES_DB: bale
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U bale -d bale" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Redis (for caching and queues)
+  redis:
+    image: redis:7-alpine
+    container_name: bale-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # Qdrant Vector Database (optional upgrade from ChromaDB)
+  # qdrant:
+  #   image: qdrant/qdrant:latest
+  #   container_name: bale-qdrant
+  #   ports:
+  #     - "6333:6333"
+  #   volumes:
+  #     - qdrant_data:/qdrant/storage
+
+  # Neo4j Knowledge Graph
+  neo4j:
+    image: neo4j:5-community
+    container_name: bale-neo4j
+    environment:
+      NEO4J_AUTH: neo4j/bale_dev
+      NEO4J_PLUGINS: '["apoc"]'
+    ports:
+      - "7474:7474" # HTTP
+      - "7687:7687" # Bolt
+    volumes:
+      - neo4j_data:/data
+    healthcheck:
+      test: [ "CMD", "wget", "-qO-", "http://localhost:7474" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # React Frontend
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: bale-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - VITE_API_URL=http://localhost:8080
+    depends_on:
+      - api
+
+  # BALE API
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: bale-api
+    environment:
+      - DATABASE_URL=postgresql://bale:bale_dev@postgres:5432/bale
+      - REDIS_URL=redis://redis:6379/0
+      - LOCAL_LLM_ENDPOINT=http://host.docker.internal:11434/v1/chat/completions
+      - LOCAL_LLM_MODEL=qwen2.5:32b
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
+      - BALE_ENV=development
+      - CORS_ORIGINS=http://localhost:3000,http://localhost:8501
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8080 --reload
+
+  # Streamlit UI (existing)
+  streamlit:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bale-streamlit
+    environment:
+      - LOCAL_LLM_ENDPOINT=http://host.docker.internal:11434/v1/chat/completions
+      - LOCAL_LLM_MODEL=qwen2.5:32b
+      - MISTRAL_API_KEY=${MISTRAL_API_KEY}
     ports:
       - "8501:8501"
     volumes:
-      - ./.env:/app/.env
       - ./data:/app/data
-      - ./chroma_db:/app/chroma_db
-    environment:
-      - PYTHONUNBUFFERED=1
-      - LOCAL_LLM_ENDPOINT=http://host.docker.internal:11434/v1/chat/completions
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    deploy:
-      resources:
-        limits:
-          cpus: '2'
-          memory: 4G
-    restart: unless-stopped
+    command: streamlit run app.py --server.port 8501 --server.address 0.0.0.0
+
+volumes:
+  postgres_data:
+  redis_data:
+  neo4j_data:
+    # qdrant_data:
+
+networks:
+  default:
+    name: bale-network

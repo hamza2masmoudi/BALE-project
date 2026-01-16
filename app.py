@@ -103,13 +103,18 @@ st.markdown("""
 with st.sidebar:
     st.markdown("### ⚙️ SYSTEM")
     
-    # Model Status
-    local_endpoint = os.getenv("LOCAL_LLM_ENDPOINT")
+    # Inference Mode Selection
+    mode_selection = st.radio("INFERENCE CORE", ["LOCAL (Ollama)", "CLOUD (Mistral)"])
+    execution_mode = "local" if "LOCAL" in mode_selection else "mistral"
     
-    if local_endpoint:
-         st.success(f"LOCAL_CORE: {os.getenv('LOCAL_LLM_MODEL', 'Unknown')}")
+    if execution_mode == "local":
+        st.caption(f"Endpoint: {os.getenv('LOCAL_LLM_ENDPOINT', 'localhost')}")
+        st.success(f"Active: {os.getenv('LOCAL_LLM_MODEL', 'qwen2.5')}")
     else:
-        st.error("CORE: OFFLINE")
+        if os.getenv("MISTRAL_API_KEY"):
+            st.success("Active: Mistral Large")
+        else:
+            st.error("Missing MISTRAL_API_KEY")
 
     st.divider()
     
@@ -165,7 +170,7 @@ if uploaded_file:
             
             # Run Graph
             app = compile_graph()
-            initial_state = {"content": text}
+            initial_state = {"content": text, "execution_mode": execution_mode}
             
             simulated_result = {}
             
@@ -247,7 +252,8 @@ if uploaded_file:
             st.plotly_chart(create_gauge(risk), use_container_width=True)
             
             st.info(f"Civilist: {report.get('civilist', 'N/A')[:100]}...")
-            st.success(f"Golden: {report.get('golden_clause', 'N/A')[:100]}...")
+            gc_text = str(report.get('golden_clause', 'N/A'))
+            st.success(f"Golden: {gc_text[:100]}...")
 
 else:
     # Landing Page State (Empty State)
