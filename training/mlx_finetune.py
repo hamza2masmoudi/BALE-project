@@ -120,7 +120,12 @@ def run_finetuning():
     try:
         from mlx_lm import load, generate
         from mlx_lm.tuner import train
+        from mlx_lm.tuner.trainer import TrainingArgs
+        from mlx_lm.tuner.datasets import load_dataset
+        from mlx_lm.tuner.lora import LoRALinear
         import mlx.core as mx
+        import mlx.nn as nn
+        import mlx.optimizers as optim
     except ImportError:
         print("❌ MLX not installed. Run: pip install mlx mlx-lm")
         return False
@@ -153,19 +158,48 @@ def run_finetuning():
     
     print(f"   Training examples: {n_train}")
     
-    # Train with LoRA
+    # Create output directory
     os.makedirs(adapter_path, exist_ok=True)
     
+    # Load datasets as JSON
+    print("Loading datasets...")
+    from mlx_lm.tuner.datasets import ChatDataset
+    
+    with open(train_data) as f:
+        train_json = [json.loads(line) for line in f][:2000]  # Cap at 2000 for speed
+    
+    with open(valid_data) as f:
+        val_json = [json.loads(line) for line in f][:200]
+    
+    train_set = ChatDataset(train_json, tokenizer)
+    val_set = ChatDataset(val_json, tokenizer)
+    
+    # Create optimizer
+    optimizer = optim.Adam(learning_rate=1e-5)
+    
+    # Training args
+    args = TrainingArgs(
+        batch_size=2,
+        iters=min(n_train // 4, 300),  # Cap iterations
+        val_batches=10,
+        steps_per_report=10,
+        steps_per_eval=50,
+        steps_per_save=50,
+        adapter_file=os.path.join(adapter_path, "adapters.safetensors"),
+        grad_checkpoint=True,
+    )
+    
+    print(f"   Iterations: {args.iters}")
+    print(f"   Batch size: {args.batch_size}")
+    print()
+    
+    # Train
     train(
         model=model,
-        tokenizer=tokenizer,
-        train_dataset=train_data,
-        val_dataset=valid_data,
-        adapter_path=adapter_path,
-        iters=min(n_train // 2, 500),  # Cap at 500 iterations
-        batch_size=2,
-        num_layers=16,  # Number of layers to apply LoRA
-        learning_rate=1e-5,
+        optimizer=optimizer,
+        train_dataset=train_set,
+        val_dataset=val_set,
+        args=args,
     )
     
     print(f"\n✅ Finetuning complete!")
