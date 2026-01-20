@@ -17,6 +17,8 @@
 
 ## 📸 Interface
 
+![BALE Landing Page](docs/images/bale_landing.png)
+
 ![BALE Dashboard](docs/images/bale_dashboard.png)
 
 ---
