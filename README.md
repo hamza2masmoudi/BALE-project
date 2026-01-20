@@ -17,7 +17,7 @@
 
 ## 📸 Interface
 
-![BALE Dashboard](docs/images/bale_dashboard.webp)
+![BALE Dashboard](docs/images/bale_dashboard.png)
 
 ---
 
