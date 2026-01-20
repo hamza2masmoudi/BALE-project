@@ -15,6 +15,12 @@
 
 ---
 
+## 📸 Interface
+
+![BALE Dashboard](docs/images/bale_dashboard.webp)
+
+---
+
 ## 🎯 Overview
 
 BALE is an enterprise-grade AI system that analyzes commercial contracts for litigation risk. It combines:
