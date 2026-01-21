@@ -1,0 +1,264 @@
+{
+  "classification": {
+    "correct": 9,
+    "total": 14,
+    "details": [
+      {
+        "id": "class_001",
+        "expected": "indemnification",
+        "got": "indemnification",
+        "correct": true
+      },
+      {
+        "id": "class_002",
+        "expected": "indemnification",
+        "got": "indemnification",
+        "correct": true
+      },
+      {
+        "id": "class_010",
+        "expected": "insurance",
+        "got": "indemnification",
+        "correct": false
+      },
+      {
+        "id": "class_011",
+        "expected": "insurance",
+        "got": "indemnification",
+        "correct": false
+      },
+      {
+        "id": "class_020",
+        "expected": "confidentiality",
+        "got": "confidentiality",
+        "correct": true
+      },
+      {
+        "id": "class_021",
+        "expected": "confidentiality",
+        "got": "confidentiality",
+        "correct": true
+      },
+      {
+        "id": "class_030",
+        "expected": "termination",
+        "got": "termination",
+        "correct": true
+      },
+      {
+        "id": "class_031",
+        "expected": "termination",
+        "got": "termination",
+        "correct": true
+      },
+      {
+        "id": "class_040",
+        "expected": "governing_law",
+        "got": "indemnification",
+        "correct": false
+      },
+      {
+        "id": "class_050",
+        "expected": "warranty",
+        "got": "warranty",
+        "correct": true
+      },
+      {
+        "id": "class_060",
+        "expected": "intellectual_property",
+        "got": "intellectual_property",
+        "correct": true
+      },
+      {
+        "id": "class_070",
+        "expected": "liability",
+        "got": "indemnification",
+        "correct": false
+      },
+      {
+        "id": "class_080",
+        "expected": "force_majeure",
+        "got": "force_majeure",
+        "correct": true
+      },
+      {
+        "id": "class_090",
+        "expected": "arbitration",
+        "got": "governing_law",
+        "correct": false
+      }
+    ]
+  },
+  "risk_detection": {
+    "correct": 5,
+    "total": 9,
+    "details": [
+      {
+        "id": "risk_001",
+        "expected": "HIGH",
+        "got": "HIGH",
+        "correct": true
+      },
+      {
+        "id": "risk_002",
+        "expected": "HIGH",
+        "got": "LOW",
+        "correct": false
+      },
+      {
+        "id": "risk_003",
+        "expected": "HIGH",
+        "got": "LOW",
+        "correct": false
+      },
+      {
+        "id": "risk_004",
+        "expected": "HIGH",
+        "got": "LOW",
+        "correct": false
+      },
+      {
+        "id": "risk_005",
+        "expected": "HIGH",
+        "got": "LOW",
+        "correct": false
+      },
+      {
+        "id": "risk_020",
+        "expected": "LOW",
+        "got": "LOW",
+        "correct": true
+      },
+      {
+        "id": "risk_021",
+        "expected": "LOW",
+        "got": "LOW",
+        "correct": true
+      },
+      {
+        "id": "risk_022",
+        "expected": "LOW",
+        "got": "LOW",
+        "correct": true
+      },
+      {
+        "id": "risk_023",
+        "expected": "LOW",
+        "got": "LOW",
+        "correct": true
+      }
+    ]
+  },
+  "edge_cases": {
+    "correct": 4,
+    "total": 5,
+    "details": [
+      {
+        "id": "edge_001",
+        "expected": "indemnification",
+        "got": "indemnification",
+        "correct": true
+      },
+      {
+        "id": "edge_002",
+        "expected": "termination",
+        "got": "termination",
+        "correct": true
+      },
+      {
+        "id": "edge_003",
+        "expected": "MEDIUM",
+        "got": "unknown",
+        "correct": false
+      },
+      {
+        "id": "edge_004",
+        "expected": "confidentiality",
+        "got": "confidentiality",
+        "correct": true
+      },
+      {
+        "id": "edge_005",
+        "expected": "confidentiality",
+        "got": "confidentiality",
+        "correct": true
+      }
+    ]
+  },
+  "multilingual": {
+    "correct": 6,
+    "total": 10,
+    "details": [
+      {
+        "id": "fr_001",
+        "language": "fr",
+        "expected": "indemnification",
+        "got": "indemnification",
+        "correct": true
+      },
+      {
+        "id": "fr_002",
+        "language": "fr",
+        "expected": "confidentiality",
+        "got": "confidentiality",
+        "correct": true
+      },
+      {
+        "id": "fr_003",
+        "language": "fr",
+        "expected": "governing_law",
+        "got": "indemnification",
+        "correct": false
+      },
+      {
+        "id": "fr_004",
+        "language": "fr",
+        "expected": "termination",
+        "got": "termination",
+        "correct": true
+      },
+      {
+        "id": "fr_005",
+        "language": "fr",
+        "expected": "HIGH",
+        "got": "LOW",
+        "correct": false
+      },
+      {
+        "id": "de_001",
+        "language": "de",
+        "expected": "indemnification",
+        "got": "indemnification",
+        "correct": true
+      },
+      {
+        "id": "de_002",
+        "language": "de",
+        "expected": "confidentiality",
+        "got": "confidentiality",
+        "correct": true
+      },
+      {
+        "id": "de_003",
+        "language": "de",
+        "expected": "governing_law",
+        "got": "indemnification",
+        "correct": false
+      },
+      {
+        "id": "de_004",
+        "language": "de",
+        "expected": "termination",
+        "got": "termination",
+        "correct": true
+      },
+      {
+        "id": "de_005",
+        "language": "de",
+        "expected": "MEDIUM",
+        "got": "LOW",
+        "correct": false
+      }
+    ]
+  }
+}

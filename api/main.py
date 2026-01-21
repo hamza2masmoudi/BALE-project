@@ -80,6 +80,14 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"NLQ routes not loaded: {e}")
     
+    # Register V5/V6 local inference routes
+    try:
+        from api.v5_routes import register_v5_routes
+        register_v5_routes(app)
+        logger.info("V5/V6 Local Inference routes: ✅")
+    except Exception as e:
+        logger.warning(f"V5 routes not loaded: {e}")
+    
     yield
     
     logger.info("👋 BALE API Shutting down...")
