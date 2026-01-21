@@ -1,0 +1,156 @@
+{
+  "version": "2.0",
+  "total_cases": 22,
+  "categories": {
+    "classification": [
+      {
+        "id": "class_001",
+        "input": "The Vendor shall indemnify, defend, and hold harmless the Customer.",
+        "expected": "indemnification",
+        "difficulty": "standard"
+      },
+      {
+        "id": "class_020",
+        "input": "All information marked 'Confidential' shall be kept strictly confidential.",
+        "expected": "confidentiality",
+        "difficulty": "standard"
+      },
+      {
+        "id": "class_030",
+        "input": "Either party may terminate this Agreement upon thirty (30) days notice.",
+        "expected": "termination",
+        "difficulty": "standard"
+      },
+      {
+        "id": "class_040",
+        "input": "This Agreement shall be governed by the laws of the State of Delaware.",
+        "expected": "governing_law",
+        "difficulty": "standard"
+      },
+      {
+        "id": "class_090",
+        "input": "Any dispute shall be resolved by binding arbitration in New York.",
+        "expected": "arbitration",
+        "difficulty": "standard"
+      }
+    ],
+    "risk_detection": [
+      {
+        "id": "risk_001",
+        "input": "Provider shall have no liability whatsoever for any damages.",
+        "expected": "HIGH",
+        "difficulty": "standard"
+      },
+      {
+        "id": "risk_002",
+        "input": "We may modify these terms at any time without notice.",
+        "expected": "HIGH",
+        "difficulty": "standard"
+      },
+      {
+        "id": "risk_020",
+        "input": "Liability limited to fees paid in last 12 months.",
+        "expected": "LOW",
+        "difficulty": "standard"
+      }
+    ],
+    "multilingual": [
+      {
+        "id": "fr_001",
+        "input": "Le Prestataire s'engage à indemniser le Client.",
+        "expected": "indemnification",
+        "language": "fr",
+        "difficulty": "standard"
+      },
+      {
+        "id": "fr_005",
+        "input": "Le Fournisseur n'assume aucune responsabilité pour les dommages indirects.",
+        "expected": "HIGH",
+        "language": "fr",
+        "category": "risk"
+      },
+      {
+        "id": "de_001",
+        "input": "Der Auftragnehmer verpflichtet sich, den Auftraggeber freizustellen.",
+        "expected": "indemnification",
+        "language": "de",
+        "difficulty": "standard"
+      },
+      {
+        "id": "de_005",
+        "input": "Wir behalten uns das Recht vor, diese Bedingungen jederzeit ohne Ankündigung zu ändern.",
+        "expected": "HIGH",
+        "language": "de",
+        "category": "risk"
+      }
+    ],
+    "employment": [
+      {
+        "id": "emp_001",
+        "input": "Employee agrees not to work for any competitor within a 50-mile radius for 12 months.",
+        "expected": "non_compete",
+        "difficulty": "standard"
+      },
+      {
+        "id": "emp_002",
+        "input": "Upon termination without cause, Employee shall receive 6 months severance pay.",
+        "expected": "termination",
+        "difficulty": "standard"
+      },
+      {
+        "id": "emp_003",
+        "input": "All inventions created during employment belong exclusively to the Company.",
+        "expected": "intellectual_property",
+        "difficulty": "standard"
+      },
+      {
+        "id": "emp_risk",
+        "input": "Employee waives all claims including discrimination rights in exchange for $100.",
+        "expected": "HIGH",
+        "category": "risk",
+        "difficulty": "standard"
+      },
+      {
+        "id": "emp_low",
+        "input": "Employment is at-will and may be terminated by either party with notice.",
+        "expected": "LOW",
+        "category": "risk",
+        "difficulty": "standard"
+      }
+    ],
+    "ma": [
+      {
+        "id": "ma_001",
+        "input": "Seller represents that there are no pending legal proceedings against the Company.",
+        "expected": "representations",
+        "difficulty": "standard"
+      },
+      {
+        "id": "ma_002",
+        "input": "Seller shall indemnify Buyer for valid claims up to the Cap Amount of $5M.",
+        "expected": "indemnification",
+        "difficulty": "standard"
+      },
+      {
+        "id": "ma_003",
+        "input": "Closing is conditioned upon receipt of HSR antitrust approval.",
+        "expected": "closing_condition",
+        "difficulty": "standard"
+      },
+      {
+        "id": "ma_risk",
+        "input": "Seller provides property 'as is' with no representations or warranties whatsoever.",
+        "expected": "HIGH",
+        "category": "risk",
+        "difficulty": "standard"
+      },
+      {
+        "id": "ma_low",
+        "input": "10% of Purchase Price shall be held in escrow for 18 months to secure indemnification.",
+        "expected": "LOW",
+        "category": "risk",
+        "difficulty": "standard"
+      }
+    ]
+  }
+}

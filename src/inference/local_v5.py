@@ -55,7 +55,7 @@ class BALELocalInference:
     """Local V5 inference engine using MLX."""
     
     MODEL_ID = "mlx-community/Mistral-7B-Instruct-v0.3-4bit"
-    ADAPTER_PATH = "models/bale-legal-lora-v5"
+    ADAPTER_PATH = "models/bale-legal-lora-v7"
     
     def __init__(self, adapter_path: Optional[str] = None):
         """Initialize the local inference engine."""
@@ -84,13 +84,13 @@ class BALELocalInference:
             return False
         
         try:
-            logger.info(f"Loading model with V5 adapters from {self.adapter_path}")
+            logger.info(f"Loading model with V7 adapters from {self.adapter_path}")
             self.model, self.tokenizer = load(
                 self.MODEL_ID,
                 adapter_path=self.adapter_path
             )
             self._loaded = True
-            logger.info("V5 model loaded successfully")
+            logger.info("V7 model loaded successfully")
             return True
         except Exception as e:
             logger.error(f"Failed to load model: {e}")
@@ -107,11 +107,15 @@ class BALELocalInference:
                 recommendations=[]
             )
         
-        prompt = f"""Analyze this Terms of Service clause for consumer risk.
-
-{clause_text[:2000]}
-
-Risk Level:"""
+        # Detect language (simple heuristic)
+        lang_instruction = "Analyze this clause for consumer risk."
+        if "est" in clause_text and "le" in clause_text: # Very basic FR detection
+            lang_instruction = "Analysez cette clause pour le risque consommateur."
+        elif "und" in clause_text and "der" in clause_text: # Very basic DE detection
+            lang_instruction = "Analysieren Sie diese Klausel auf Verbraucherrisiko."
+            
+        messages = [{"role": "user", "content": f"{lang_instruction}\n\n{clause_text[:2000]}"}]
+        prompt = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         
         try:
             response = generate(
@@ -143,11 +147,15 @@ Risk Level:"""
                 key_indicators=[]
             )
         
-        prompt = f"""Classify this contract clause and explain why it is this type.
+        # Detect language
+        lang_instruction = "Classify this contract clause."
+        if "est" in clause_text and "le" in clause_text:
+            lang_instruction = "Classifiez cette clause contractuelle."
+        elif "und" in clause_text and "der" in clause_text:
+            lang_instruction = "Klassifizieren Sie diese Vertragsklausel."
 
-{clause_text[:2000]}
-
-Classification:"""
+        messages = [{"role": "user", "content": f"{lang_instruction}\n\n{clause_text[:2000]}"}]
+        prompt = self.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
         
         try:
             response = generate(
