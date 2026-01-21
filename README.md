@@ -42,6 +42,33 @@ BALE is an enterprise-grade AI system that analyzes commercial contracts for lit
 | **Multi-Jurisdiction** | Compare interpretations across legal systems |
 | **Knowledge Graph** | Citation tracking and precedent analysis |
 
+### 🤖 V7 Local AI Model
+
+BALE includes a fine-tuned **Mistral-7B** model (V7) for real-time clause analysis:
+
+| Capability | Accuracy | Description |
+|:-----------|:---------|:------------|
+| **Risk Detection** | 100% | Detect HIGH/MEDIUM/LOW risk clauses |
+| **Classification** | 80% | Identify clause type (indemnification, confidentiality, etc.) |
+| **Multilingual** | 75% | French & German contract support |
+| **Employment Law** | 60% | Non-competes, severance, IP assignment |
+| **M&A** | 60% | Reps & warranties, closing conditions |
+
+**V7 API Endpoints:**
+```bash
+# Risk Analysis
+POST /api/v5/risk
+{"clause_text": "Provider shall have no liability whatsoever..."}
+
+# Classification
+POST /api/v5/classify
+{"clause_text": "This Agreement shall be governed by Delaware law..."}
+
+# Full Contract Analysis
+POST /api/v5/analyze-contract
+{"contract_text": "[full contract text]"}
+```
+
 ---
 
 ## 🚀 Quick Start

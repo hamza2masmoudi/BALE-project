@@ -282,6 +282,84 @@ class BaleApiClient {
     async health(): Promise<{ status: string }> {
         return this.request<{ status: string }>('/health')
     }
+
+    // ==================== V7 LOCAL RISK ANALYSIS ====================
+
+    async analyzeClauseRisk(clauseText: string): Promise<V7RiskAnalysisResponse> {
+        return this.request<V7RiskAnalysisResponse>('/v5/risk', {
+            method: 'POST',
+            body: JSON.stringify({ clause_text: clauseText }),
+        })
+    }
+
+    async classifyClause(clauseText: string): Promise<V7ClassificationResponse> {
+        return this.request<V7ClassificationResponse>('/v5/classify', {
+            method: 'POST',
+            body: JSON.stringify({ clause_text: clauseText }),
+        })
+    }
+
+    async analyzeContractV7(contractText: string): Promise<V7ContractAnalysisResponse> {
+        return this.request<V7ContractAnalysisResponse>('/v5/analyze-contract', {
+            method: 'POST',
+            body: JSON.stringify({ contract_text: contractText }),
+        })
+    }
+
+    async getV7Status(): Promise<V7StatusResponse> {
+        return this.request<V7StatusResponse>('/v5/status')
+    }
+}
+
+// V7 Response Types
+export interface V7RiskAnalysisResponse {
+    risk_level: 'HIGH' | 'MEDIUM' | 'LOW' | 'UNKNOWN'
+    risk_score: number
+    reasoning: string
+    problems: string[]
+    recommendations: string[]
+    model_version: string
+}
+
+export interface V7ClassificationResponse {
+    clause_type: string
+    confidence: number
+    reasoning: string
+    key_indicators: string[]
+    model_version: string
+}
+
+export interface V7ContractAnalysisResponse {
+    overall_risk_score: number
+    total_sections: number
+    high_risk_count: number
+    medium_risk_count: number
+    low_risk_count: number
+    high_risk_clauses: V7ClauseAnalysis[]
+    classifications: V7ClauseClassification[]
+    model_version: string
+}
+
+export interface V7ClauseAnalysis {
+    index: number
+    text: string
+    type: string
+    risk_level: string
+    risk_score: number
+    problems: string[]
+}
+
+export interface V7ClauseClassification {
+    index: number
+    type: string
+    confidence: number
+}
+
+export interface V7StatusResponse {
+    v5_available: boolean
+    model: string
+    adapter_path: string
+    loaded: boolean
 }
 
 // Singleton instance
