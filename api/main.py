@@ -88,6 +88,14 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.warning(f"V5 routes not loaded: {e}")
     
+    # Register V8 routes
+    try:
+        from api.routes.v8_routes import router as v8_router
+        app.include_router(v8_router, prefix="/api")
+        logger.info("V8 Analysis routes: ✅")
+    except Exception as e:
+        logger.warning(f"V8 routes not loaded: {e}")
+    
     yield
     
     logger.info("👋 BALE API Shutting down...")
