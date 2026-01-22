@@ -88,8 +88,11 @@ services:
       - MISTRAL_API_KEY=${MISTRAL_API_KEY}
       - BALE_ENV=development
       - CORS_ORIGINS=http://localhost:3000,http://localhost:8501
+      # V7 Model Configuration
+      - V7_ADAPTER_PATH=/app/models/bale-legal-lora-v7
+      - PYTHONPATH=/app
     ports:
-      - "8080:8080"
+      - "8000:8000"
     depends_on:
       postgres:
         condition: service_healthy
@@ -97,7 +100,8 @@ services:
         condition: service_healthy
     volumes:
       - ./data:/app/data
-    command: uvicorn api.main:app --host 0.0.0.0 --port 8080 --reload
+      - ./models:/app/models:ro # V7 model adapters (read-only)
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
 
   # Streamlit UI (existing)
   streamlit:
