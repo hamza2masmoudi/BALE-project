@@ -42,41 +42,30 @@ BALE is an enterprise-grade AI system that analyzes commercial contracts for lit
 | **Multi-Jurisdiction** | Compare interpretations across legal systems |
 | **Knowledge Graph** | Citation tracking and precedent analysis |
 
-### 🤖 V7 Local AI Model
+### 🚀 V8 Ultimate - Production-Ready Legal AI
 
-BALE includes a fine-tuned **Mistral-7B** model (V7) for real-time clause analysis:
+BALE V8 Ultimate is trained on **75,381 real legal examples** from 10 sources, powered by fine-tuned **Mistral-7B** with LoRA:
 
-| Capability | Accuracy | Description |
-|:-----------|:---------|:------------|
-| **Risk Detection** | 100% | Detect HIGH/MEDIUM/LOW risk clauses |
-| **Classification** | 80% | Identify clause type (indemnification, confidentiality, etc.) |
-| **Multilingual** | 75% | French & German contract support |
-| **Employment Law** | 60% | Non-competes, severance, IP assignment |
-| **M&A** | 60% | Reps & warranties, closing conditions |
-
-### 🚀 V8 Ultimate - Production-Ready Model (NEW!)
-
-V8 Ultimate is trained on **75,381 real legal examples** from 10 sources:
-
-| Metric | Score | Improvement |
-|:-------|:-----:|:-----------:|
-| **English Classification** | 66.7% | +24% vs baseline |
-| **Risk Detection** | 66.7% | +26% vs baseline |
-| **Edge Cases** | 80.0% | +30% vs baseline |
-| **CUAD Real Samples** | 60.0% | - |
-| **Avg Latency** | 1,241ms | Production-ready |
+| Metric | Score | Description |
+|:-------|:-----:|:------------|
+| **English Classification** | 66.7% | Identify clause types (indemnification, liability, etc.) |
+| **Risk Detection** | 66.7% | Detect HIGH/MEDIUM/LOW risk clauses |
+| **Edge Cases** | 80.0% | Handle varied input formats |
+| **Latency** | ~1.2s | Production-ready inference |
 
 **Training Data (75K+ examples):**
-- CUAD (SEC contracts): 10,667
-- Legal Argument Mining: 23,113
-- Claudette ToS: 9,319
-- Mistral Legal French: 14,875
-- EURLex-4K: 5,000
-- + 5 more sources
+| Source | Examples |
+|:-------|:--------:|
+| CUAD (SEC contracts) | 10,667 |
+| Legal Argument Mining | 23,113 |
+| Claudette ToS | 9,319 |
+| Mistral Legal French | 14,875 |
+| EURLex-4K | 5,000 |
+| + 5 more sources | ~13,000 |
 
-**V8 API Endpoints:**
+**API Endpoints:**
 ```bash
-# Risk Analysis
+# Clause Analysis
 POST /api/v8/analyze/clause
 {"clause_text": "Provider shall have no liability whatsoever..."}
 
@@ -87,22 +76,6 @@ POST /api/v8/analyze/contract
 # List All Clause Types (75 types)
 GET /api/v8/clause-types
 ```
-
-**V7 API Endpoints:**
-```bash
-# Risk Analysis
-POST /api/v5/risk
-{"clause_text": "Provider shall have no liability whatsoever..."}
-
-# Classification
-POST /api/v5/classify
-{"clause_text": "This Agreement shall be governed by Delaware law..."}
-
-# Full Contract Analysis
-POST /api/v5/analyze-contract
-{"contract_text": "[full contract text]"}
-```
-
 
 
 ---
