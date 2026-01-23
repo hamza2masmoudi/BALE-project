@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![BALE Logo](https://img.shields.io/badge/BALE-2.2-black?style=for-the-badge)
+![BALE Logo](https://img.shields.io/badge/BALE-V8_Ultimate-black?style=for-the-badge)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg?style=flat-square)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-green.svg?style=flat-square)](https://fastapi.tiangolo.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
@@ -54,6 +54,40 @@ BALE includes a fine-tuned **Mistral-7B** model (V7) for real-time clause analys
 | **Employment Law** | 60% | Non-competes, severance, IP assignment |
 | **M&A** | 60% | Reps & warranties, closing conditions |
 
+### 🚀 V8 Ultimate - Production-Ready Model (NEW!)
+
+V8 Ultimate is trained on **75,381 real legal examples** from 10 sources:
+
+| Metric | Score | Improvement |
+|:-------|:-----:|:-----------:|
+| **English Classification** | 66.7% | +24% vs baseline |
+| **Risk Detection** | 66.7% | +26% vs baseline |
+| **Edge Cases** | 80.0% | +30% vs baseline |
+| **CUAD Real Samples** | 60.0% | - |
+| **Avg Latency** | 1,241ms | Production-ready |
+
+**Training Data (75K+ examples):**
+- CUAD (SEC contracts): 10,667
+- Legal Argument Mining: 23,113
+- Claudette ToS: 9,319
+- Mistral Legal French: 14,875
+- EURLex-4K: 5,000
+- + 5 more sources
+
+**V8 API Endpoints:**
+```bash
+# Risk Analysis
+POST /api/v8/analyze/clause
+{"clause_text": "Provider shall have no liability whatsoever..."}
+
+# Full Contract Analysis  
+POST /api/v8/analyze/contract
+{"contract_text": "[full contract text]"}
+
+# List All Clause Types (75 types)
+GET /api/v8/clause-types
+```
+
 **V7 API Endpoints:**
 ```bash
 # Risk Analysis
@@ -68,6 +102,8 @@ POST /api/v5/classify
 POST /api/v5/analyze-contract
 {"contract_text": "[full contract text]"}
 ```
+
+
 
 ---
 
