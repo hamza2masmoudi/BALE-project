@@ -1,0 +1,386 @@
+{
+  "metadata": {
+    "timestamp": "2026-01-24T17:42:50.808141",
+    "model_path": "mlx-community/Mistral-7B-Instruct-v0.3-4bit",
+    "adapter_path": "models/bale-legal-lora-v8-ultimate",
+    "total_cases": 91
+  },
+  "summary": {
+    "type_accuracy": 0.0,
+    "risk_accuracy": 0.0,
+    "combined_accuracy": 0.0,
+    "average_latency_ms": 0.0,
+    "total_evaluated": 91,
+    "errors": 91
+  },
+  "by_language": {},
+  "by_type": {},
+  "by_risk": {},
+  "detailed_results": [],
+  "errors": [
+    {
+      "id": "EN_IND_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_IND_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_IND_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_LOL_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_LOL_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_LOL_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_TERM_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_TERM_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_TERM_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_CONF_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_CONF_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_CONF_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_IP_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_IP_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_IP_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_GOV_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_GOV_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_GOV_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_FM_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_FM_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_FM_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_WAR_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_WAR_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_WAR_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_PAY_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_PAY_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_PAY_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_NC_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_NC_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_NC_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_DP_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_DP_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_DP_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_ASS_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_ASS_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_ASS_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_DR_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_DR_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_DR_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_INS_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_INS_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_INS_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_AUD_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_AUD_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_AUD_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_IND_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_IND_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_IND_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_LOL_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_LOL_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_LOL_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_TERM_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_TERM_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_TERM_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_CONF_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_CONF_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_CONF_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_IP_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_IP_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_IP_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_GOV_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_GOV_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_GOV_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_FM_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_FM_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_FM_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_WAR_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_WAR_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_WAR_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_PAY_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_PAY_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_PAY_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_NC_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_NC_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_NC_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_DP_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_DP_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_DP_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_ASS_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_ASS_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_ASS_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_DR_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_DR_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_DR_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_EDGE_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_EDGE_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_EDGE_003",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_EDGE_004",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "FR_EDGE_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_MIXED_001",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    },
+    {
+      "id": "EN_MIXED_002",
+      "error": "generate_step() got an unexpected keyword argument 'temp'"
+    }
+  ]
+}

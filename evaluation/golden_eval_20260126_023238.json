@@ -1,0 +1,1108 @@
+{
+  "metadata": {
+    "timestamp": "2026-01-26T02:29:29.722805",
+    "model_path": "mlx-community/Mistral-7B-Instruct-v0.3-4bit",
+    "adapter_path": "models/bale-legal-lora-v8-ultimate",
+    "total_cases": 91
+  },
+  "summary": {
+    "type_accuracy": 98.9,
+    "risk_accuracy": 58.24,
+    "combined_accuracy": 57.14,
+    "average_latency_ms": 2079.55,
+    "total_evaluated": 91,
+    "errors": 0
+  },
+  "by_language": {
+    "en": {
+      "type_accuracy": 100.0,
+      "risk_accuracy": 56.86,
+      "total": 51
+    },
+    "fr": {
+      "type_accuracy": 97.5,
+      "risk_accuracy": 60.0,
+      "total": 40
+    }
+  },
+  "by_type": {
+    "indemnification": {
+      "accuracy": 100.0,
+      "total": 7
+    },
+    "limitation_of_liability": {
+      "accuracy": 100.0,
+      "total": 7
+    },
+    "termination": {
+      "accuracy": 100.0,
+      "total": 8
+    },
+    "confidentiality": {
+      "accuracy": 100.0,
+      "total": 7
+    },
+    "intellectual_property": {
+      "accuracy": 100.0,
+      "total": 6
+    },
+    "governing_law": {
+      "accuracy": 100.0,
+      "total": 7
+    },
+    "force_majeure": {
+      "accuracy": 100.0,
+      "total": 6
+    },
+    "warranty": {
+      "accuracy": 100.0,
+      "total": 7
+    },
+    "payment_terms": {
+      "accuracy": 100.0,
+      "total": 6
+    },
+    "non_compete": {
+      "accuracy": 100.0,
+      "total": 6
+    },
+    "data_protection": {
+      "accuracy": 100.0,
+      "total": 6
+    },
+    "assignment": {
+      "accuracy": 100.0,
+      "total": 6
+    },
+    "dispute_resolution": {
+      "accuracy": 83.33,
+      "total": 6
+    },
+    "insurance": {
+      "accuracy": 100.0,
+      "total": 3
+    },
+    "audit_rights": {
+      "accuracy": 100.0,
+      "total": 3
+    }
+  },
+  "by_risk": {
+    "high": {
+      "accuracy": 63.33,
+      "total": 30
+    },
+    "medium": {
+      "accuracy": 18.75,
+      "total": 32
+    },
+    "low": {
+      "accuracy": 96.55,
+      "total": 29
+    }
+  },
+  "detailed_results": [
+    {
+      "id": "EN_IND_001",
+      "language": "en",
+      "expected_type": "indemnification",
+      "predicted_type": "indemnification",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 2223.865032196045
+    },
+    {
+      "id": "EN_IND_002",
+      "language": "en",
+      "expected_type": "indemnification",
+      "predicted_type": "indemnification",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1404.2010307312012
+    },
+    {
+      "id": "EN_IND_003",
+      "language": "en",
+      "expected_type": "indemnification",
+      "predicted_type": "indemnification",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1575.063943862915
+    },
+    {
+      "id": "EN_LOL_001",
+      "language": "en",
+      "expected_type": "limitation_of_liability",
+      "predicted_type": "limitation_of_liability",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1692.3630237579346
+    },
+    {
+      "id": "EN_LOL_002",
+      "language": "en",
+      "expected_type": "limitation_of_liability",
+      "predicted_type": "limitation_of_liability",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 3662.3170375823975
+    },
+    {
+      "id": "EN_LOL_003",
+      "language": "en",
+      "expected_type": "limitation_of_liability",
+      "predicted_type": "limitation_of_liability",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1613.5048866271973
+    },
+    {
+      "id": "EN_TERM_001",
+      "language": "en",
+      "expected_type": "termination",
+      "predicted_type": "termination",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "medium",
+      "risk_correct": false,
+      "latency_ms": 1327.185869216919
+    },
+    {
+      "id": "EN_TERM_002",
+      "language": "en",
+      "expected_type": "termination",
+      "predicted_type": "termination",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "high",
+      "risk_correct": false,
+      "latency_ms": 1327.211856842041
+    },
+    {
+      "id": "EN_TERM_003",
+      "language": "en",
+      "expected_type": "termination",
+      "predicted_type": "termination",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 4685.471057891846
+    },
+    {
+      "id": "EN_CONF_001",
+      "language": "en",
+      "expected_type": "confidentiality",
+      "predicted_type": "confidentiality",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1323.521614074707
+    },
+    {
+      "id": "EN_CONF_002",
+      "language": "en",
+      "expected_type": "confidentiality",
+      "predicted_type": "confidentiality",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "medium",
+      "risk_correct": true,
+      "latency_ms": 4448.295116424561
+    },
+    {
+      "id": "EN_CONF_003",
+      "language": "en",
+      "expected_type": "confidentiality",
+      "predicted_type": "confidentiality",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1613.9559745788574
+    },
+    {
+      "id": "EN_IP_001",
+      "language": "en",
+      "expected_type": "intellectual_property",
+      "predicted_type": "intellectual_property",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1367.678165435791
+    },
+    {
+      "id": "EN_IP_002",
+      "language": "en",
+      "expected_type": "intellectual_property",
+      "predicted_type": "intellectual_property",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1379.5702457427979
+    },
+    {
+      "id": "EN_IP_003",
+      "language": "en",
+      "expected_type": "intellectual_property",
+      "predicted_type": "intellectual_property",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1364.0639781951904
+    },
+    {
+      "id": "EN_GOV_001",
+      "language": "en",
+      "expected_type": "governing_law",
+      "predicted_type": "governing_law",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1360.7537746429443
+    },
+    {
+      "id": "EN_GOV_002",
+      "language": "en",
+      "expected_type": "governing_law",
+      "predicted_type": "governing_law",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1564.8572444915771
+    },
+    {
+      "id": "EN_GOV_003",
+      "language": "en",
+      "expected_type": "governing_law",
+      "predicted_type": "governing_law",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 4422.368049621582
+    },
+    {
+      "id": "EN_FM_001",
+      "language": "en",
+      "expected_type": "force_majeure",
+      "predicted_type": "force_majeure",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1449.6281147003174
+    },
+    {
+      "id": "EN_FM_002",
+      "language": "en",
+      "expected_type": "force_majeure",
+      "predicted_type": "force_majeure",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1435.0566864013672
+    },
+    {
+      "id": "EN_FM_003",
+      "language": "en",
+      "expected_type": "force_majeure",
+      "predicted_type": "force_majeure",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1451.913833618164
+    },
+    {
+      "id": "EN_WAR_001",
+      "language": "en",
+      "expected_type": "warranty",
+      "predicted_type": "warranty",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 4749.557018280029
+    },
+    {
+      "id": "EN_WAR_002",
+      "language": "en",
+      "expected_type": "warranty",
+      "predicted_type": "warranty",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1409.7778797149658
+    },
+    {
+      "id": "EN_WAR_003",
+      "language": "en",
+      "expected_type": "warranty",
+      "predicted_type": "warranty",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1309.1599941253662
+    },
+    {
+      "id": "EN_PAY_001",
+      "language": "en",
+      "expected_type": "payment_terms",
+      "predicted_type": "payment_terms",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1415.5089855194092
+    },
+    {
+      "id": "EN_PAY_002",
+      "language": "en",
+      "expected_type": "payment_terms",
+      "predicted_type": "payment_terms",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1635.8890533447266
+    },
+    {
+      "id": "EN_PAY_003",
+      "language": "en",
+      "expected_type": "payment_terms",
+      "predicted_type": "payment_terms",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1415.583848953247
+    },
+    {
+      "id": "EN_NC_001",
+      "language": "en",
+      "expected_type": "non_compete",
+      "predicted_type": "non_compete",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1412.2538566589355
+    },
+    {
+      "id": "EN_NC_002",
+      "language": "en",
+      "expected_type": "non_compete",
+      "predicted_type": "non_compete",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "medium",
+      "risk_correct": true,
+      "latency_ms": 1407.7918529510498
+    },
+    {
+      "id": "EN_NC_003",
+      "language": "en",
+      "expected_type": "non_compete",
+      "predicted_type": "non_compete",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1402.1189212799072
+    },
+    {
+      "id": "EN_DP_001",
+      "language": "en",
+      "expected_type": "data_protection",
+      "predicted_type": "data_protection",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1416.52512550354
+    },
+    {
+      "id": "EN_DP_002",
+      "language": "en",
+      "expected_type": "data_protection",
+      "predicted_type": "data_protection",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1405.9019088745117
+    },
+    {
+      "id": "EN_DP_003",
+      "language": "en",
+      "expected_type": "data_protection",
+      "predicted_type": "data_protection",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1432.3031902313232
+    },
+    {
+      "id": "EN_ASS_001",
+      "language": "en",
+      "expected_type": "assignment",
+      "predicted_type": "assignment",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 4063.005208969116
+    },
+    {
+      "id": "EN_ASS_002",
+      "language": "en",
+      "expected_type": "assignment",
+      "predicted_type": "assignment",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1305.1328659057617
+    },
+    {
+      "id": "EN_ASS_003",
+      "language": "en",
+      "expected_type": "assignment",
+      "predicted_type": "assignment",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1288.8092994689941
+    },
+    {
+      "id": "EN_DR_001",
+      "language": "en",
+      "expected_type": "dispute_resolution",
+      "predicted_type": "dispute_resolution",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "medium",
+      "risk_correct": false,
+      "latency_ms": 1678.7049770355225
+    },
+    {
+      "id": "EN_DR_002",
+      "language": "en",
+      "expected_type": "dispute_resolution",
+      "predicted_type": "dispute_resolution",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1410.9556674957275
+    },
+    {
+      "id": "EN_DR_003",
+      "language": "en",
+      "expected_type": "dispute_resolution",
+      "predicted_type": "dispute_resolution",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1405.9152603149414
+    },
+    {
+      "id": "EN_INS_001",
+      "language": "en",
+      "expected_type": "insurance",
+      "predicted_type": "insurance",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "medium",
+      "risk_correct": false,
+      "latency_ms": 1301.0940551757812
+    },
+    {
+      "id": "EN_INS_002",
+      "language": "en",
+      "expected_type": "insurance",
+      "predicted_type": "insurance",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1289.8569107055664
+    },
+    {
+      "id": "EN_INS_003",
+      "language": "en",
+      "expected_type": "insurance",
+      "predicted_type": "insurance",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1288.214921951294
+    },
+    {
+      "id": "EN_AUD_001",
+      "language": "en",
+      "expected_type": "audit_rights",
+      "predicted_type": "audit_rights",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1411.09299659729
+    },
+    {
+      "id": "EN_AUD_002",
+      "language": "en",
+      "expected_type": "audit_rights",
+      "predicted_type": "audit_rights",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1408.200979232788
+    },
+    {
+      "id": "EN_AUD_003",
+      "language": "en",
+      "expected_type": "audit_rights",
+      "predicted_type": "audit_rights",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1402.043104171753
+    },
+    {
+      "id": "FR_IND_001",
+      "language": "fr",
+      "expected_type": "indemnification",
+      "predicted_type": "indemnification",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1665.6711101531982
+    },
+    {
+      "id": "FR_IND_002",
+      "language": "fr",
+      "expected_type": "indemnification",
+      "predicted_type": "indemnification",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1522.1889019012451
+    },
+    {
+      "id": "FR_IND_003",
+      "language": "fr",
+      "expected_type": "indemnification",
+      "predicted_type": "indemnification",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 4844.117879867554
+    },
+    {
+      "id": "FR_LOL_001",
+      "language": "fr",
+      "expected_type": "limitation_of_liability",
+      "predicted_type": "limitation_of_liability",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1823.8000869750977
+    },
+    {
+      "id": "FR_LOL_002",
+      "language": "fr",
+      "expected_type": "limitation_of_liability",
+      "predicted_type": "limitation_of_liability",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1778.352975845337
+    },
+    {
+      "id": "FR_LOL_003",
+      "language": "fr",
+      "expected_type": "limitation_of_liability",
+      "predicted_type": "limitation_of_liability",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1771.907091140747
+    },
+    {
+      "id": "FR_TERM_001",
+      "language": "fr",
+      "expected_type": "termination",
+      "predicted_type": "termination",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "medium",
+      "risk_correct": false,
+      "latency_ms": 1459.8500728607178
+    },
+    {
+      "id": "FR_TERM_002",
+      "language": "fr",
+      "expected_type": "termination",
+      "predicted_type": "termination",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "medium",
+      "risk_correct": true,
+      "latency_ms": 1471.9350337982178
+    },
+    {
+      "id": "FR_TERM_003",
+      "language": "fr",
+      "expected_type": "termination",
+      "predicted_type": "termination",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 4238.607168197632
+    },
+    {
+      "id": "FR_CONF_001",
+      "language": "fr",
+      "expected_type": "confidentiality",
+      "predicted_type": "confidentiality",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1470.2699184417725
+    },
+    {
+      "id": "FR_CONF_002",
+      "language": "fr",
+      "expected_type": "confidentiality",
+      "predicted_type": "confidentiality",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "medium",
+      "risk_correct": true,
+      "latency_ms": 1609.3151569366455
+    },
+    {
+      "id": "FR_CONF_003",
+      "language": "fr",
+      "expected_type": "confidentiality",
+      "predicted_type": "confidentiality",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1481.6372394561768
+    },
+    {
+      "id": "FR_IP_001",
+      "language": "fr",
+      "expected_type": "intellectual_property",
+      "predicted_type": "intellectual_property",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1506.5088272094727
+    },
+    {
+      "id": "FR_IP_002",
+      "language": "fr",
+      "expected_type": "intellectual_property",
+      "predicted_type": "intellectual_property",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1500.5125999450684
+    },
+    {
+      "id": "FR_IP_003",
+      "language": "fr",
+      "expected_type": "intellectual_property",
+      "predicted_type": "intellectual_property",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1497.2119331359863
+    },
+    {
+      "id": "FR_GOV_001",
+      "language": "fr",
+      "expected_type": "governing_law",
+      "predicted_type": "governing_law",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 4131.063938140869
+    },
+    {
+      "id": "FR_GOV_002",
+      "language": "fr",
+      "expected_type": "governing_law",
+      "predicted_type": "governing_law",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 4803.909063339233
+    },
+    {
+      "id": "FR_GOV_003",
+      "language": "fr",
+      "expected_type": "governing_law",
+      "predicted_type": "governing_law",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 4931.276082992554
+    },
+    {
+      "id": "FR_FM_001",
+      "language": "fr",
+      "expected_type": "force_majeure",
+      "predicted_type": "force_majeure",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1636.4881992340088
+    },
+    {
+      "id": "FR_FM_002",
+      "language": "fr",
+      "expected_type": "force_majeure",
+      "predicted_type": "force_majeure",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1630.2516460418701
+    },
+    {
+      "id": "FR_FM_003",
+      "language": "fr",
+      "expected_type": "force_majeure",
+      "predicted_type": "force_majeure",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1630.6068897247314
+    },
+    {
+      "id": "FR_WAR_001",
+      "language": "fr",
+      "expected_type": "warranty",
+      "predicted_type": "warranty",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 5126.402139663696
+    },
+    {
+      "id": "FR_WAR_002",
+      "language": "fr",
+      "expected_type": "warranty",
+      "predicted_type": "warranty",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1511.6708278656006
+    },
+    {
+      "id": "FR_WAR_003",
+      "language": "fr",
+      "expected_type": "warranty",
+      "predicted_type": "warranty",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1527.886152267456
+    },
+    {
+      "id": "FR_PAY_001",
+      "language": "fr",
+      "expected_type": "payment_terms",
+      "predicted_type": "payment_terms",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1600.8896827697754
+    },
+    {
+      "id": "FR_PAY_002",
+      "language": "fr",
+      "expected_type": "payment_terms",
+      "predicted_type": "payment_terms",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1606.0810089111328
+    },
+    {
+      "id": "FR_PAY_003",
+      "language": "fr",
+      "expected_type": "payment_terms",
+      "predicted_type": "payment_terms",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1541.3639545440674
+    },
+    {
+      "id": "FR_NC_001",
+      "language": "fr",
+      "expected_type": "non_compete",
+      "predicted_type": "non_compete",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1586.1289501190186
+    },
+    {
+      "id": "FR_NC_002",
+      "language": "fr",
+      "expected_type": "non_compete",
+      "predicted_type": "non_compete",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "medium",
+      "risk_correct": true,
+      "latency_ms": 1615.440845489502
+    },
+    {
+      "id": "FR_NC_003",
+      "language": "fr",
+      "expected_type": "non_compete",
+      "predicted_type": "non_compete",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1586.3559246063232
+    },
+    {
+      "id": "FR_DP_001",
+      "language": "fr",
+      "expected_type": "data_protection",
+      "predicted_type": "data_protection",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1592.4768447875977
+    },
+    {
+      "id": "FR_DP_002",
+      "language": "fr",
+      "expected_type": "data_protection",
+      "predicted_type": "data_protection",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1601.7260551452637
+    },
+    {
+      "id": "FR_DP_003",
+      "language": "fr",
+      "expected_type": "data_protection",
+      "predicted_type": "data_protection",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1589.4739627838135
+    },
+    {
+      "id": "FR_ASS_001",
+      "language": "fr",
+      "expected_type": "assignment",
+      "predicted_type": "assignment",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1474.2588996887207
+    },
+    {
+      "id": "FR_ASS_002",
+      "language": "fr",
+      "expected_type": "assignment",
+      "predicted_type": "assignment",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1482.917070388794
+    },
+    {
+      "id": "FR_ASS_003",
+      "language": "fr",
+      "expected_type": "assignment",
+      "predicted_type": "assignment",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 1468.822956085205
+    },
+    {
+      "id": "FR_DR_001",
+      "language": "fr",
+      "expected_type": "dispute_resolution",
+      "predicted_type": "dispute_resolution",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "medium",
+      "risk_correct": false,
+      "latency_ms": 4932.675123214722
+    },
+    {
+      "id": "FR_DR_002",
+      "language": "fr",
+      "expected_type": "dispute_resolution",
+      "predicted_type": "dispute_resolution",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 5006.492137908936
+    },
+    {
+      "id": "FR_DR_003",
+      "language": "fr",
+      "expected_type": "dispute_resolution",
+      "predicted_type": "governing_law",
+      "type_correct": false,
+      "expected_risk": "low",
+      "predicted_risk": "low",
+      "risk_correct": true,
+      "latency_ms": 4321.776866912842
+    },
+    {
+      "id": "EN_EDGE_001",
+      "language": "en",
+      "expected_type": "limitation_of_liability",
+      "predicted_type": "limitation_of_liability",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "medium",
+      "risk_correct": true,
+      "latency_ms": 4634.988069534302
+    },
+    {
+      "id": "EN_EDGE_002",
+      "language": "en",
+      "expected_type": "warranty",
+      "predicted_type": "warranty",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "high",
+      "risk_correct": true,
+      "latency_ms": 1196.742057800293
+    },
+    {
+      "id": "EN_EDGE_003",
+      "language": "en",
+      "expected_type": "governing_law",
+      "predicted_type": "governing_law",
+      "type_correct": true,
+      "expected_risk": "low",
+      "predicted_risk": "medium",
+      "risk_correct": false,
+      "latency_ms": 1843.2021141052246
+    },
+    {
+      "id": "EN_EDGE_004",
+      "language": "en",
+      "expected_type": "indemnification",
+      "predicted_type": "indemnification",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "high",
+      "risk_correct": false,
+      "latency_ms": 2076.2977600097656
+    },
+    {
+      "id": "FR_EDGE_001",
+      "language": "fr",
+      "expected_type": "termination",
+      "predicted_type": "termination",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1233.4892749786377
+    },
+    {
+      "id": "EN_MIXED_001",
+      "language": "en",
+      "expected_type": "confidentiality",
+      "predicted_type": "confidentiality",
+      "type_correct": true,
+      "expected_risk": "medium",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 4935.1959228515625
+    },
+    {
+      "id": "EN_MIXED_002",
+      "language": "en",
+      "expected_type": "termination",
+      "predicted_type": "termination",
+      "type_correct": true,
+      "expected_risk": "high",
+      "predicted_risk": "low",
+      "risk_correct": false,
+      "latency_ms": 1382.8039169311523
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,856 @@
+{
+    "metadata": {
+        "version": "1.0",
+        "created": "2026-01-24",
+        "description": "Golden test set for BALE V8 model evaluation - manually curated ground truth",
+        "total_examples": 100,
+        "languages": [
+            "en",
+            "fr"
+        ],
+        "purpose": "Objective measurement of model accuracy for clause classification and risk assessment"
+    },
+    "clause_type_taxonomy": {
+        "indemnification": "Clauses requiring one party to compensate another for losses",
+        "limitation_of_liability": "Caps on damages or exclusions of liability",
+        "termination": "Conditions and procedures for ending the contract",
+        "confidentiality": "Non-disclosure and information protection obligations",
+        "intellectual_property": "Ownership and licensing of IP rights",
+        "governing_law": "Choice of jurisdiction and applicable law",
+        "force_majeure": "Excuses for non-performance due to extraordinary events",
+        "warranty": "Guarantees about quality, performance, or condition",
+        "payment_terms": "Pricing, invoicing, and payment conditions",
+        "non_compete": "Restrictions on competitive activities",
+        "data_protection": "GDPR/privacy compliance obligations",
+        "assignment": "Transfer of rights or obligations to third parties",
+        "dispute_resolution": "Arbitration, mediation, or litigation procedures",
+        "insurance": "Requirements to maintain insurance coverage",
+        "audit_rights": "Rights to inspect books, records, or compliance"
+    },
+    "risk_levels": {
+        "low": "Standard, balanced clauses with minimal exposure",
+        "medium": "Contains some one-sided terms requiring attention",
+        "high": "Significantly unfavorable terms requiring negotiation or rejection"
+    },
+    "test_cases": [
+        {
+            "id": "EN_IND_001",
+            "language": "en",
+            "clause_type": "indemnification",
+            "risk_level": "high",
+            "text": "Supplier shall indemnify, defend, and hold harmless Customer and its affiliates, officers, directors, employees, and agents from and against any and all claims, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising out of or relating to Supplier's performance under this Agreement, regardless of fault or negligence.",
+            "risk_rationale": "Unlimited indemnification without fault requirement - extremely one-sided",
+            "source": "curated"
+        },
+        {
+            "id": "EN_IND_002",
+            "language": "en",
+            "clause_type": "indemnification",
+            "risk_level": "medium",
+            "text": "Each party shall indemnify the other against third-party claims arising from such party's gross negligence or willful misconduct in its performance of this Agreement.",
+            "risk_rationale": "Mutual indemnification limited to gross negligence - balanced but requires monitoring",
+            "source": "curated"
+        },
+        {
+            "id": "EN_IND_003",
+            "language": "en",
+            "clause_type": "indemnification",
+            "risk_level": "low",
+            "text": "Vendor agrees to indemnify Buyer for direct damages resulting from Vendor's breach of the warranty provisions set forth in Section 5, subject to the limitation of liability in Section 8.",
+            "risk_rationale": "Limited scope, tied to specific breach, capped by liability clause",
+            "source": "curated"
+        },
+        {
+            "id": "EN_LOL_001",
+            "language": "en",
+            "clause_type": "limitation_of_liability",
+            "risk_level": "high",
+            "text": "IN NO EVENT SHALL PROVIDER BE LIABLE FOR ANY DAMAGES WHATSOEVER, INCLUDING WITHOUT LIMITATION, DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES, LOST PROFITS, OR LOSS OF DATA, EVEN IF PROVIDER HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.",
+            "risk_rationale": "Total liability exclusion including direct damages - unenforceable in many jurisdictions",
+            "source": "curated"
+        },
+        {
+            "id": "EN_LOL_002",
+            "language": "en",
+            "clause_type": "limitation_of_liability",
+            "risk_level": "medium",
+            "text": "Neither party shall be liable for any indirect, incidental, special, or consequential damages. Each party's total liability shall not exceed the fees paid under this Agreement in the twelve months preceding the claim.",
+            "risk_rationale": "Consequential damages excluded, liability capped at 12-month fees - industry standard",
+            "source": "curated"
+        },
+        {
+            "id": "EN_LOL_003",
+            "language": "en",
+            "clause_type": "limitation_of_liability",
+            "risk_level": "low",
+            "text": "Except for breaches of confidentiality, IP infringement, or indemnification obligations, each party's liability shall be limited to proven direct damages up to the total contract value.",
+            "risk_rationale": "Carve-outs for critical areas, fair cap - well-balanced",
+            "source": "curated"
+        },
+        {
+            "id": "EN_TERM_001",
+            "language": "en",
+            "clause_type": "termination",
+            "risk_level": "high",
+            "text": "Customer may terminate this Agreement at any time for any reason upon written notice. Supplier may not terminate except for Customer's material breach that remains uncured for 90 days after written notice.",
+            "risk_rationale": "Asymmetric termination rights heavily favor one party",
+            "source": "curated"
+        },
+        {
+            "id": "EN_TERM_002",
+            "language": "en",
+            "clause_type": "termination",
+            "risk_level": "medium",
+            "text": "Either party may terminate this Agreement upon 60 days' prior written notice without cause, or immediately upon material breach by the other party that remains uncured for 30 days.",
+            "risk_rationale": "Mutual termination rights but cure period may be too short for complex issues",
+            "source": "curated"
+        },
+        {
+            "id": "EN_TERM_003",
+            "language": "en",
+            "clause_type": "termination",
+            "risk_level": "low",
+            "text": "This Agreement shall continue for the Initial Term and automatically renew for successive one-year periods unless either party provides 90 days' written notice of non-renewal. Either party may terminate for material uncured breach.",
+            "risk_rationale": "Standard auto-renewal with adequate notice period",
+            "source": "curated"
+        },
+        {
+            "id": "EN_CONF_001",
+            "language": "en",
+            "clause_type": "confidentiality",
+            "risk_level": "high",
+            "text": "Recipient shall maintain the confidentiality of all Discloser's information in perpetuity and shall not disclose such information to any third party under any circumstances, including pursuant to legal process or court order.",
+            "risk_rationale": "Perpetual obligation with no exceptions for legal requirements - unenforceable",
+            "source": "curated"
+        },
+        {
+            "id": "EN_CONF_002",
+            "language": "en",
+            "clause_type": "confidentiality",
+            "risk_level": "medium",
+            "text": "Each party shall protect the other's Confidential Information using the same degree of care it uses to protect its own confidential information, but no less than reasonable care, for a period of five years following disclosure.",
+            "risk_rationale": "Reasonable care standard with defined term - standard provision",
+            "source": "curated"
+        },
+        {
+            "id": "EN_CONF_003",
+            "language": "en",
+            "clause_type": "confidentiality",
+            "risk_level": "low",
+            "text": "Confidential Information shall not include information that: (a) is publicly available; (b) was known prior to disclosure; (c) is independently developed; or (d) is received from a third party without restriction. The confidentiality obligation shall survive for 3 years.",
+            "risk_rationale": "Standard exclusions with reasonable survival period",
+            "source": "curated"
+        },
+        {
+            "id": "EN_IP_001",
+            "language": "en",
+            "clause_type": "intellectual_property",
+            "risk_level": "high",
+            "text": "All work product, inventions, discoveries, and improvements made by Contractor, whether or not related to the Services, shall be the sole and exclusive property of Client, and Contractor hereby assigns all rights thereto.",
+            "risk_rationale": "Overly broad IP assignment including unrelated work - potentially unenforceable",
+            "source": "curated"
+        },
+        {
+            "id": "EN_IP_002",
+            "language": "en",
+            "clause_type": "intellectual_property",
+            "risk_level": "medium",
+            "text": "Client shall own all Deliverables created specifically for Client under this Agreement. Contractor retains ownership of pre-existing materials and general knowledge, and grants Client a perpetual license to use such materials as incorporated in the Deliverables.",
+            "risk_rationale": "Clear delineation but perpetual license may limit contractor's future work",
+            "source": "curated"
+        },
+        {
+            "id": "EN_IP_003",
+            "language": "en",
+            "clause_type": "intellectual_property",
+            "risk_level": "low",
+            "text": "Each party retains all intellectual property rights it owned prior to this Agreement. Any jointly developed IP shall be co-owned with each party having non-exclusive rights to use and sublicense.",
+            "risk_rationale": "Fair mutual treatment with clear joint ownership terms",
+            "source": "curated"
+        },
+        {
+            "id": "EN_GOV_001",
+            "language": "en",
+            "clause_type": "governing_law",
+            "risk_level": "high",
+            "text": "This Agreement shall be governed by and construed in accordance with the laws of the Cayman Islands. The parties irrevocably submit to the exclusive jurisdiction of the courts of the Cayman Islands.",
+            "risk_rationale": "Offshore jurisdiction may limit legal recourse and increase costs",
+            "source": "curated"
+        },
+        {
+            "id": "EN_GOV_002",
+            "language": "en",
+            "clause_type": "governing_law",
+            "risk_level": "medium",
+            "text": "This Agreement shall be governed by the laws of the State of Delaware, without regard to its conflict of laws principles. Any dispute shall be resolved in the state or federal courts located in Wilmington, Delaware.",
+            "risk_rationale": "Delaware law is business-friendly but may be inconvenient for non-US parties",
+            "source": "curated"
+        },
+        {
+            "id": "EN_GOV_003",
+            "language": "en",
+            "clause_type": "governing_law",
+            "risk_level": "low",
+            "text": "This Agreement shall be governed by the laws of the jurisdiction where the Services are primarily performed. Each party submits to the non-exclusive jurisdiction of the courts of such jurisdiction.",
+            "risk_rationale": "Practical approach with non-exclusive jurisdiction allowing flexibility",
+            "source": "curated"
+        },
+        {
+            "id": "EN_FM_001",
+            "language": "en",
+            "clause_type": "force_majeure",
+            "risk_level": "high",
+            "text": "Supplier shall not be excused from performance due to any event beyond its control, including but not limited to acts of God, war, terrorism, pandemic, or government action. Supplier must continue to perform and deliver regardless of circumstances.",
+            "risk_rationale": "No force majeure protection - exposes party to impossible obligations",
+            "source": "curated"
+        },
+        {
+            "id": "EN_FM_002",
+            "language": "en",
+            "clause_type": "force_majeure",
+            "risk_level": "medium",
+            "text": "Neither party shall be liable for failure to perform due to causes beyond its reasonable control, provided that the affected party gives prompt notice and uses reasonable efforts to resume performance. If the force majeure event continues for more than 60 days, either party may terminate.",
+            "risk_rationale": "Standard provision with termination right after extended event",
+            "source": "curated"
+        },
+        {
+            "id": "EN_FM_003",
+            "language": "en",
+            "clause_type": "force_majeure",
+            "risk_level": "low",
+            "text": "Performance shall be excused during Force Majeure Events, which include natural disasters, war, terrorism, pandemic, government orders, and similar events beyond reasonable control. Obligations shall be suspended proportionately.",
+            "risk_rationale": "Comprehensive list with proportional suspension - fair and clear",
+            "source": "curated"
+        },
+        {
+            "id": "EN_WAR_001",
+            "language": "en",
+            "clause_type": "warranty",
+            "risk_level": "high",
+            "text": "THE SERVICES ARE PROVIDED 'AS IS' WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.",
+            "risk_rationale": "Complete warranty disclaimer - buyer assumes all risk",
+            "source": "curated"
+        },
+        {
+            "id": "EN_WAR_002",
+            "language": "en",
+            "clause_type": "warranty",
+            "risk_level": "medium",
+            "text": "Provider warrants that the Services shall be performed in a professional and workmanlike manner consistent with industry standards. Provider's sole obligation for breach of this warranty shall be to re-perform the non-conforming Services.",
+            "risk_rationale": "Limited warranty with sole remedy of re-performance - may not cover all losses",
+            "source": "curated"
+        },
+        {
+            "id": "EN_WAR_003",
+            "language": "en",
+            "clause_type": "warranty",
+            "risk_level": "low",
+            "text": "Seller warrants that the Products shall conform to specifications, be free from defects in materials and workmanship, and not infringe third-party IP rights. This warranty extends for 24 months from delivery.",
+            "risk_rationale": "Comprehensive warranty with reasonable duration - buyer well protected",
+            "source": "curated"
+        },
+        {
+            "id": "EN_PAY_001",
+            "language": "en",
+            "clause_type": "payment_terms",
+            "risk_level": "high",
+            "text": "All fees are due upon invoice and non-refundable. Late payments shall bear interest at 2% per month. Customer shall pay all collection costs including reasonable attorneys' fees. Provider may suspend services immediately upon any payment delay.",
+            "risk_rationale": "Harsh payment terms with high interest and immediate suspension right",
+            "source": "curated"
+        },
+        {
+            "id": "EN_PAY_002",
+            "language": "en",
+            "clause_type": "payment_terms",
+            "risk_level": "medium",
+            "text": "Payment is due within 30 days of invoice date. Late payments shall bear interest at 1.5% per month or the maximum legal rate. Provider may suspend services after 15 days' written notice of non-payment.",
+            "risk_rationale": "Standard terms but interest rate may be high in some jurisdictions",
+            "source": "curated"
+        },
+        {
+            "id": "EN_PAY_003",
+            "language": "en",
+            "clause_type": "payment_terms",
+            "risk_level": "low",
+            "text": "Invoices shall be payable within 45 days. Interest on overdue amounts shall accrue at the prime rate plus 2%. Either party may request review of disputed invoices within 10 days of receipt.",
+            "risk_rationale": "Reasonable payment window with dispute mechanism - balanced",
+            "source": "curated"
+        },
+        {
+            "id": "EN_NC_001",
+            "language": "en",
+            "clause_type": "non_compete",
+            "risk_level": "high",
+            "text": "Employee agrees not to engage in any business that competes with Company, anywhere in the world, for a period of five years following termination of employment, regardless of the reason for termination.",
+            "risk_rationale": "Overbroad geographic scope and duration - likely unenforceable",
+            "source": "curated"
+        },
+        {
+            "id": "EN_NC_002",
+            "language": "en",
+            "clause_type": "non_compete",
+            "risk_level": "medium",
+            "text": "For a period of 12 months following termination, Employee shall not work for or provide services to any Competing Business within the Territory where Employee provided services during the last 24 months.",
+            "risk_rationale": "Reasonable duration and limited geography but still restrictive",
+            "source": "curated"
+        },
+        {
+            "id": "EN_NC_003",
+            "language": "en",
+            "clause_type": "non_compete",
+            "risk_level": "low",
+            "text": "Employee agrees not to solicit Company's customers with whom Employee had direct contact during the 6 months prior to termination, for a period of 6 months following termination.",
+            "risk_rationale": "Narrow non-solicitation rather than broad non-compete - enforceable and fair",
+            "source": "curated"
+        },
+        {
+            "id": "EN_DP_001",
+            "language": "en",
+            "clause_type": "data_protection",
+            "risk_level": "high",
+            "text": "Customer grants Provider unrestricted rights to use, share, and sell all data provided by Customer, including personal data of Customer's employees and customers, for any purpose including marketing to third parties.",
+            "risk_rationale": "Gross GDPR violation - exposes customer to massive regulatory fines",
+            "source": "curated"
+        },
+        {
+            "id": "EN_DP_002",
+            "language": "en",
+            "clause_type": "data_protection",
+            "risk_level": "medium",
+            "text": "Provider shall process Personal Data only as necessary to provide the Services and shall implement appropriate technical and organizational measures. Provider may use sub-processors subject to written agreements imposing equivalent obligations.",
+            "risk_rationale": "Basic GDPR compliance but lacks specific DPA requirements",
+            "source": "curated"
+        },
+        {
+            "id": "EN_DP_003",
+            "language": "en",
+            "clause_type": "data_protection",
+            "risk_level": "low",
+            "text": "The parties shall enter into a Data Processing Agreement in the form attached as Exhibit A, which complies with GDPR Article 28. Provider shall process data only within the EEA unless Standard Contractual Clauses are executed.",
+            "risk_rationale": "Full GDPR compliance with separate DPA and transfer mechanisms",
+            "source": "curated"
+        },
+        {
+            "id": "EN_ASS_001",
+            "language": "en",
+            "clause_type": "assignment",
+            "risk_level": "high",
+            "text": "Provider may assign, transfer, or delegate this Agreement in whole or in part to any third party without restriction or notice. Customer may not assign any rights or obligations without Provider's prior written consent.",
+            "risk_rationale": "Asymmetric assignment rights with no customer protection on change of provider",
+            "source": "curated"
+        },
+        {
+            "id": "EN_ASS_002",
+            "language": "en",
+            "clause_type": "assignment",
+            "risk_level": "medium",
+            "text": "Neither party may assign this Agreement without the prior written consent of the other party, which consent shall not be unreasonably withheld. Either party may assign to an affiliate or in connection with a merger or acquisition.",
+            "risk_rationale": "Standard with M&A exception - watch for change in service quality",
+            "source": "curated"
+        },
+        {
+            "id": "EN_ASS_003",
+            "language": "en",
+            "clause_type": "assignment",
+            "risk_level": "low",
+            "text": "This Agreement may not be assigned by either party without the other's written consent. Any purported assignment without consent shall be void. This Agreement shall bind and inure to the benefit of permitted successors.",
+            "risk_rationale": "Equal treatment with clear consequence for violation - balanced",
+            "source": "curated"
+        },
+        {
+            "id": "EN_DR_001",
+            "language": "en",
+            "clause_type": "dispute_resolution",
+            "risk_level": "high",
+            "text": "All disputes shall be resolved by binding arbitration in Singapore before a single arbitrator under ICC Rules. The arbitration shall be confidential. Customer waives any right to participate in a class action.",
+            "risk_rationale": "Mandatory arbitration with class waiver and distant venue - favors provider",
+            "source": "curated"
+        },
+        {
+            "id": "EN_DR_002",
+            "language": "en",
+            "clause_type": "dispute_resolution",
+            "risk_level": "medium",
+            "text": "The parties shall first attempt to resolve disputes through good faith negotiation. If unresolved within 30 days, disputes shall proceed to mediation, and if still unresolved, to binding arbitration under AAA Commercial Rules.",
+            "risk_rationale": "Multi-tiered process is fair but may delay resolution",
+            "source": "curated"
+        },
+        {
+            "id": "EN_DR_003",
+            "language": "en",
+            "clause_type": "dispute_resolution",
+            "risk_level": "low",
+            "text": "The parties shall attempt to resolve disputes through negotiation. Either party may initiate non-binding mediation. If mediation fails, disputes may be submitted to the courts of competent jurisdiction.",
+            "risk_rationale": "Preserves litigation option with encouragement of ADR - flexible",
+            "source": "curated"
+        },
+        {
+            "id": "EN_INS_001",
+            "language": "en",
+            "clause_type": "insurance",
+            "risk_level": "high",
+            "text": "Vendor shall maintain comprehensive general liability insurance of not less than $50 million per occurrence, professional liability of $20 million, cyber liability of $30 million, and such other insurance as Client may require from time to time.",
+            "risk_rationale": "Excessive coverage requirements may be impossible or prohibitively expensive",
+            "source": "curated"
+        },
+        {
+            "id": "EN_INS_002",
+            "language": "en",
+            "clause_type": "insurance",
+            "risk_level": "medium",
+            "text": "Contractor shall maintain commercial general liability insurance of at least $2 million per occurrence and professional errors and omissions insurance of at least $1 million. Client shall be named as additional insured.",
+            "risk_rationale": "Reasonable requirements but additional insured status may increase premiums",
+            "source": "curated"
+        },
+        {
+            "id": "EN_INS_003",
+            "language": "en",
+            "clause_type": "insurance",
+            "risk_level": "low",
+            "text": "Each party shall maintain insurance appropriate to its business operations. Upon request, either party shall provide certificates of insurance evidencing such coverage.",
+            "risk_rationale": "Flexible approach allowing each party to assess its own risk",
+            "source": "curated"
+        },
+        {
+            "id": "EN_AUD_001",
+            "language": "en",
+            "clause_type": "audit_rights",
+            "risk_level": "high",
+            "text": "Customer may audit Provider's facilities, systems, personnel, and records at any time without prior notice. Provider shall bear all costs of such audits. Audit findings may be disclosed publicly.",
+            "risk_rationale": "Unlimited audit rights without notice or confidentiality - unreasonable burden",
+            "source": "curated"
+        },
+        {
+            "id": "EN_AUD_002",
+            "language": "en",
+            "clause_type": "audit_rights",
+            "risk_level": "medium",
+            "text": "Customer may audit Provider's compliance with this Agreement once per year upon 30 days' notice during normal business hours. Provider shall provide reasonable access to relevant records. Each party bears its own audit costs.",
+            "risk_rationale": "Annual audit with notice is standard - cost allocation is fair",
+            "source": "curated"
+        },
+        {
+            "id": "EN_AUD_003",
+            "language": "en",
+            "clause_type": "audit_rights",
+            "risk_level": "low",
+            "text": "Upon reasonable written request, Provider shall provide Customer with SOC 2 audit reports or equivalent third-party certifications demonstrating compliance with security requirements. Provider shall notify Customer of any material audit findings.",
+            "risk_rationale": "Reliance on third-party audits reduces burden while ensuring oversight",
+            "source": "curated"
+        },
+        {
+            "id": "FR_IND_001",
+            "language": "fr",
+            "clause_type": "indemnification",
+            "risk_level": "high",
+            "text": "Le Prestataire s'engage à indemniser et garantir le Client contre toutes réclamations, pertes, dommages, frais et dépenses, y compris les honoraires d'avocat, résultant directement ou indirectement de l'exécution du présent Contrat, quelle que soit la faute ou la négligence.",
+            "risk_rationale": "Indemnisation illimitée sans exigence de faute - extrêmement déséquilibrée",
+            "source": "curated"
+        },
+        {
+            "id": "FR_IND_002",
+            "language": "fr",
+            "clause_type": "indemnification",
+            "risk_level": "medium",
+            "text": "Chaque partie s'engage à indemniser l'autre partie contre les réclamations de tiers résultant de sa négligence grave ou de sa faute intentionnelle dans l'exécution du présent Contrat.",
+            "risk_rationale": "Indemnisation mutuelle limitée à la négligence grave - équilibrée mais à surveiller",
+            "source": "curated"
+        },
+        {
+            "id": "FR_IND_003",
+            "language": "fr",
+            "clause_type": "indemnification",
+            "risk_level": "low",
+            "text": "Le Fournisseur accepte d'indemniser l'Acheteur pour les dommages directs résultant d'une violation des garanties énoncées à l'Article 5, sous réserve de la limitation de responsabilité prévue à l'Article 8.",
+            "risk_rationale": "Portée limitée, liée à une violation spécifique, plafonnée par clause de responsabilité",
+            "source": "curated"
+        },
+        {
+            "id": "FR_LOL_001",
+            "language": "fr",
+            "clause_type": "limitation_of_liability",
+            "risk_level": "high",
+            "text": "EN AUCUN CAS LE PRESTATAIRE NE SERA RESPONSABLE DE QUELQUE DOMMAGE QUE CE SOIT, Y COMPRIS SANS LIMITATION LES DOMMAGES DIRECTS, INDIRECTS, ACCESSOIRES OU CONSÉCUTIFS, LA PERTE DE PROFITS OU LA PERTE DE DONNÉES.",
+            "risk_rationale": "Exclusion totale de responsabilité y compris dommages directs - inapplicable en droit français",
+            "source": "curated"
+        },
+        {
+            "id": "FR_LOL_002",
+            "language": "fr",
+            "clause_type": "limitation_of_liability",
+            "risk_level": "medium",
+            "text": "Aucune des parties ne sera responsable des dommages indirects, accessoires, spéciaux ou consécutifs. La responsabilité totale de chaque partie ne dépassera pas les honoraires payés au cours des douze mois précédant la réclamation.",
+            "risk_rationale": "Exclusion des dommages indirects, responsabilité plafonnée - clause standard",
+            "source": "curated"
+        },
+        {
+            "id": "FR_LOL_003",
+            "language": "fr",
+            "clause_type": "limitation_of_liability",
+            "risk_level": "low",
+            "text": "Sauf en cas de violation de la confidentialité, de contrefaçon de propriété intellectuelle ou d'obligations d'indemnisation, la responsabilité de chaque partie sera limitée aux dommages directs prouvés jusqu'à concurrence de la valeur totale du contrat.",
+            "risk_rationale": "Exclusions pour domaines critiques, plafond équitable - bien équilibrée",
+            "source": "curated"
+        },
+        {
+            "id": "FR_TERM_001",
+            "language": "fr",
+            "clause_type": "termination",
+            "risk_level": "high",
+            "text": "Le Client peut résilier le présent Contrat à tout moment et pour quelque raison que ce soit par notification écrite. Le Fournisseur ne peut résilier qu'en cas de manquement substantiel du Client resté sans remède pendant 90 jours.",
+            "risk_rationale": "Droits de résiliation asymétriques fortement favorables à une partie",
+            "source": "curated"
+        },
+        {
+            "id": "FR_TERM_002",
+            "language": "fr",
+            "clause_type": "termination",
+            "risk_level": "medium",
+            "text": "Chaque partie peut résilier le présent Contrat moyennant un préavis écrit de 60 jours sans motif, ou immédiatement en cas de manquement substantiel de l'autre partie resté sans remède pendant 30 jours.",
+            "risk_rationale": "Droits de résiliation mutuels mais délai de correction peut être court",
+            "source": "curated"
+        },
+        {
+            "id": "FR_TERM_003",
+            "language": "fr",
+            "clause_type": "termination",
+            "risk_level": "low",
+            "text": "Le présent Contrat se poursuivra pendant la Durée Initiale et sera automatiquement renouvelé pour des périodes successives d'un an, sauf préavis de non-renouvellement de 90 jours. Chaque partie peut résilier pour manquement substantiel non corrigé.",
+            "risk_rationale": "Renouvellement automatique standard avec délai de préavis adéquat",
+            "source": "curated"
+        },
+        {
+            "id": "FR_CONF_001",
+            "language": "fr",
+            "clause_type": "confidentiality",
+            "risk_level": "high",
+            "text": "Le Destinataire s'engage à maintenir la confidentialité de toutes les informations du Divulgateur à perpétuité et ne divulguera ces informations à aucun tiers en aucune circonstance, y compris suite à une procédure judiciaire ou une ordonnance du tribunal.",
+            "risk_rationale": "Obligation perpétuelle sans exceptions pour exigences légales - inapplicable",
+            "source": "curated"
+        },
+        {
+            "id": "FR_CONF_002",
+            "language": "fr",
+            "clause_type": "confidentiality",
+            "risk_level": "medium",
+            "text": "Chaque partie protégera les Informations Confidentielles de l'autre avec le même degré de soin qu'elle utilise pour protéger ses propres informations confidentielles, mais pas moins qu'un soin raisonnable, pendant une période de cinq ans.",
+            "risk_rationale": "Norme de soin raisonnable avec durée définie - disposition standard",
+            "source": "curated"
+        },
+        {
+            "id": "FR_CONF_003",
+            "language": "fr",
+            "clause_type": "confidentiality",
+            "risk_level": "low",
+            "text": "Les Informations Confidentielles n'incluent pas les informations qui: (a) sont publiquement disponibles; (b) étaient connues avant la divulgation; (c) sont développées indépendamment; ou (d) sont reçues d'un tiers sans restriction. L'obligation de confidentialité survivra pendant 3 ans.",
+            "risk_rationale": "Exclusions standard avec période de survie raisonnable",
+            "source": "curated"
+        },
+        {
+            "id": "FR_IP_001",
+            "language": "fr",
+            "clause_type": "intellectual_property",
+            "risk_level": "high",
+            "text": "Tous les produits du travail, inventions, découvertes et améliorations réalisés par le Prestataire, qu'ils soient ou non liés aux Services, seront la propriété exclusive du Client, et le Prestataire cède par les présentes tous les droits y afférents.",
+            "risk_rationale": "Cession de PI trop large incluant le travail non lié - potentiellement inapplicable",
+            "source": "curated"
+        },
+        {
+            "id": "FR_IP_002",
+            "language": "fr",
+            "clause_type": "intellectual_property",
+            "risk_level": "medium",
+            "text": "Le Client sera propriétaire de tous les Livrables créés spécifiquement pour le Client. Le Prestataire conserve la propriété des matériaux préexistants et accorde au Client une licence perpétuelle pour utiliser ces matériaux intégrés dans les Livrables.",
+            "risk_rationale": "Délimitation claire mais la licence perpétuelle peut limiter le prestataire",
+            "source": "curated"
+        },
+        {
+            "id": "FR_IP_003",
+            "language": "fr",
+            "clause_type": "intellectual_property",
+            "risk_level": "low",
+            "text": "Chaque partie conserve tous les droits de propriété intellectuelle qu'elle détenait avant le présent Contrat. Toute PI développée conjointement sera copropriété avec chaque partie ayant des droits non exclusifs d'utilisation et de sous-licence.",
+            "risk_rationale": "Traitement mutuel équitable avec termes clairs de copropriété",
+            "source": "curated"
+        },
+        {
+            "id": "FR_GOV_001",
+            "language": "fr",
+            "clause_type": "governing_law",
+            "risk_level": "high",
+            "text": "Le présent Contrat sera régi par et interprété conformément aux lois des Îles Caïmans. Les parties se soumettent irrévocablement à la compétence exclusive des tribunaux des Îles Caïmans.",
+            "risk_rationale": "Juridiction offshore peut limiter les recours légaux et augmenter les coûts",
+            "source": "curated"
+        },
+        {
+            "id": "FR_GOV_002",
+            "language": "fr",
+            "clause_type": "governing_law",
+            "risk_level": "medium",
+            "text": "Le présent Contrat est régi par le droit français. Tout litige sera soumis à la compétence exclusive des tribunaux de Paris.",
+            "risk_rationale": "Droit français et tribunaux de Paris - standard pour parties françaises",
+            "source": "curated"
+        },
+        {
+            "id": "FR_GOV_003",
+            "language": "fr",
+            "clause_type": "governing_law",
+            "risk_level": "low",
+            "text": "Le présent Contrat sera régi par le droit du pays où les Services sont principalement exécutés. Chaque partie se soumet à la compétence non exclusive des tribunaux de ce pays.",
+            "risk_rationale": "Approche pratique avec compétence non exclusive permettant la flexibilité",
+            "source": "curated"
+        },
+        {
+            "id": "FR_FM_001",
+            "language": "fr",
+            "clause_type": "force_majeure",
+            "risk_level": "high",
+            "text": "Le Fournisseur ne sera pas dispensé de son obligation d'exécution en raison d'un événement hors de son contrôle, y compris mais sans s'y limiter les cas de force majeure, guerre, terrorisme, pandémie ou action gouvernementale.",
+            "risk_rationale": "Aucune protection de force majeure - expose la partie à des obligations impossibles",
+            "source": "curated"
+        },
+        {
+            "id": "FR_FM_002",
+            "language": "fr",
+            "clause_type": "force_majeure",
+            "risk_level": "medium",
+            "text": "Aucune partie ne sera responsable de l'inexécution de ses obligations due à des causes hors de son contrôle raisonnable, à condition que la partie affectée donne un préavis rapide et fasse des efforts raisonnables pour reprendre l'exécution.",
+            "risk_rationale": "Disposition standard avec obligation de notification et d'efforts",
+            "source": "curated"
+        },
+        {
+            "id": "FR_FM_003",
+            "language": "fr",
+            "clause_type": "force_majeure",
+            "risk_level": "low",
+            "text": "L'exécution sera suspendue pendant les Événements de Force Majeure, qui comprennent les catastrophes naturelles, guerres, terrorisme, pandémies, ordonnances gouvernementales et événements similaires hors du contrôle raisonnable des parties.",
+            "risk_rationale": "Liste complète avec suspension proportionnelle - équitable et claire",
+            "source": "curated"
+        },
+        {
+            "id": "FR_WAR_001",
+            "language": "fr",
+            "clause_type": "warranty",
+            "risk_level": "high",
+            "text": "LES SERVICES SONT FOURNIS 'EN L'ÉTAT' SANS GARANTIE D'AUCUNE SORTE, EXPRESSE OU IMPLICITE, Y COMPRIS MAIS SANS S'Y LIMITER LES GARANTIES DE QUALITÉ MARCHANDE OU D'ADÉQUATION À UN USAGE PARTICULIER.",
+            "risk_rationale": "Exclusion totale de garantie - l'acheteur assume tous les risques (clause limitée en droit français)",
+            "source": "curated"
+        },
+        {
+            "id": "FR_WAR_002",
+            "language": "fr",
+            "clause_type": "warranty",
+            "risk_level": "medium",
+            "text": "Le Prestataire garantit que les Services seront exécutés de manière professionnelle et conforme aux normes de l'industrie. La seule obligation du Prestataire en cas de violation sera de réexécuter les Services non conformes.",
+            "risk_rationale": "Garantie limitée avec remède exclusif de réexécution - peut ne pas couvrir toutes les pertes",
+            "source": "curated"
+        },
+        {
+            "id": "FR_WAR_003",
+            "language": "fr",
+            "clause_type": "warranty",
+            "risk_level": "low",
+            "text": "Le Vendeur garantit que les Produits seront conformes aux spécifications, exempts de défauts de matériaux et de fabrication, et ne porteront pas atteinte aux droits de propriété intellectuelle de tiers. Cette garantie s'étend sur 24 mois à compter de la livraison.",
+            "risk_rationale": "Garantie complète avec durée raisonnable - l'acheteur est bien protégé",
+            "source": "curated"
+        },
+        {
+            "id": "FR_PAY_001",
+            "language": "fr",
+            "clause_type": "payment_terms",
+            "risk_level": "high",
+            "text": "Tous les honoraires sont dus dès réception de la facture et non remboursables. Les retards de paiement porteront intérêt au taux de 2% par mois. Le Prestataire peut suspendre les services immédiatement en cas de retard de paiement.",
+            "risk_rationale": "Conditions de paiement sévères avec intérêts élevés et droit de suspension immédiate",
+            "source": "curated"
+        },
+        {
+            "id": "FR_PAY_002",
+            "language": "fr",
+            "clause_type": "payment_terms",
+            "risk_level": "medium",
+            "text": "Le paiement est dû dans les 30 jours suivant la date de facturation. Les retards de paiement porteront intérêt au taux légal. Le Prestataire peut suspendre les services après un préavis écrit de 15 jours en cas de non-paiement.",
+            "risk_rationale": "Conditions standard avec taux d'intérêt légal - conforme au droit français",
+            "source": "curated"
+        },
+        {
+            "id": "FR_PAY_003",
+            "language": "fr",
+            "clause_type": "payment_terms",
+            "risk_level": "low",
+            "text": "Les factures sont payables à 45 jours. Les intérêts sur les montants en retard courront au taux d'intérêt légal plus 2%. Chaque partie peut demander un examen des factures contestées dans les 10 jours suivant leur réception.",
+            "risk_rationale": "Délai de paiement raisonnable avec mécanisme de contestation - équilibré",
+            "source": "curated"
+        },
+        {
+            "id": "FR_NC_001",
+            "language": "fr",
+            "clause_type": "non_compete",
+            "risk_level": "high",
+            "text": "Le Salarié s'engage à ne pas exercer d'activité concurrente avec la Société, partout dans le monde, pendant une période de cinq ans suivant la fin de son contrat de travail, quelle que soit la raison de la cessation.",
+            "risk_rationale": "Portée géographique et durée excessives - probablement inapplicable",
+            "source": "curated"
+        },
+        {
+            "id": "FR_NC_002",
+            "language": "fr",
+            "clause_type": "non_compete",
+            "risk_level": "medium",
+            "text": "Pendant une période de 12 mois suivant la cessation de son emploi, le Salarié s'engage à ne pas travailler pour une Entreprise Concurrente dans le Territoire où il a fourni des services au cours des 24 derniers mois, moyennant une contrepartie financière de 30% de son salaire.",
+            "risk_rationale": "Durée et géographie raisonnables avec contrepartie financière - conforme au droit français",
+            "source": "curated"
+        },
+        {
+            "id": "FR_NC_003",
+            "language": "fr",
+            "clause_type": "non_compete",
+            "risk_level": "low",
+            "text": "Le Salarié s'engage à ne pas solliciter les clients de la Société avec lesquels il a eu un contact direct au cours des 6 mois précédant la cessation de son emploi, pendant une période de 6 mois.",
+            "risk_rationale": "Non-sollicitation étroite plutôt que non-concurrence large - applicable et équitable",
+            "source": "curated"
+        },
+        {
+            "id": "FR_DP_001",
+            "language": "fr",
+            "clause_type": "data_protection",
+            "risk_level": "high",
+            "text": "Le Client accorde au Prestataire des droits illimités d'utiliser, partager et vendre toutes les données fournies par le Client, y compris les données personnelles des employés et clients du Client, à toutes fins y compris le marketing à des tiers.",
+            "risk_rationale": "Violation grave du RGPD - expose le client à des amendes réglementaires massives",
+            "source": "curated"
+        },
+        {
+            "id": "FR_DP_002",
+            "language": "fr",
+            "clause_type": "data_protection",
+            "risk_level": "medium",
+            "text": "Le Prestataire traitera les Données Personnelles uniquement dans la mesure nécessaire à la fourniture des Services et mettra en œuvre des mesures techniques et organisationnelles appropriées. Le Prestataire peut recourir à des sous-traitants sous réserve d'accords écrits imposant des obligations équivalentes.",
+            "risk_rationale": "Conformité RGPD de base mais manque d'exigences spécifiques au DPA",
+            "source": "curated"
+        },
+        {
+            "id": "FR_DP_003",
+            "language": "fr",
+            "clause_type": "data_protection",
+            "risk_level": "low",
+            "text": "Les parties concluront un Accord de Traitement de Données conforme à l'Article 28 du RGPD, joint en Annexe A. Le Prestataire ne traitera les données que dans l'EEE sauf si des Clauses Contractuelles Types sont signées.",
+            "risk_rationale": "Conformité RGPD complète avec DPA séparé et mécanismes de transfert",
+            "source": "curated"
+        },
+        {
+            "id": "FR_ASS_001",
+            "language": "fr",
+            "clause_type": "assignment",
+            "risk_level": "high",
+            "text": "Le Prestataire peut céder, transférer ou déléguer le présent Contrat en tout ou partie à tout tiers sans restriction ni préavis. Le Client ne peut céder aucun droit ou obligation sans le consentement écrit préalable du Prestataire.",
+            "risk_rationale": "Droits de cession asymétriques sans protection du client en cas de changement de prestataire",
+            "source": "curated"
+        },
+        {
+            "id": "FR_ASS_002",
+            "language": "fr",
+            "clause_type": "assignment",
+            "risk_level": "medium",
+            "text": "Aucune partie ne peut céder le présent Contrat sans le consentement écrit préalable de l'autre partie, qui ne sera pas refusé de manière déraisonnable. Chaque partie peut céder à une filiale ou dans le cadre d'une fusion ou acquisition.",
+            "risk_rationale": "Standard avec exception pour M&A - surveiller la qualité de service après cession",
+            "source": "curated"
+        },
+        {
+            "id": "FR_ASS_003",
+            "language": "fr",
+            "clause_type": "assignment",
+            "risk_level": "low",
+            "text": "Le présent Contrat ne peut être cédé par aucune des parties sans le consentement écrit de l'autre. Toute cession sans consentement sera nulle. Le présent Contrat liera les successeurs et ayants droit autorisés.",
+            "risk_rationale": "Traitement égal avec conséquence claire en cas de violation - équilibré",
+            "source": "curated"
+        },
+        {
+            "id": "FR_DR_001",
+            "language": "fr",
+            "clause_type": "dispute_resolution",
+            "risk_level": "high",
+            "text": "Tous les litiges seront résolus par arbitrage obligatoire à Singapour devant un arbitre unique selon le règlement CCI. L'arbitrage sera confidentiel. Le Client renonce à tout droit de participer à une action collective.",
+            "risk_rationale": "Arbitrage obligatoire avec clause collective et lieu éloigné - favorise le prestataire",
+            "source": "curated"
+        },
+        {
+            "id": "FR_DR_002",
+            "language": "fr",
+            "clause_type": "dispute_resolution",
+            "risk_level": "medium",
+            "text": "Les parties tenteront d'abord de résoudre les litiges par négociation de bonne foi. En cas d'échec dans les 30 jours, les litiges seront soumis à la médiation du Centre de Médiation et d'Arbitrage de Paris (CMAP).",
+            "risk_rationale": "Processus étagé équitable - la médiation CMAP est une pratique standard",
+            "source": "curated"
+        },
+        {
+            "id": "FR_DR_003",
+            "language": "fr",
+            "clause_type": "dispute_resolution",
+            "risk_level": "low",
+            "text": "Les parties tenteront de résoudre les litiges par négociation. Chaque partie peut initier une médiation non contraignante. En cas d'échec de la médiation, les litiges peuvent être soumis aux tribunaux compétents.",
+            "risk_rationale": "Préserve l'option de contentieux avec encouragement des ADR - flexible",
+            "source": "curated"
+        },
+        {
+            "id": "EN_EDGE_001",
+            "language": "en",
+            "clause_type": "limitation_of_liability",
+            "risk_level": "medium",
+            "text": "Liability cap: 12 months fees.",
+            "risk_rationale": "Edge case - extremely short clause, tests model's handling of minimal context",
+            "source": "curated"
+        },
+        {
+            "id": "EN_EDGE_002",
+            "language": "en",
+            "clause_type": "warranty",
+            "risk_level": "high",
+            "text": "No warranties. AS-IS basis only.",
+            "risk_rationale": "Edge case - extremely terse, tests extraction of meaning from minimal text",
+            "source": "curated"
+        },
+        {
+            "id": "EN_EDGE_003",
+            "language": "en",
+            "clause_type": "governing_law",
+            "risk_level": "low",
+            "text": "This Agreement shall be governed by the laws of England and Wales. However, for any matters relating to intellectual property, the laws of the United States shall apply. For data protection matters, if the affected data subject is a resident of the European Union, GDPR shall apply regardless of the parties' location. Additionally, any consumer protection claims shall be governed by the laws of the consumer's country of residence. In the event of a conflict between these provisions, the most protective law for the non-drafting party shall prevail, except where such application would result in illegality, in which case the next most protective applicable law shall govern.",
+            "risk_rationale": "Edge case - extremely complex multi-jurisdictional clause, tests comprehension of nested conditions",
+            "source": "curated"
+        },
+        {
+            "id": "EN_EDGE_004",
+            "language": "en",
+            "clause_type": "indemnification",
+            "risk_level": "medium",
+            "text": "Subject to Section 14.2(b)(iii), and notwithstanding any provision to the contrary in Sections 7, 8, or 12 (but without limiting the generality of Section 9.1), Vendor shall indemnify Buyer as set forth in Exhibit C, provided that the applicable Loss (as defined in Schedule 2.1) exceeds the Threshold (as defined in Section 1.45) and Buyer has complied with the Notice Requirements (Section 14.5), unless such compliance was waived under Section 14.5(c).",
+            "risk_rationale": "Edge case - heavily cross-referenced, tests handling of incomplete context",
+            "source": "curated"
+        },
+        {
+            "id": "FR_EDGE_001",
+            "language": "fr",
+            "clause_type": "termination",
+            "risk_level": "medium",
+            "text": "Résiliation possible avec préavis de 30 jours.",
+            "risk_rationale": "Edge case - extremely short French clause, tests bilingual minimal context handling",
+            "source": "curated"
+        },
+        {
+            "id": "EN_MIXED_001",
+            "language": "en",
+            "clause_type": "confidentiality",
+            "risk_level": "medium",
+            "text": "Recipient shall maintain the confidentiality of Discloser's Confidential Information and shall not disclose such information to third parties except as necessary to perform under this Agreement. Additionally, Recipient shall indemnify Discloser for any breach of this confidentiality obligation.",
+            "risk_rationale": "Mixed clause - contains both confidentiality and indemnification elements, tests primary classification",
+            "source": "curated"
+        },
+        {
+            "id": "EN_MIXED_002",
+            "language": "en",
+            "clause_type": "termination",
+            "risk_level": "high",
+            "text": "Either party may terminate this Agreement upon material breach. Upon termination, all intellectual property developed during the term shall revert to the Provider, and Customer shall pay all outstanding fees plus a termination fee equal to 50% of the remaining contract value.",
+            "risk_rationale": "Mixed clause - termination with IP and payment provisions, high risk due to harsh exit terms",
+            "source": "curated"
+        }
+    ]
+}

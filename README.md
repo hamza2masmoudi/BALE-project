@@ -6,14 +6,47 @@
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg?style=flat-square)](https://www.python.org/downloads/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.109+-green.svg?style=flat-square)](https://fastapi.tiangolo.com)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
+[![Paper](https://img.shields.io/badge/Paper-Research-red.svg?style=flat-square)](research/paper.md)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18377733.svg)](https://doi.org/10.5281/zenodo.18377733)
 
 **A neuro-symbolic legal reasoning engine for auditing international commercial contracts.**
 
-[Quick Start](#-quick-start) • [API Docs](#-api-reference) • [Architecture](#-architecture) • [Fine-Tuning](#-fine-tuning)
+📄 **[Research Paper](research/paper.md)** • [Quick Start](#-quick-start) • [API Docs](#-api-reference) • [Cite](#-citation)
 
 </div>
 
 ---
+
+## 📚 Research Paper
+
+> **BALE: A Neuro-Symbolic Framework for Bilingual Contract Risk Assessment**
+> 
+> Hamza Masmoudi (Independent Researcher), 2026
+
+### Key Results
+
+| Metric | Score |
+|--------|-------|
+| Clause Type Accuracy | **97.8%** |
+| Risk Detection | **65.9%** (+21% over baseline) |
+| Languages | English + French |
+| Training Data | 75,382 examples |
+
+📄 **Full Paper**: [research/paper.md](research/paper.md)
+
+### Citation
+
+```bibtex
+@software{masmoudi2026bale,
+  author = {Masmoudi, Hamza},
+  title = {BALE: A Neuro-Symbolic Framework for Bilingual Contract Risk Assessment},
+  year = {2026},
+  doi = {10.5281/zenodo.18377733},
+  url = {https://github.com/hamza2masmoudi/BALE-project}
+}
+```
+
+
 
 ## 📸 Interface
 

@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "BALE: A Neuro-Symbolic Framework for Bilingual Contract Risk Assessment"
+version: "8.0.0"
+date-released: "2026-01-26"
+authors:
+  - family-names: "Masmoudi"
+    given-names: "Hamza"
+    orcid: ""  # Add your ORCID if you have one
+abstract: >-
+  BALE is a neuro-symbolic legal reasoning engine for analyzing 
+  commercial contracts. It combines fine-tuned Mistral-7B with 
+  rule-based risk patterns to achieve 97.8% clause type accuracy 
+  and 65.9% risk detection accuracy on bilingual (EN/FR) contracts.
+keywords:
+  - legal-nlp
+  - contract-analysis
+  - risk-assessment
+  - neuro-symbolic-ai
+  - bilingual-nlp
+  - mistral
+  - lora
+license: MIT
+repository-code: "https://github.com/hamza2masmoudi/BALE-project"

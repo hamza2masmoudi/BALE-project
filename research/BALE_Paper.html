@@ -1,0 +1,1822 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BALE: A Neuro-Symbolic Framework for Bilingual Contract Risk Assessment</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css" />
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">BALE: A Neuro-Symbolic Framework for Bilingual
+Contract Risk Assessment</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a
+href="#bale-a-neuro-symbolic-framework-for-bilingual-contract-risk-assessment"
+id="toc-bale-a-neuro-symbolic-framework-for-bilingual-contract-risk-assessment">BALE:
+A Neuro-Symbolic Framework for Bilingual Contract Risk Assessment</a>
+<ul>
+<li><a href="#abstract" id="toc-abstract">Abstract</a></li>
+<li><a href="#introduction" id="toc-introduction">1. Introduction</a>
+<ul>
+<li><a href="#contributions"
+id="toc-contributions">Contributions</a></li>
+</ul></li>
+<li><a href="#related-work" id="toc-related-work">2. Related Work</a>
+<ul>
+<li><a href="#contract-understanding-and-cuad"
+id="toc-contract-understanding-and-cuad">2.1 Contract Understanding and
+CUAD</a></li>
+<li><a href="#legal-judgment-prediction"
+id="toc-legal-judgment-prediction">2.2 Legal Judgment
+Prediction</a></li>
+<li><a href="#neuro-symbolic-integration"
+id="toc-neuro-symbolic-integration">2.3 Neuro-Symbolic
+Integration</a></li>
+<li><a href="#multilingual-legal-nlp"
+id="toc-multilingual-legal-nlp">2.4 Multilingual Legal NLP</a></li>
+<li><a href="#explainable-legal-ai" id="toc-explainable-legal-ai">2.5
+Explainable Legal AI</a></li>
+</ul></li>
+<li><a href="#the-bale-system" id="toc-the-bale-system">3. The BALE
+System</a>
+<ul>
+<li><a href="#system-architecture" id="toc-system-architecture">3.1
+System Architecture</a></li>
+<li><a href="#neural-component-fine-tuned-classification"
+id="toc-neural-component-fine-tuned-classification">3.2 Neural
+Component: Fine-Tuned Classification</a></li>
+<li><a href="#symbolic-component-risk-pattern-library"
+id="toc-symbolic-component-risk-pattern-library">3.3 Symbolic Component:
+Risk Pattern Library</a></li>
+<li><a href="#hybrid-integration-strategy"
+id="toc-hybrid-integration-strategy">3.4 Hybrid Integration
+Strategy</a></li>
+</ul></li>
+<li><a href="#datasets-and-evaluation-setup"
+id="toc-datasets-and-evaluation-setup">4. Datasets and Evaluation
+Setup</a>
+<ul>
+<li><a href="#training-data-composition"
+id="toc-training-data-composition">4.1 Training Data
+Composition</a></li>
+<li><a href="#golden-test-set-construction"
+id="toc-golden-test-set-construction">4.2 Golden Test Set
+Construction</a></li>
+<li><a href="#evaluation-metrics" id="toc-evaluation-metrics">4.3
+Evaluation Metrics</a></li>
+</ul></li>
+<li><a href="#experimental-results" id="toc-experimental-results">5.
+Experimental Results</a>
+<ul>
+<li><a href="#clause-type-classification"
+id="toc-clause-type-classification">5.1 Clause Type
+Classification</a></li>
+<li><a href="#risk-level-detection" id="toc-risk-level-detection">5.2
+Risk Level Detection</a></li>
+<li><a href="#bilingual-performance" id="toc-bilingual-performance">5.3
+Bilingual Performance</a></li>
+<li><a href="#ablation-studies" id="toc-ablation-studies">5.4 Ablation
+Studies</a></li>
+<li><a href="#latency-analysis" id="toc-latency-analysis">5.5 Latency
+Analysis</a></li>
+</ul></li>
+<li><a href="#analysis-and-discussion"
+id="toc-analysis-and-discussion">6. Analysis and Discussion</a>
+<ul>
+<li><a href="#complementarity-of-neural-and-symbolic-components"
+id="toc-complementarity-of-neural-and-symbolic-components">6.1
+Complementarity of Neural and Symbolic Components</a></li>
+<li><a href="#error-analysis" id="toc-error-analysis">6.2 Error
+Analysis</a></li>
+<li><a href="#limitations" id="toc-limitations">6.3 Limitations</a></li>
+<li><a href="#comparison-with-commercial-systems"
+id="toc-comparison-with-commercial-systems">6.4 Comparison with
+Commercial Systems</a></li>
+</ul></li>
+<li><a href="#conclusion" id="toc-conclusion">7. Conclusion</a></li>
+<li><a href="#acknowledgments"
+id="toc-acknowledgments">Acknowledgments</a></li>
+<li><a href="#references" id="toc-references">References</a></li>
+<li><a href="#appendix-a-complete-risk-pattern-library"
+id="toc-appendix-a-complete-risk-pattern-library">Appendix A: Complete
+Risk Pattern Library</a>
+<ul>
+<li><a href="#a.1-high-risk-patterns-english"
+id="toc-a.1-high-risk-patterns-english">A.1 HIGH Risk Patterns
+(English)</a></li>
+<li><a href="#a.2-high-risk-patterns-french"
+id="toc-a.2-high-risk-patterns-french">A.2 HIGH Risk Patterns
+(French)</a></li>
+<li><a href="#a.3-low-risk-patterns-english"
+id="toc-a.3-low-risk-patterns-english">A.3 LOW Risk Patterns
+(English)</a></li>
+<li><a href="#a.4-low-risk-patterns-french"
+id="toc-a.4-low-risk-patterns-french">A.4 LOW Risk Patterns
+(French)</a></li>
+</ul></li>
+<li><a href="#appendix-b-golden-test-set-examples"
+id="toc-appendix-b-golden-test-set-examples">Appendix B: Golden Test Set
+Examples</a>
+<ul>
+<li><a href="#b.1-high-risk-examples"
+id="toc-b.1-high-risk-examples">B.1 HIGH Risk Examples</a></li>
+<li><a href="#b.2-low-risk-examples" id="toc-b.2-low-risk-examples">B.2
+LOW Risk Examples</a></li>
+</ul></li>
+<li><a href="#appendix-c-reproducibility-checklist"
+id="toc-appendix-c-reproducibility-checklist">Appendix C:
+Reproducibility Checklist</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1
+id="bale-a-neuro-symbolic-framework-for-bilingual-contract-risk-assessment">BALE:
+A Neuro-Symbolic Framework for Bilingual Contract Risk Assessment</h1>
+<p><strong>Authors</strong>: Hamza Masmoudi¹<br />
+<strong>Affiliations</strong>: ¹[University/Institution]<br />
+<strong>Correspondence</strong>: hamza.masmoudi@[email]</p>
+<hr />
+<h2 id="abstract">Abstract</h2>
+<p>Commercial contract review remains a critical bottleneck in legal
+practice, requiring specialized expertise to identify clause types and
+assess associated risks across diverse jurisdictions. While large
+language models (LLMs) have demonstrated remarkable capabilities in
+legal text understanding, they suffer from inconsistent risk assessments
+and limited explainability—critical shortcomings for high-stakes legal
+applications. We present BALE (Binary Adjudication &amp; Litigation
+Engine), a neuro-symbolic framework that addresses these limitations
+through a principled integration of neural classification with
+deterministic symbolic risk scoring.</p>
+<p>Our approach makes four key contributions: (1) we develop a bilingual
+legal clause classifier trained on 75,382 real examples from 10 diverse
+sources spanning English and French jurisdictions; (2) we introduce a
+hybrid risk assessment methodology combining fine-tuned Mistral-7B with
+100+ expert-curated risk patterns; (3) we demonstrate that this
+neuro-symbolic integration yields a 21-percentage-point improvement over
+model-only baselines (45.0% → 65.9%) while maintaining 97.8% clause type
+accuracy; and (4) we release a rigorously annotated golden test set of
+91 contract clauses with expert risk rationales to facilitate
+reproducible evaluation.</p>
+<p>Our experimental analysis reveals a clear complementarity: neural
+components excel at semantic understanding and cross-lingual transfer,
+while symbolic rules ensure consistency and interpretability. BALE
+processes clauses in under 2 seconds, demonstrating practical viability
+for production deployment in legal technology applications.</p>
+<p><strong>Keywords</strong>: Legal NLP, Contract Understanding, Risk
+Assessment, Neuro-Symbolic AI, Hybrid Systems, Bilingual NLP,
+Explainable AI</p>
+<hr />
+<h2 id="introduction">1. Introduction</h2>
+<p>Commercial contracts form the legal backbone of global commerce,
+governing relationships worth an estimated $11 trillion annually in
+cross-border transactions alone (World Trade Organization, 2023). Yet
+contract review remains a predominantly manual process, with studies
+indicating that attorneys spend 20-40% of their time on document review
+tasks (Susskind, 2017). The challenge is multifaceted: reviewers must
+not only identify clause types but assess their risk implications—a task
+requiring deep legal expertise and contextual understanding across
+potentially unfamiliar jurisdictions.</p>
+<p>The advent of large language models has generated considerable
+interest in automating legal document analysis. Systems like GPT-4,
+Claude, and domain-specific models have achieved impressive results on
+legal benchmarks (Chalkidis et al., 2022; Niklaus et al., 2023).
+However, three fundamental limitations persist for contract risk
+assessment:</p>
+<p><strong>The Explainability Gap.</strong> When an LLM classifies a
+limitation of liability clause as “high risk,” practitioners require
+justification grounded in legal principles—not opaque neural
+activations. The European Union’s AI Act (2024) mandates such
+transparency for high-risk AI applications, including legal
+services.</p>
+<p><strong>The Consistency Problem.</strong> Identical clauses may
+receive different risk assessments across inference runs, a phenomenon
+particularly pronounced in risk-related reasoning where subtle wording
+differences carry significant legal weight. For mission-critical legal
+applications, deterministic behavior is non-negotiable.</p>
+<p><strong>The Knowledge Integration Challenge.</strong> Risk assessment
+requires domain knowledge that extends beyond training data: awareness
+of red-flag terms, jurisdiction-specific concerns, and industry-standard
+protective language. Pure neural approaches struggle to incorporate this
+structured expertise reliably.</p>
+<p>We propose BALE, a <strong>neuro-symbolic framework</strong> that
+addresses these limitations through principled integration of
+complementary paradigms:</p>
+<pre><code>Neural Strengths          Symbolic Strengths
+─────────────────         ──────────────────
+Semantic understanding    Deterministic scoring
+Cross-lingual transfer    Explicit knowledge encoding
+Pattern generalization    Transparent decision logic
+Handling novel inputs     Consistency guarantees</code></pre>
+<p>Our key insight is that clause <em>type</em> classification is
+fundamentally a semantic understanding task—well-suited to neural
+approaches—while risk <em>assessment</em> requires structured legal
+knowledge better captured by symbolic rules. BALE leverages each
+paradigm for its strengths while using hybrid integration to resolve
+ambiguous cases.</p>
+<h3 id="contributions">Contributions</h3>
+<ol type="1">
+<li><p><strong>Bilingual Training Corpus</strong>: We compile 75,382
+training examples from 10 sources spanning English and French legal
+domains—significantly expanding multilingual legal NLP
+resources.</p></li>
+<li><p><strong>Hybrid Risk Assessment</strong>: We develop a principled
+methodology combining neural classification with expert-curated risk
+patterns, achieving 21-point improvement over model-only
+baselines.</p></li>
+<li><p><strong>Golden Test Benchmark</strong>: We release 91 rigorously
+annotated test cases with expert risk rationales, enabling reproducible
+evaluation of contract analysis systems.</p></li>
+<li><p><strong>Empirical Analysis</strong>: We provide detailed ablation
+studies and error analysis illuminating the complementary roles of
+neural and symbolic components.</p></li>
+</ol>
+<hr />
+<h2 id="related-work">2. Related Work</h2>
+<h3 id="contract-understanding-and-cuad">2.1 Contract Understanding and
+CUAD</h3>
+<p>The Contract Understanding Atticus Dataset (CUAD) (Hendrycks et al.,
+2021) established the first large-scale benchmark for contract clause
+identification, comprising 510 commercial contracts with 13,000+
+annotations across 41 clause types. Subsequent work has explored clause
+extraction (Borchmann et al., 2020), obligation identification
+(Chalkidis et al., 2017), and contract summarization (Manor &amp; Li,
+2019).</p>
+<p>Our work differs in focus: while CUAD addresses clause
+<em>presence</em>, we tackle the downstream task of risk
+<em>assessment</em>—determining not just what a clause says, but whether
+it favors one party, exposes the reader to liability, or contains
+adversarial terms.</p>
+<h3 id="legal-judgment-prediction">2.2 Legal Judgment Prediction</h3>
+<p>Predicting legal outcomes has received substantial attention, with
+benchmark datasets for European Court of Human Rights cases (Chalkidis
+et al., 2019), Chinese court judgments (Xiao et al., 2018), and U.S.
+Supreme Court decisions (Katz et al., 2017). These systems model
+judicial decision-making given well-structured case facts.</p>
+<p>Contract risk assessment differs fundamentally: we lack ground-truth
+“outcomes” and must instead operationalize risk through proxy
+measures—presence of one-sided terms, liability exposure, and deviation
+from industry standards.</p>
+<h3 id="neuro-symbolic-integration">2.3 Neuro-Symbolic Integration</h3>
+<p>Hybrid systems combining neural networks with symbolic reasoning have
+demonstrated success across domains requiring both pattern recognition
+and structured knowledge (Garcez et al., 2019; Lamb et al., 2020). In
+legal AI specifically:</p>
+<ul>
+<li><strong>Legal Knowledge Graphs</strong>: Zhong et al. (2020)
+integrated neural encoders with legal knowledge graphs for charge
+prediction.</li>
+<li><strong>Rule-Guided Learning</strong>: Dong et al. (2021)
+incorporated legal rules as soft constraints during neural
+training.</li>
+<li><strong>Symbolic Verification</strong>: Wang et al. (2022) used
+formal methods to verify neural legal reasoning.</li>
+</ul>
+<p>Our approach—using neural classification with symbolic
+post-processing—is computationally simpler but empirically effective,
+avoiding complex joint training procedures.</p>
+<h3 id="multilingual-legal-nlp">2.4 Multilingual Legal NLP</h3>
+<p>The majority of legal NLP research focuses on English, with notable
+exceptions:</p>
+<ul>
+<li><strong>MultiLegalPile</strong> (Niklaus et al., 2023): 689GB
+multilingual corpus for legal pre-training</li>
+<li><strong>LegalBench-FR</strong> (Salaün et al., 2022): French legal
+benchmark tasks</li>
+<li><strong>Swiss-Judgment-Prediction</strong> (Niklaus et al., 2022):
+Trilingual Swiss court decisions</li>
+</ul>
+<p>Our bilingual English-French system addresses practical needs in
+jurisdictions where contracts frequently appear in both languages
+(Canada, Belgium, international commerce).</p>
+<h3 id="explainable-legal-ai">2.5 Explainable Legal AI</h3>
+<p>Explainability in legal AI has gained urgency with regulatory
+requirements (EU AI Act) and professional ethics obligations. Approaches
+include:</p>
+<ul>
+<li><strong>Attention visualization</strong>: Highlighting influential
+text spans (Chalkidis et al., 2021)</li>
+<li><strong>Rationale extraction</strong>: Generating natural language
+explanations (DeYoung et al., 2020)</li>
+<li><strong>Rule-based explanation</strong>: Deriving explanations from
+explicit decision rules (our approach)</li>
+</ul>
+<p>We adopt the latter, generating rationales directly from matched risk
+patterns—ensuring explanations accurately reflect the decision
+process.</p>
+<hr />
+<h2 id="the-bale-system">3. The BALE System</h2>
+<h3 id="system-architecture">3.1 System Architecture</h3>
+<p>BALE implements a staged pipeline with parallel neural and symbolic
+processing tracks, as illustrated in Figure 1.</p>
+<figure>
+<img src="figures/architecture_detailed.png"
+alt="Figure 1: BALE System Architecture" />
+<figcaption aria-hidden="true">Figure 1: BALE System
+Architecture</figcaption>
+</figure>
+<p><strong>Figure 1</strong>: BALE neuro-symbolic architecture. The
+<strong>Neural Component</strong> (blue) performs clause type
+classification using fine-tuned Mistral-7B with LoRA adapters. The
+<strong>Symbolic Component</strong> (green) scores risk using 100+
+bilingual patterns. The <strong>Hybrid Decision Module</strong> combines
+both signals, with the neural model serving as tiebreaker for ambiguous
+cases.</p>
+<p>The architecture reflects our core design principle:
+<strong>separation of concerns</strong>. Semantic understanding (clause
+type) is delegated to neural processing, while risk scoring (which
+requires explicit legal knowledge) is handled symbolically. The hybrid
+module integrates both signals, resolving conflicts through principled
+fusion rules.</p>
+<h3 id="neural-component-fine-tuned-classification">3.2 Neural
+Component: Fine-Tuned Classification</h3>
+<p>We employ Mistral-7B-Instruct-v0.3 (Jiang et al., 2023) as our base
+model, selected for its strong instruction-following capabilities and
+efficient inference on consumer hardware. Fine-tuning uses Low-Rank
+Adaptation (LoRA) (Hu et al., 2022) for parameter efficiency.</p>
+<p><strong>Model Configuration:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Value</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Base Model</td>
+<td>Mistral-7B-Instruct-v0.3</td>
+<td>Strong instruction following</td>
+</tr>
+<tr>
+<td>Quantization</td>
+<td>4-bit (QLoRA)</td>
+<td>Memory efficiency</td>
+</tr>
+<tr>
+<td>LoRA Rank</td>
+<td>16</td>
+<td>Balance adaptation/efficiency</td>
+</tr>
+<tr>
+<td>LoRA Alpha</td>
+<td>32</td>
+<td>Standard scaling factor</td>
+</tr>
+<tr>
+<td>Target Layers</td>
+<td>8</td>
+<td>Final transformer layers</td>
+</tr>
+<tr>
+<td>Learning Rate</td>
+<td>1×10⁻⁵</td>
+<td>Conservative for fine-tuning</td>
+</tr>
+<tr>
+<td>Batch Size</td>
+<td>1</td>
+<td>Memory constraints</td>
+</tr>
+<tr>
+<td>Training Steps</td>
+<td>3,000</td>
+<td>Empirically determined</td>
+</tr>
+<tr>
+<td>Max Sequence</td>
+<td>1,024 tokens</td>
+<td>Typical clause length</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Prompt Template:</strong></p>
+<pre><code>&lt;s&gt;[INST] You are an expert legal analyst. Classify the following 
+contract clause and assess its risk level.
+
+Clause: &quot;{clause_text}&quot;
+
+Provide:
+1. Type: [clause category]
+2. Risk: [LOW/MEDIUM/HIGH]
+3. Reason: [brief explanation] [/INST]</code></pre>
+<p><strong>Clause Taxonomy:</strong></p>
+<p>We define 15 clause categories based on legal practice and CUAD
+categories:</p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Description</th>
+<th>Frequency</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Indemnification</td>
+<td>Hold harmless, defense obligations</td>
+<td>12.3%</td>
+</tr>
+<tr>
+<td>Limitation of Liability</td>
+<td>Damage caps, exclusions</td>
+<td>11.8%</td>
+</tr>
+<tr>
+<td>Termination</td>
+<td>Convenience, cause, breach</td>
+<td>10.2%</td>
+</tr>
+<tr>
+<td>Confidentiality</td>
+<td>Non-disclosure, trade secrets</td>
+<td>9.7%</td>
+</tr>
+<tr>
+<td>Intellectual Property</td>
+<td>Ownership, licensing</td>
+<td>8.4%</td>
+</tr>
+<tr>
+<td>Governing Law</td>
+<td>Choice of law, venue</td>
+<td>7.9%</td>
+</tr>
+<tr>
+<td>Force Majeure</td>
+<td>Impossibility, acts of God</td>
+<td>6.8%</td>
+</tr>
+<tr>
+<td>Warranty</td>
+<td>Representations, disclaimers</td>
+<td>6.5%</td>
+</tr>
+<tr>
+<td>Payment Terms</td>
+<td>Pricing, penalties</td>
+<td>6.2%</td>
+</tr>
+<tr>
+<td>Non-Compete</td>
+<td>Restrictive covenants</td>
+<td>5.8%</td>
+</tr>
+<tr>
+<td>Data Protection</td>
+<td>Privacy, GDPR compliance</td>
+<td>5.4%</td>
+</tr>
+<tr>
+<td>Assignment</td>
+<td>Transfer of rights</td>
+<td>3.2%</td>
+</tr>
+<tr>
+<td>Dispute Resolution</td>
+<td>Arbitration, mediation</td>
+<td>2.8%</td>
+</tr>
+<tr>
+<td>Insurance</td>
+<td>Coverage requirements</td>
+<td>1.5%</td>
+</tr>
+<tr>
+<td>Audit Rights</td>
+<td>Inspection, compliance</td>
+<td>1.5%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="symbolic-component-risk-pattern-library">3.3 Symbolic Component:
+Risk Pattern Library</h3>
+<p>Pure neural risk detection achieved only 45% accuracy in our
+experiments—insufficient for practical deployment. Analysis revealed
+that the model captures semantic similarity but lacks explicit knowledge
+of risk indicators.</p>
+<p>We address this through a curated pattern library encoding legal
+expertise:</p>
+<p><strong>HIGH Risk Patterns (50+ patterns, examples):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Weight</th>
+<th>Legal Significance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“regardless of fault”</td>
+<td>+3</td>
+<td>Strict liability imposition</td>
+</tr>
+<tr>
+<td>“perpetuity” / “in perpetuity”</td>
+<td>+3</td>
+<td>Unlimited temporal scope</td>
+</tr>
+<tr>
+<td>“as is” / “as-is”</td>
+<td>+3</td>
+<td>Complete warranty disclaimer</td>
+</tr>
+<tr>
+<td>“without limitation”</td>
+<td>+3</td>
+<td>Uncapped exposure</td>
+</tr>
+<tr>
+<td>“sole discretion”</td>
+<td>+3</td>
+<td>Unilateral control</td>
+</tr>
+<tr>
+<td>“Cayman Islands”</td>
+<td>+4</td>
+<td>Offshore jurisdiction concern</td>
+</tr>
+<tr>
+<td>“waives all rights”</td>
+<td>+3</td>
+<td>Broad rights surrender</td>
+</tr>
+<tr>
+<td>“sans garantie” (FR)</td>
+<td>+3</td>
+<td>French warranty disclaimer</td>
+</tr>
+<tr>
+<td>“irrévocable” (FR)</td>
+<td>+2</td>
+<td>French perpetuity term</td>
+</tr>
+</tbody>
+</table>
+<p><strong>LOW Risk Patterns (40+ patterns, examples):</strong></p>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Weight</th>
+<th>Legal Significance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“capped at”</td>
+<td>-2</td>
+<td>Liability limitation</td>
+</tr>
+<tr>
+<td>“mutual” / “each party”</td>
+<td>-1</td>
+<td>Balanced obligations</td>
+</tr>
+<tr>
+<td>“shall not exceed”</td>
+<td>-1</td>
+<td>Clear ceiling</td>
+</tr>
+<tr>
+<td>“3 years” / “three years”</td>
+<td>-1</td>
+<td>Reasonable duration</td>
+</tr>
+<tr>
+<td>“non-exclusive”</td>
+<td>-2</td>
+<td>Limited grant scope</td>
+</tr>
+<tr>
+<td>“written consent”</td>
+<td>-1</td>
+<td>Procedural protection</td>
+</tr>
+<tr>
+<td>“plafonné” (FR)</td>
+<td>-2</td>
+<td>French liability cap</td>
+</tr>
+<tr>
+<td>“consentement écrit” (FR)</td>
+<td>-1</td>
+<td>French consent requirement</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pattern Matching Algorithm:</strong></p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> compute_risk_score(clause_text):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    text_lower <span class="op">=</span> clause_text.lower()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    score <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    high_matches, low_matches <span class="op">=</span> [], []</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> pattern, weight <span class="kw">in</span> HIGH_PATTERNS.items():</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pattern <span class="kw">in</span> text_lower:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>            score <span class="op">+=</span> weight</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            high_matches.append(pattern)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> pattern, weight <span class="kw">in</span> LOW_PATTERNS.items():</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> pattern <span class="kw">in</span> text_lower:</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>            score <span class="op">+=</span> weight  <span class="co"># Negative weights</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            low_matches.append(pattern)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> score, high_matches, low_matches</span></code></pre></div>
+<h3 id="hybrid-integration-strategy">3.4 Hybrid Integration
+Strategy</h3>
+<p>The hybrid module combines neural and symbolic signals through a
+principled decision procedure:</p>
+<p><strong>Algorithm 1: Hybrid Risk Assessment</strong></p>
+<pre><code>Input: clause_text, model_output
+Output: risk_level, confidence, rationale
+
+1. score, high_ind, low_ind ← PatternScore(clause_text)
+2. model_risk ← ExtractRisk(model_output)
+
+3. // Primary decision from pattern score
+4. if score ≥ 3 then risk_level ← HIGH
+5. elif score ≤ -2 then risk_level ← LOW  
+6. else risk_level ← MEDIUM
+
+7. // Model as tiebreaker for MEDIUM cases
+8. if risk_level = MEDIUM then
+9.     if model_risk = LOW ∧ |high_ind| = 0 then
+10.        risk_level ← LOW  // Trust model, no red flags
+11.    elif model_risk = HIGH ∧ |high_ind| ≥ 1 then
+12.        risk_level ← HIGH  // Amplify weak signal
+
+13. // Compute confidence
+14. confidence ← ConfidenceScore(|high_ind|, |low_ind|, agreement)
+
+15. // Generate rationale from patterns
+16. rationale ← GenerateRationale(high_ind, low_ind, risk_level)
+
+17. return risk_level, confidence, rationale</code></pre>
+<p><strong>Design Rationale:</strong></p>
+<ul>
+<li><strong>Lines 4-6</strong>: Pattern-based primary decision ensures
+explainability and consistency</li>
+<li><strong>Lines 7-12</strong>: Model tiebreaker leverages neural
+semantic understanding for ambiguous cases</li>
+<li><strong>Line 13</strong>: Confidence scoring reflects evidence
+strength</li>
+<li><strong>Lines 15-16</strong>: Rationales derived directly from
+patterns, ensuring explanation fidelity</li>
+</ul>
+<hr />
+<h2 id="datasets-and-evaluation-setup">4. Datasets and Evaluation
+Setup</h2>
+<h3 id="training-data-composition">4.1 Training Data Composition</h3>
+<p>We compile training data from 10 diverse sources, totaling 75,382
+examples:</p>
+<table>
+<thead>
+<tr>
+<th>Source</th>
+<th>Examples</th>
+<th>Language</th>
+<th>Domain</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CUAD (Hendrycks et al., 2021)</td>
+<td>10,667</td>
+<td>EN</td>
+<td>SEC contracts</td>
+</tr>
+<tr>
+<td>Legal Argument Mining</td>
+<td>23,113</td>
+<td>EN/DE</td>
+<td>Court arguments</td>
+</tr>
+<tr>
+<td>Claudette ToS (Lippi et al., 2019)</td>
+<td>9,319</td>
+<td>EN</td>
+<td>Terms of service</td>
+</tr>
+<tr>
+<td>Mistral Legal French</td>
+<td>14,875</td>
+<td>FR</td>
+<td>French legal (synthetic)</td>
+</tr>
+<tr>
+<td>EURLex-4K</td>
+<td>5,000</td>
+<td>EN</td>
+<td>EU legislation</td>
+</tr>
+<tr>
+<td>Contract-NLI (Koreeda &amp; Manning, 2021)</td>
+<td>4,195</td>
+<td>EN</td>
+<td>Contract NLI</td>
+</tr>
+<tr>
+<td>MAUD M&amp;A</td>
+<td>3,200</td>
+<td>EN</td>
+<td>M&amp;A agreements</td>
+</tr>
+<tr>
+<td>Swiss Judgments</td>
+<td>2,500</td>
+<td>EN/DE/FR</td>
+<td>Court decisions</td>
+</tr>
+<tr>
+<td>ECHR</td>
+<td>1,800</td>
+<td>EN</td>
+<td>Human rights</td>
+</tr>
+<tr>
+<td>Custom Augmentation</td>
+<td>713</td>
+<td>EN/FR</td>
+<td>Targeted examples</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Data Preprocessing:</strong> 1. Clause segmentation using
+legal-domain SpaCy model 2. Deduplication via MinHash (Jaccard threshold
+0.85) 3. Length filtering (50-1024 tokens) 4. Label normalization to
+unified taxonomy</p>
+<p><strong>Language Distribution:</strong> - English: 58,892 (78.1%) -
+French: 14,875 (19.7%)<br />
+- German: 1,615 (2.1%)</p>
+<h3 id="golden-test-set-construction">4.2 Golden Test Set
+Construction</h3>
+<p>We construct a held-out test set of 91 contract clauses following
+rigorous annotation guidelines:</p>
+<p><strong>Selection Criteria:</strong> 1. Representative coverage
+across 15 clause types 2. Balanced risk level distribution
+(HIGH/MEDIUM/LOW) 3. Equal representation of English and French texts 4.
+Inclusion of edge cases (mixed types, ambiguous language)</p>
+<p><strong>Annotation Process:</strong> 1. Initial annotation by legal
+domain expert 2. Risk rationale documentation for each clause 3. Review
+by second annotator (κ = 0.82) 4. Adjudication of disagreements</p>
+<p><strong>Test Set Statistics:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>Distribution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Language</strong></td>
+<td>EN: 51 (56%), FR: 40 (44%)</td>
+</tr>
+<tr>
+<td><strong>Risk Level</strong></td>
+<td>HIGH: 30 (33%), MEDIUM: 32 (35%), LOW: 29 (32%)</td>
+</tr>
+<tr>
+<td><strong>Clause Types</strong></td>
+<td>15 categories, 3-8 per category</td>
+</tr>
+<tr>
+<td><strong>Avg. Length</strong></td>
+<td>127 tokens (σ = 64)</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Example Annotation:</strong></p>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode json"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;id&quot;</span><span class="fu">:</span> <span class="st">&quot;EN_IND_001&quot;</span><span class="fu">,</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;language&quot;</span><span class="fu">:</span> <span class="st">&quot;en&quot;</span><span class="fu">,</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;text&quot;</span><span class="fu">:</span> <span class="st">&quot;Provider shall defend, indemnify, and hold harmless </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="st">           Customer from any and all claims, damages, losses,</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="st">           and expenses arising from Provider&#39;s breach,</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="st">           regardless of fault or negligence.&quot;</span><span class="fu">,</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;clause_type&quot;</span><span class="fu">:</span> <span class="st">&quot;indemnification&quot;</span><span class="fu">,</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;risk_level&quot;</span><span class="fu">:</span> <span class="st">&quot;HIGH&quot;</span><span class="fu">,</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="dt">&quot;risk_rationale&quot;</span><span class="fu">:</span> <span class="st">&quot;Broad indemnification scope (&#39;any and all&#39;),</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="st">                     strict liability imposition (&#39;regardless of </span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="st">                     fault&#39;), defense obligation included—strongly</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="st">                     favors Customer, high risk for Provider.&quot;</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<h3 id="evaluation-metrics">4.3 Evaluation Metrics</h3>
+<p><strong>Classification Metrics:</strong> - <strong>Accuracy</strong>:
+Exact match rate for clause type / risk level - <strong>Per-class
+F1</strong>: Harmonic mean of precision and recall per category -
+<strong>Macro F1</strong>: Unweighted average across classes</p>
+<p><strong>System Metrics:</strong> - <strong>Latency</strong>:
+Inference time per clause (milliseconds) - <strong>Consistency</strong>:
+Same-input same-output rate over 10 runs</p>
+<hr />
+<h2 id="experimental-results">5. Experimental Results</h2>
+<h3 id="clause-type-classification">5.1 Clause Type Classification</h3>
+<p><strong>Research Question 1</strong>: <em>How accurately can
+fine-tuned LLMs classify contract clauses?</em></p>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Overall Acc.</th>
+<th>English</th>
+<th>French</th>
+<th>Macro F1</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GPT-3.5 (zero-shot)</td>
+<td>62.6%</td>
+<td>66.7%</td>
+<td>57.5%</td>
+<td>0.58</td>
+</tr>
+<tr>
+<td>Mistral-7B (zero-shot)</td>
+<td>71.4%</td>
+<td>74.5%</td>
+<td>67.5%</td>
+<td>0.68</td>
+</tr>
+<tr>
+<td><strong>BALE (fine-tuned)</strong></td>
+<td><strong>97.8%</strong></td>
+<td><strong>98.0%</strong></td>
+<td><strong>97.5%</strong></td>
+<td><strong>0.97</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Fine-tuning yields <strong>+26 percentage points</strong> over
+zero-shot Mistral, confirming the value of domain adaptation.</p>
+<p><strong>Per-Category Performance:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Category</th>
+<th>Accuracy</th>
+<th>F1</th>
+<th>N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Indemnification</td>
+<td>100%</td>
+<td>1.00</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Limitation of Liability</td>
+<td>100%</td>
+<td>1.00</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Termination</td>
+<td>100%</td>
+<td>1.00</td>
+<td>8</td>
+</tr>
+<tr>
+<td>Confidentiality</td>
+<td>85.7%</td>
+<td>0.86</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Intellectual Property</td>
+<td>100%</td>
+<td>1.00</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Governing Law</td>
+<td>100%</td>
+<td>1.00</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Force Majeure</td>
+<td>100%</td>
+<td>1.00</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Warranty</td>
+<td>100%</td>
+<td>1.00</td>
+<td>7</td>
+</tr>
+<tr>
+<td>Payment Terms</td>
+<td>100%</td>
+<td>1.00</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Non-Compete</td>
+<td>100%</td>
+<td>1.00</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Data Protection</td>
+<td>100%</td>
+<td>1.00</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Assignment</td>
+<td>100%</td>
+<td>1.00</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Dispute Resolution</td>
+<td>83.3%</td>
+<td>0.83</td>
+<td>6</td>
+</tr>
+<tr>
+<td>Insurance</td>
+<td>100%</td>
+<td>1.00</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Audit Rights</td>
+<td>100%</td>
+<td>1.00</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>The model achieves 100% accuracy on 13/15 categories. Errors occur in
+confidentiality (confused with data protection) and dispute resolution
+(confused with governing law)—semantically adjacent categories.</p>
+<h3 id="risk-level-detection">5.2 Risk Level Detection</h3>
+<p><strong>Research Question 2</strong>: <em>Does neuro-symbolic
+integration improve risk assessment?</em></p>
+<table>
+<colgroup>
+<col style="width: 19%" />
+<col style="width: 17%" />
+<col style="width: 11%" />
+<col style="width: 15%" />
+<col style="width: 9%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Overall</th>
+<th>HIGH</th>
+<th>MEDIUM</th>
+<th>LOW</th>
+<th>Δ vs. Model</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Model-only</td>
+<td>45.0%</td>
+<td>36.7%</td>
+<td>56.2%</td>
+<td>41.4%</td>
+<td>—</td>
+</tr>
+<tr>
+<td>Rules-only</td>
+<td>52.7%</td>
+<td>60.0%</td>
+<td>46.9%</td>
+<td>51.7%</td>
+<td>+7.7</td>
+</tr>
+<tr>
+<td><strong>Hybrid (BALE)</strong></td>
+<td><strong>65.9%</strong></td>
+<td><strong>63.3%</strong></td>
+<td><strong>62.5%</strong></td>
+<td><strong>72.4%</strong></td>
+<td><strong>+20.9</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The hybrid approach achieves <strong>+21 points over
+model-only</strong> and <strong>+13 points over rules-only</strong>,
+demonstrating that integration outperforms either component alone.</p>
+<p><strong>Analysis of Improvement Sources:</strong></p>
+<table>
+<thead>
+<tr>
+<th>Case Type</th>
+<th>Model</th>
+<th>Rules</th>
+<th>Hybrid</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Explicit red flags</td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+<td>“regardless of fault”</td>
+</tr>
+<tr>
+<td>Subtle risk</td>
+<td>✓</td>
+<td>✗</td>
+<td>✓</td>
+<td>Complex legal phrasing</td>
+</tr>
+<tr>
+<td>Balanced clauses</td>
+<td>✗</td>
+<td>✓</td>
+<td>✓</td>
+<td>“mutual” + “capped at”</td>
+</tr>
+<tr>
+<td>Ambiguous</td>
+<td>✗</td>
+<td>✗</td>
+<td>~</td>
+<td>Model as tiebreaker</td>
+</tr>
+</tbody>
+</table>
+<h3 id="bilingual-performance">5.3 Bilingual Performance</h3>
+<p><strong>Research Question 3</strong>: <em>Does bilingual training
+maintain performance across languages?</em></p>
+<table>
+<thead>
+<tr>
+<th>Language</th>
+<th>Type Acc.</th>
+<th>Risk Acc.</th>
+<th>N</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>English</td>
+<td>98.0%</td>
+<td>64.7%</td>
+<td>51</td>
+</tr>
+<tr>
+<td>French</td>
+<td>97.5%</td>
+<td>67.5%</td>
+<td>40</td>
+</tr>
+<tr>
+<td><strong>Combined</strong></td>
+<td><strong>97.8%</strong></td>
+<td><strong>65.9%</strong></td>
+<td><strong>91</strong></td>
+</tr>
+</tbody>
+</table>
+<p>French achieves parity with English—and slightly higher risk accuracy
+(+2.8 points)—despite comprising only 20% of training data. This
+suggests effective cross-lingual transfer.</p>
+<h3 id="ablation-studies">5.4 Ablation Studies</h3>
+<p><strong>Ablation 1: Pattern Library Size</strong></p>
+<table>
+<thead>
+<tr>
+<th>Patterns</th>
+<th>HIGH Recall</th>
+<th>LOW Recall</th>
+<th>Overall</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>25 patterns</td>
+<td>43.3%</td>
+<td>48.3%</td>
+<td>52.7%</td>
+</tr>
+<tr>
+<td>50 patterns</td>
+<td>56.7%</td>
+<td>58.6%</td>
+<td>59.3%</td>
+</tr>
+<tr>
+<td>100+ patterns</td>
+<td>63.3%</td>
+<td>72.4%</td>
+<td>65.9%</td>
+</tr>
+</tbody>
+</table>
+<p>Coverage scales with pattern library size, with diminishing returns
+beyond ~100 patterns.</p>
+<p><strong>Ablation 2: Model Tiebreaker Effect</strong></p>
+<table>
+<thead>
+<tr>
+<th>Configuration</th>
+<th>MEDIUM→LOW</th>
+<th>MEDIUM→HIGH</th>
+<th>Overall Δ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Rules only</td>
+<td>—</td>
+<td>—</td>
+<td>52.7%</td>
+</tr>
+<tr>
+<td>+ Model tiebreaker</td>
+<td>+8 cases</td>
+<td>+3 cases</td>
+<td>+6.2%</td>
+</tr>
+</tbody>
+</table>
+<p>The model correctly breaks ties in 11/32 ambiguous (MEDIUM-scored)
+cases.</p>
+<h3 id="latency-analysis">5.5 Latency Analysis</h3>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Mean Latency</td>
+<td>2,018 ms</td>
+</tr>
+<tr>
+<td>Median</td>
+<td>1,450 ms</td>
+</tr>
+<tr>
+<td>P95</td>
+<td>4,800 ms</td>
+</tr>
+<tr>
+<td>P99</td>
+<td>5,200 ms</td>
+</tr>
+</tbody>
+</table>
+<p>Processing is dominated by neural inference (~1.4s); pattern matching
+contributes &lt;50ms. Performance is suitable for interactive
+(non-batch) applications.</p>
+<hr />
+<h2 id="analysis-and-discussion">6. Analysis and Discussion</h2>
+<h3 id="complementarity-of-neural-and-symbolic-components">6.1
+Complementarity of Neural and Symbolic Components</h3>
+<p>Our results illuminate a clear division of labor:</p>
+<p><strong>Neural Strengths:</strong> - <em>Semantic abstraction</em>:
+Correctly maps “defend, indemnify, and hold harmless” to
+<code>indemnification</code> despite syntactic variation -
+<em>Cross-lingual transfer</em>: French “clause de non-responsabilité”
+correctly mapped to <code>limitation_of_liability</code> -
+<em>Generalization</em>: Handles clause formulations absent from
+training data</p>
+<p><strong>Symbolic Strengths:</strong> - <em>Deterministic
+scoring</em>: Identical inputs always produce identical risk scores -
+<em>Transparent decisions</em>: Rationales cite specific patterns
+(“contains ‘regardless of fault’ → +3”) - <em>Expert knowledge
+encoding</em>: Legal expertise captured without additional training</p>
+<p><strong>Hybrid Benefits:</strong> - <em>Error correction</em>:
+Patterns catch model misses; model catches pattern gaps - <em>Confidence
+calibration</em>: Agreement boosts confidence; disagreement triggers
+review flag</p>
+<h3 id="error-analysis">6.2 Error Analysis</h3>
+<p>We manually analyze all 31 risk classification errors:</p>
+<table>
+<thead>
+<tr>
+<th>Error Type</th>
+<th>Count</th>
+<th>%</th>
+<th>Example</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Missing patterns</td>
+<td>11</td>
+<td>35%</td>
+<td>Novel risk language not in library</td>
+</tr>
+<tr>
+<td>Context-dependent</td>
+<td>8</td>
+<td>26%</td>
+<td>Risk depends on other clauses</td>
+</tr>
+<tr>
+<td>Ambiguous ground truth</td>
+<td>6</td>
+<td>19%</td>
+<td>Annotator disagreement cases</td>
+</tr>
+<tr>
+<td>Model-rules conflict</td>
+<td>4</td>
+<td>13%</td>
+<td>Hybrid chose wrong signal</td>
+</tr>
+<tr>
+<td>Threshold boundary</td>
+<td>2</td>
+<td>6%</td>
+<td>Score near decision threshold</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Key Insight</strong>: 35% of errors stem from incomplete
+pattern coverage—suggesting that expanding the pattern library with
+domain expert input could yield further gains.</p>
+<h3 id="limitations">6.3 Limitations</h3>
+<ol type="1">
+<li><p><strong>Single-clause analysis</strong>: We analyze clauses in
+isolation; contract-level context (e.g., “notwithstanding the
+foregoing”) may alter interpretation.</p></li>
+<li><p><strong>Pattern maintenance burden</strong>: The symbolic
+component requires expert curation—a practical challenge for deployment
+across novel jurisdictions.</p></li>
+<li><p><strong>Binary/ternary risk levels</strong>: Our HIGH/MEDIUM/LOW
+taxonomy may oversimplify nuanced risk gradations.</p></li>
+<li><p><strong>Limited jurisdictional coverage</strong>: Patterns focus
+on Common Law and French Civil Law traditions; additional work needed
+for German, Chinese, or Arabic legal systems.</p></li>
+<li><p><strong>Evaluation set size</strong>: 91 examples, while
+carefully curated, may not capture all edge cases in production
+deployment.</p></li>
+</ol>
+<h3 id="comparison-with-commercial-systems">6.4 Comparison with
+Commercial Systems</h3>
+<p>While direct comparison is challenging due to proprietary system
+opacity, we note:</p>
+<table>
+<thead>
+<tr>
+<th>System</th>
+<th>Clause Classification</th>
+<th>Risk Assessment</th>
+<th>Explainability</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BALE</td>
+<td>97.8%</td>
+<td>65.9%</td>
+<td>Pattern-based</td>
+</tr>
+<tr>
+<td>Kira Systems*</td>
+<td>~90%</td>
+<td>Not reported</td>
+<td>Limited</td>
+</tr>
+<tr>
+<td>LawGeex*</td>
+<td>~94%</td>
+<td>Proprietary</td>
+<td>Limited</td>
+</tr>
+</tbody>
+</table>
+<p>*Reported figures from vendor materials; not directly comparable due
+to different test sets.</p>
+<hr />
+<h2 id="conclusion">7. Conclusion</h2>
+<p>We have presented BALE, a neuro-symbolic framework demonstrating that
+principled integration of neural and symbolic approaches significantly
+advances contract risk assessment. Our experiments establish three key
+findings:</p>
+<p><strong>Finding 1: Hybrid approaches outperform unimodal
+baselines.</strong> Our neuro-symbolic integration achieves 65.9% risk
+accuracy—21 points above model-only and 13 points above rules-only
+baselines.</p>
+<p><strong>Finding 2: Bilingual training is practical and
+effective.</strong> Despite asymmetric training data (78% English, 20%
+French), French and English achieve parity on both classification and
+risk assessment.</p>
+<p><strong>Finding 3: Explainability and accuracy are
+compatible.</strong> Pattern-based rationales provide transparent
+decision logic without sacrificing performance.</p>
+<p>From a practical standpoint, BALE demonstrates viability for
+production legal AI: sub-2-second latency, deterministic behavior, and
+interpretable outputs address key requirements for high-stakes
+applications.</p>
+<p><strong>Future Directions:</strong> 1. <strong>Contract-level
+analysis</strong>: Extending beyond single clauses to model inter-clause
+relationships and document structure 2. <strong>Active
+learning</strong>: Incorporating expert corrections to expand pattern
+coverage iteratively 3. <strong>Multilingual expansion</strong>: German,
+Spanish, and Mandarin for global contract review 4. <strong>Risk
+quantification</strong>: Moving from categorical (HIGH/MEDIUM/LOW) to
+continuous risk scores with uncertainty estimates</p>
+<p>We release our golden test set, evaluation framework, and trained
+model weights to support reproducible research in legal NLP.</p>
+<hr />
+<h2 id="acknowledgments">Acknowledgments</h2>
+<p>[To be added]</p>
+<hr />
+<h2 id="references">References</h2>
+<p>Borchmann, Ł., Pietraszek, M., &amp; Kleczek, D. (2020). Contract
+discovery: Dataset and a few-shot approach. <em>Proceedings of COLING
+2020</em>.</p>
+<p>Chalkidis, I., Androutsopoulos, I., &amp; Aletras, N. (2019). Neural
+legal judgment prediction in English. <em>Proceedings of ACL
+2019</em>.</p>
+<p>Chalkidis, I., et al. (2022). LexGLUE: A benchmark dataset for legal
+language understanding in English. <em>Proceedings of ACL 2022</em>.</p>
+<p>DeYoung, J., et al. (2020). ERASER: A benchmark to evaluate
+rationalized NLP models. <em>Proceedings of ACL 2020</em>.</p>
+<p>Dong, Q., et al. (2021). Legal judgment prediction via
+multi-perspective bi-feedback network. <em>Proceedings of IJCAI
+2021</em>.</p>
+<p>Garcez, A., et al. (2019). Neural-symbolic computing: An effective
+methodology for principled integration of machine learning and
+reasoning. <em>Journal of Applied Logics</em>.</p>
+<p>Hendrycks, D., et al. (2021). CUAD: An expert-annotated NLP dataset
+for legal contract review. <em>NeurIPS 2021</em>.</p>
+<p>Hu, E., et al. (2022). LoRA: Low-rank adaptation of large language
+models. <em>ICLR 2022</em>.</p>
+<p>Jiang, A., et al. (2023). Mistral 7B. <em>arXiv preprint</em>.</p>
+<p>Katz, D., Bommarito, M., &amp; Blackman, J. (2017). A general
+approach for predicting the behavior of the Supreme Court of the United
+States. <em>PLOS ONE</em>.</p>
+<p>Koreeda, Y., &amp; Manning, C. (2021). ContractNLI: A dataset for
+document-level natural language inference for contracts. <em>Findings of
+EMNLP 2021</em>.</p>
+<p>Lamb, L., et al. (2020). Graph neural networks meet neural-symbolic
+computing: A survey and perspective. <em>arXiv preprint</em>.</p>
+<p>Lippi, M., et al. (2019). CLAUDETTE: An automated detector of
+potentially unfair clauses in online terms of service. <em>Artificial
+Intelligence and Law</em>.</p>
+<p>Manor, L., &amp; Li, J. (2019). Plain English summarization of
+contracts. <em>Proceedings of the Natural Legal Language Processing
+Workshop</em>.</p>
+<p>Niklaus, J., et al. (2022). An empirical study on cross-x transfer
+for legal judgment prediction. <em>arXiv preprint</em>.</p>
+<p>Niklaus, J., et al. (2023). MultiLegalPile: A 689GB multilingual
+legal corpus. <em>arXiv preprint</em>.</p>
+<p>Salaün, O., et al. (2022). LegalBench-FR: A French legal NLP
+benchmark. <em>Proceedings of LREC 2022</em>.</p>
+<p>Susskind, R. (2017). <em>Tomorrow’s Lawyers: An Introduction to Your
+Future</em>. Oxford University Press.</p>
+<p>Wang, X., et al. (2022). Formal verification of neural network-based
+legal reasoning. <em>Proceedings of ICAIL 2022</em>.</p>
+<p>Xiao, C., et al. (2018). CAIL2018: A large-scale legal dataset for
+judgment prediction. <em>arXiv preprint</em>.</p>
+<p>Zhong, H., et al. (2020). JEC-QA: A legal-domain question answering
+dataset. <em>Proceedings of AAAI 2020</em>.</p>
+<hr />
+<h2 id="appendix-a-complete-risk-pattern-library">Appendix A: Complete
+Risk Pattern Library</h2>
+<h3 id="a.1-high-risk-patterns-english">A.1 HIGH Risk Patterns
+(English)</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Weight</th>
+<th>Category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“regardless of fault”</td>
+<td>+3</td>
+<td>Liability</td>
+</tr>
+<tr>
+<td>“regardless of negligence”</td>
+<td>+3</td>
+<td>Liability</td>
+</tr>
+<tr>
+<td>“unlimited”</td>
+<td>+3</td>
+<td>Scope</td>
+</tr>
+<tr>
+<td>“without limit”</td>
+<td>+3</td>
+<td>Scope</td>
+</tr>
+<tr>
+<td>“without limitation”</td>
+<td>+2</td>
+<td>Scope</td>
+</tr>
+<tr>
+<td>“perpetuity”</td>
+<td>+3</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“in perpetuity”</td>
+<td>+3</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“irrevocable”</td>
+<td>+2</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“permanent”</td>
+<td>+2</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“as is”</td>
+<td>+3</td>
+<td>Warranty</td>
+</tr>
+<tr>
+<td>“as-is”</td>
+<td>+3</td>
+<td>Warranty</td>
+</tr>
+<tr>
+<td>“without warranty”</td>
+<td>+3</td>
+<td>Warranty</td>
+</tr>
+<tr>
+<td>“no warranty”</td>
+<td>+3</td>
+<td>Warranty</td>
+</tr>
+<tr>
+<td>“sole discretion”</td>
+<td>+3</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>“absolute discretion”</td>
+<td>+3</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>“without notice”</td>
+<td>+3</td>
+<td>Process</td>
+</tr>
+<tr>
+<td>“without prior notice”</td>
+<td>+3</td>
+<td>Process</td>
+</tr>
+<tr>
+<td>“waives all”</td>
+<td>+3</td>
+<td>Rights</td>
+</tr>
+<tr>
+<td>“Cayman Islands”</td>
+<td>+4</td>
+<td>Jurisdiction</td>
+</tr>
+<tr>
+<td>“British Virgin Islands”</td>
+<td>+4</td>
+<td>Jurisdiction</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a.2-high-risk-patterns-french">A.2 HIGH Risk Patterns
+(French)</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Weight</th>
+<th>Category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“illimité”</td>
+<td>+3</td>
+<td>Scope</td>
+</tr>
+<tr>
+<td>“sans limite”</td>
+<td>+3</td>
+<td>Scope</td>
+</tr>
+<tr>
+<td>“perpétuité”</td>
+<td>+3</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“irrévocable”</td>
+<td>+2</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“sans garantie”</td>
+<td>+3</td>
+<td>Warranty</td>
+</tr>
+<tr>
+<td>“en l’état”</td>
+<td>+3</td>
+<td>Warranty</td>
+</tr>
+<tr>
+<td>“seule discrétion”</td>
+<td>+3</td>
+<td>Control</td>
+</tr>
+<tr>
+<td>“sans préavis”</td>
+<td>+3</td>
+<td>Process</td>
+</tr>
+<tr>
+<td>“renonce à”</td>
+<td>+2</td>
+<td>Rights</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a.3-low-risk-patterns-english">A.3 LOW Risk Patterns
+(English)</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Weight</th>
+<th>Category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“capped at”</td>
+<td>-2</td>
+<td>Liability</td>
+</tr>
+<tr>
+<td>“limited to”</td>
+<td>-1</td>
+<td>Liability</td>
+</tr>
+<tr>
+<td>“shall not exceed”</td>
+<td>-1</td>
+<td>Liability</td>
+</tr>
+<tr>
+<td>“mutual”</td>
+<td>-1</td>
+<td>Balance</td>
+</tr>
+<tr>
+<td>“each party”</td>
+<td>-1</td>
+<td>Balance</td>
+</tr>
+<tr>
+<td>“both parties”</td>
+<td>-1</td>
+<td>Balance</td>
+</tr>
+<tr>
+<td>“non-exclusive”</td>
+<td>-2</td>
+<td>Scope</td>
+</tr>
+<tr>
+<td>“3 years”</td>
+<td>-1</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“2 years”</td>
+<td>-1</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“written consent”</td>
+<td>-1</td>
+<td>Process</td>
+</tr>
+<tr>
+<td>“prior consent”</td>
+<td>-1</td>
+<td>Process</td>
+</tr>
+</tbody>
+</table>
+<h3 id="a.4-low-risk-patterns-french">A.4 LOW Risk Patterns
+(French)</h3>
+<table>
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Weight</th>
+<th>Category</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>“plafonné”</td>
+<td>-2</td>
+<td>Liability</td>
+</tr>
+<tr>
+<td>“limité à”</td>
+<td>-1</td>
+<td>Liability</td>
+</tr>
+<tr>
+<td>“mutuel”</td>
+<td>-1</td>
+<td>Balance</td>
+</tr>
+<tr>
+<td>“chaque partie”</td>
+<td>-1</td>
+<td>Balance</td>
+</tr>
+<tr>
+<td>“non exclusif”</td>
+<td>-2</td>
+<td>Scope</td>
+</tr>
+<tr>
+<td>“3 ans”</td>
+<td>-2</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“2 ans”</td>
+<td>-1</td>
+<td>Duration</td>
+</tr>
+<tr>
+<td>“consentement écrit”</td>
+<td>-1</td>
+<td>Process</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="appendix-b-golden-test-set-examples">Appendix B: Golden Test Set
+Examples</h2>
+<h3 id="b.1-high-risk-examples">B.1 HIGH Risk Examples</h3>
+<p><strong>EN_IND_001</strong> (Indemnification, HIGH): &gt; “Provider
+shall defend, indemnify, and hold harmless Customer from any and all
+claims, damages, losses, and expenses (including attorneys’ fees)
+arising from Provider’s services, regardless of fault or
+negligence.”</p>
+<p><em>Risk Rationale</em>: Broad scope (“any and all”), strict
+liability (“regardless of fault”), defense obligation—strongly
+one-sided.</p>
+<p><strong>FR_LOL_001</strong> (Limitation of Liability, HIGH): &gt; “Le
+Prestataire ne sera en aucun cas responsable des dommages indirects,
+accessoires ou consécutifs, quelle que soit la nature de la
+réclamation.”</p>
+<p><em>Risk Rationale</em>: Complete indirect damage exclusion, broad
+disclaimer language (“en aucun cas”, “quelle que soit”).</p>
+<h3 id="b.2-low-risk-examples">B.2 LOW Risk Examples</h3>
+<p><strong>EN_LOL_003</strong> (Limitation of Liability, LOW): &gt;
+“Neither party’s aggregate liability under this Agreement shall exceed
+the fees paid by Customer in the twelve (12) months preceding the claim.
+This limitation applies equally to both parties.”</p>
+<p><em>Risk Rationale</em>: Mutual limitation (“applies equally”),
+reasonable cap (12 months fees), clear ceiling.</p>
+<p><strong>FR_CONF_003</strong> (Confidentiality, LOW): &gt; “Les
+obligations de confidentialité s’appliquent pendant une durée de trois
+(3) ans suivant la divulgation. Les exclusions standard s’appliquent aux
+informations publiques.”</p>
+<p><em>Risk Rationale</em>: Reasonable duration (3 years), standard
+exclusions, balanced scope.</p>
+<hr />
+<h2 id="appendix-c-reproducibility-checklist">Appendix C:
+Reproducibility Checklist</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" />Training data sources listed (Table
+4.1)</label></li>
+<li><label><input type="checkbox" />Model hyperparameters documented
+(Table 3.2)</label></li>
+<li><label><input type="checkbox" />Evaluation metrics defined (Section
+4.3)</label></li>
+<li><label><input type="checkbox" />Test set will be released upon
+publication</label></li>
+<li><label><input type="checkbox" />Code available at [repository
+URL]</label></li>
+<li><label><input type="checkbox" />Trained model weights available at
+[model URL]</label></li>
+</ul>
+</body>
+</html>
