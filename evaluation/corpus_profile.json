@@ -1,0 +1,310 @@
+{
+  "total_contracts": 21,
+  "contract_type_counts": {
+    "MSA": 12,
+    "Vendor": 1,
+    "Employment": 1,
+    "Loan": 1,
+    "BAA": 1,
+    "DPA": 1,
+    "NDA": 2,
+    "SLA": 1,
+    "Terms": 1
+  },
+  "mean_risk_score": 56.5,
+  "std_risk_score": 18.4,
+  "mean_clause_count": 11.3,
+  "clause_statistics": {
+    "indemnification": {
+      "count": 11,
+      "mean_confidence": 0.549,
+      "std_confidence": 0.087,
+      "mean_risk_weight": 0.8,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 9
+    },
+    "limitation_of_liability": {
+      "count": 17,
+      "mean_confidence": 0.553,
+      "std_confidence": 0.15,
+      "mean_risk_weight": 0.9,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 13
+    },
+    "termination": {
+      "count": 45,
+      "mean_confidence": 0.489,
+      "std_confidence": 0.158,
+      "mean_risk_weight": 0.6,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 19
+    },
+    "governing_law": {
+      "count": 17,
+      "mean_confidence": 0.472,
+      "std_confidence": 0.078,
+      "mean_risk_weight": 0.3,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 13
+    },
+    "payment_terms": {
+      "count": 20,
+      "mean_confidence": 0.492,
+      "std_confidence": 0.093,
+      "mean_risk_weight": 0.5,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 10
+    },
+    "data_protection": {
+      "count": 26,
+      "mean_confidence": 0.413,
+      "std_confidence": 0.09,
+      "mean_risk_weight": 0.7,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 11
+    },
+    "warranty": {
+      "count": 14,
+      "mean_confidence": 0.396,
+      "std_confidence": 0.087,
+      "mean_risk_weight": 0.6,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 102.0,
+      "presence_count": 6
+    },
+    "confidentiality": {
+      "count": 39,
+      "mean_confidence": 0.528,
+      "std_confidence": 0.101,
+      "mean_risk_weight": 0.5,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 18
+    },
+    "intellectual_property": {
+      "count": 13,
+      "mean_confidence": 0.553,
+      "std_confidence": 0.128,
+      "mean_risk_weight": 0.7,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 102.0,
+      "presence_count": 11
+    },
+    "force_majeure": {
+      "count": 2,
+      "mean_confidence": 0.788,
+      "std_confidence": 0.019,
+      "mean_risk_weight": 0.6,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 2
+    },
+    "non_compete": {
+      "count": 16,
+      "mean_confidence": 0.444,
+      "std_confidence": 0.086,
+      "mean_risk_weight": 0.8,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 8
+    },
+    "audit_rights": {
+      "count": 4,
+      "mean_confidence": 0.531,
+      "std_confidence": 0.049,
+      "mean_risk_weight": 0.4,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 3
+    },
+    "dispute_resolution": {
+      "count": 6,
+      "mean_confidence": 0.586,
+      "std_confidence": 0.085,
+      "mean_risk_weight": 0.5,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 103.0,
+      "presence_count": 6
+    },
+    "assignment": {
+      "count": 6,
+      "mean_confidence": 0.48,
+      "std_confidence": 0.065,
+      "mean_risk_weight": 0.4,
+      "std_risk_weight": 0.01,
+      "mean_text_length": 102.0,
+      "presence_count": 4
+    },
+    "insurance": {
+      "count": 1,
+      "mean_confidence": 0.523,
+      "std_confidence": 0.1,
+      "mean_risk_weight": 0.4,
+      "std_risk_weight": 0.1,
+      "mean_text_length": 103.0,
+      "presence_count": 1
+    }
+  },
+  "_risk_score_sum": 1186.8000000000002,
+  "_risk_score_sq_sum": 74193.64,
+  "_clause_count_sum": 237,
+  "_clause_count_sq_sum": 2871,
+  "_raw_clause_stats": {
+    "indemnification": {
+      "count": 11,
+      "confidence_sum": 6.0409999999999995,
+      "confidence_sq_sum": 3.400419,
+      "risk_weight_sum": 8.799999999999999,
+      "risk_weight_sq_sum": 7.040000000000003,
+      "text_length_sum": 1133,
+      "text_length_sq_sum": 116699,
+      "presence_count": 9
+    },
+    "limitation_of_liability": {
+      "count": 17,
+      "confidence_sum": 9.397000000000002,
+      "confidence_sq_sum": 5.5766490000000015,
+      "risk_weight_sum": 15.300000000000004,
+      "risk_weight_sq_sum": 13.770000000000007,
+      "text_length_sum": 1751,
+      "text_length_sq_sum": 180353,
+      "presence_count": 13
+    },
+    "termination": {
+      "count": 45,
+      "confidence_sum": 22.01100000000001,
+      "confidence_sq_sum": 11.895937,
+      "risk_weight_sum": 27.00000000000002,
+      "risk_weight_sq_sum": 16.199999999999992,
+      "text_length_sum": 4617,
+      "text_length_sq_sum": 474021,
+      "presence_count": 19
+    },
+    "governing_law": {
+      "count": 17,
+      "confidence_sum": 8.017999999999999,
+      "confidence_sq_sum": 3.884958,
+      "risk_weight_sum": 5.099999999999999,
+      "risk_weight_sq_sum": 1.5300000000000002,
+      "text_length_sum": 1751,
+      "text_length_sq_sum": 180353,
+      "presence_count": 13
+    },
+    "payment_terms": {
+      "count": 20,
+      "confidence_sum": 9.842,
+      "confidence_sq_sum": 5.015242,
+      "risk_weight_sum": 10.0,
+      "risk_weight_sq_sum": 5.0,
+      "text_length_sum": 2060,
+      "text_length_sq_sum": 212180,
+      "presence_count": 10
+    },
+    "data_protection": {
+      "count": 26,
+      "confidence_sum": 10.746999999999996,
+      "confidence_sq_sum": 4.651554999999999,
+      "risk_weight_sum": 18.199999999999992,
+      "risk_weight_sq_sum": 12.740000000000002,
+      "text_length_sum": 2678,
+      "text_length_sq_sum": 275834,
+      "presence_count": 11
+    },
+    "warranty": {
+      "count": 14,
+      "confidence_sum": 5.543000000000001,
+      "confidence_sq_sum": 2.300321,
+      "risk_weight_sum": 8.399999999999999,
+      "risk_weight_sq_sum": 5.04,
+      "text_length_sum": 1435,
+      "text_length_sq_sum": 147121,
+      "presence_count": 6
+    },
+    "confidentiality": {
+      "count": 39,
+      "confidence_sum": 20.606999999999996,
+      "confidence_sq_sum": 11.289081000000001,
+      "risk_weight_sum": 19.5,
+      "risk_weight_sq_sum": 9.75,
+      "text_length_sum": 4017,
+      "text_length_sq_sum": 413751,
+      "presence_count": 18
+    },
+    "intellectual_property": {
+      "count": 13,
+      "confidence_sum": 7.187000000000001,
+      "confidence_sq_sum": 4.184837,
+      "risk_weight_sum": 9.1,
+      "risk_weight_sq_sum": 6.37,
+      "text_length_sum": 1328,
+      "text_length_sq_sum": 135772,
+      "presence_count": 11
+    },
+    "force_majeure": {
+      "count": 2,
+      "confidence_sum": 1.576,
+      "confidence_sq_sum": 1.24261,
+      "risk_weight_sum": 1.2,
+      "risk_weight_sq_sum": 0.72,
+      "text_length_sum": 206,
+      "text_length_sq_sum": 21218,
+      "presence_count": 2
+    },
+    "non_compete": {
+      "count": 16,
+      "confidence_sum": 7.096000000000001,
+      "confidence_sq_sum": 3.2642339999999996,
+      "risk_weight_sum": 12.800000000000002,
+      "risk_weight_sq_sum": 10.240000000000006,
+      "text_length_sum": 1648,
+      "text_length_sq_sum": 169744,
+      "presence_count": 8
+    },
+    "audit_rights": {
+      "count": 4,
+      "confidence_sum": 2.123,
+      "confidence_sq_sum": 1.1365189999999998,
+      "risk_weight_sum": 1.6,
+      "risk_weight_sq_sum": 0.6400000000000001,
+      "text_length_sum": 412,
+      "text_length_sq_sum": 42436,
+      "presence_count": 3
+    },
+    "dispute_resolution": {
+      "count": 6,
+      "confidence_sum": 3.5170000000000003,
+      "confidence_sq_sum": 2.105059,
+      "risk_weight_sum": 3.0,
+      "risk_weight_sq_sum": 1.5,
+      "text_length_sum": 618,
+      "text_length_sq_sum": 63654,
+      "presence_count": 6
+    },
+    "assignment": {
+      "count": 6,
+      "confidence_sum": 2.881,
+      "confidence_sq_sum": 1.409077,
+      "risk_weight_sum": 2.4,
+      "risk_weight_sq_sum": 0.9600000000000002,
+      "text_length_sum": 614,
+      "text_length_sq_sum": 62846,
+      "presence_count": 4
+    },
+    "insurance": {
+      "count": 1,
+      "confidence_sum": 0.523,
+      "confidence_sq_sum": 0.273529,
+      "risk_weight_sum": 0.4,
+      "risk_weight_sq_sum": 0.16000000000000003,
+      "text_length_sum": 103,
+      "text_length_sq_sum": 10609,
+      "presence_count": 1
+    }
+  }
+}
