@@ -1,349 +1,349 @@
 {
-  "version": "1.0",
-  "total_cases": 38,
-  "categories": {
-    "classification": [
-      {
-        "id": "class_001",
-        "category": "classification",
-        "input": "The Vendor shall indemnify, defend, and hold harmless the Customer from and against any and all claims, losses, damages, liabilities, costs, and expenses arising from Vendor's breach of this Agreement.",
-        "expected": "indemnification",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_002",
-        "category": "classification",
-        "input": "Contractor agrees to protect and indemnify Client against any liability arising from the services provided hereunder.",
-        "expected": "indemnification",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_010",
-        "category": "classification",
-        "input": "Provider shall maintain commercial general liability insurance with coverage of not less than Two Million Dollars ($2,000,000) per occurrence.",
-        "expected": "insurance",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_011",
-        "category": "classification",
-        "input": "The contractor must procure and keep in force professional liability insurance with a minimum limit of $1,000,000.",
-        "expected": "insurance",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_020",
-        "category": "classification",
-        "input": "All information disclosed by either party that is marked as 'Confidential' or that a reasonable person would understand to be confidential shall be kept strictly confidential.",
-        "expected": "confidentiality",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_021",
-        "category": "classification",
-        "input": "The receiving party agrees to maintain the confidentiality of all proprietary information and trade secrets disclosed during the term of this agreement.",
-        "expected": "confidentiality",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_030",
-        "category": "classification",
-        "input": "Either party may terminate this Agreement upon thirty (30) days prior written notice to the other party.",
-        "expected": "termination",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_031",
-        "category": "classification",
-        "input": "This Agreement may be terminated immediately by either party in the event of a material breach by the other party.",
-        "expected": "termination",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_040",
-        "category": "classification",
-        "input": "This Agreement shall be governed by and construed in accordance with the laws of the State of Delaware, without regard to its conflicts of laws principles.",
-        "expected": "governing_law",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_050",
-        "category": "classification",
-        "input": "Seller warrants that the Products shall be free from defects in materials and workmanship for a period of one (1) year from delivery.",
-        "expected": "warranty",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_060",
-        "category": "classification",
-        "input": "All intellectual property created by Contractor in the performance of Services shall be the sole and exclusive property of Client.",
-        "expected": "intellectual_property",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_070",
-        "category": "classification",
-        "input": "In no event shall either party be liable for any indirect, incidental, special, consequential, or punitive damages.",
-        "expected": "liability",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_080",
-        "category": "classification",
-        "input": "Neither party shall be liable for any failure or delay in performing their obligations where such failure or delay results from Force Majeure events including acts of God, natural disasters, war, or pandemic.",
-        "expected": "force_majeure",
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "class_090",
-        "category": "classification",
-        "input": "Any dispute arising out of this Agreement shall be resolved by binding arbitration in accordance with the rules of the American Arbitration Association.",
-        "expected": "arbitration",
-        "difficulty": "standard",
-        "language": "en"
-      }
-    ],
-    "risk_detection": [
-      {
-        "id": "risk_001",
-        "category": "risk_detection",
-        "input": "Provider shall have no liability whatsoever for any damages, including but not limited to direct, indirect, consequential, or punitive damages, regardless of the cause of action.",
-        "expected": "HIGH",
-        "problems": [
-          "no liability whatsoever",
-          "regardless of cause"
-        ],
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "risk_002",
-        "category": "risk_detection",
-        "input": "We may modify these terms at any time without notice. Your continued use constitutes acceptance of new terms.",
-        "expected": "HIGH",
-        "problems": [
-          "without notice",
-          "continued use constitutes acceptance"
-        ],
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "risk_003",
-        "category": "risk_detection",
-        "input": "Any dispute shall be resolved exclusively through binding arbitration. You waive any right to a jury trial and to participate in class actions.",
-        "expected": "HIGH",
-        "problems": [
-          "binding arbitration",
-          "waive jury trial",
-          "waive class actions"
-        ],
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "risk_004",
-        "category": "risk_detection",
-        "input": "By using our service, you grant us an irrevocable, perpetual, worldwide license to use, modify, distribute, and sublicense any content you submit.",
-        "expected": "HIGH",
-        "problems": [
-          "irrevocable",
-          "perpetual",
-          "sublicense"
-        ],
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "risk_005",
-        "category": "risk_detection",
-        "input": "All disputes must be brought exclusively in courts located in Singapore. You consent to personal jurisdiction there and waive any objection to venue.",
-        "expected": "HIGH",
-        "problems": [
-          "exclusively in Singapore",
-          "waive objection"
-        ],
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "risk_020",
-        "category": "risk_detection",
-        "input": "Each party's liability for direct damages shall not exceed the fees paid in the preceding 12 months. Neither party excludes liability for gross negligence, willful misconduct, or personal injury.",
-        "expected": "LOW",
-        "problems": [],
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "risk_021",
-        "category": "risk_detection",
-        "input": "Either party may terminate with 30 days written notice. Upon termination, all prepaid fees will be prorated and refunded.",
-        "expected": "LOW",
-        "problems": [],
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "risk_022",
-        "category": "risk_detection",
-        "input": "We may modify these terms with 30 days advance notice via email. Material changes will allow you to terminate without penalty.",
-        "expected": "LOW",
-        "problems": [],
-        "difficulty": "standard",
-        "language": "en"
-      },
-      {
-        "id": "risk_023",
-        "category": "risk_detection",
-        "input": "You retain all ownership rights to your content. We receive a limited license to display your content on our platform only while you use the service.",
-        "expected": "LOW",
-        "problems": [],
-        "difficulty": "standard",
-        "language": "en"
-      }
-    ],
-    "edge_cases": [
-      {
-        "id": "edge_001",
-        "category": "classification",
-        "input": "Vendor agrees to protect Customer from any claims arising from the services, including maintaining appropriate professional coverage.",
-        "expected": "indemnification",
-        "difficulty": "edge_case",
-        "notes": "Contains both indemnification and insurance concepts",
-        "language": "en"
-      },
-      {
-        "id": "edge_002",
-        "category": "classification",
-        "input": "This agreement terminates automatically upon expiration. Confidentiality obligations shall survive for 5 years.",
-        "expected": "termination",
-        "difficulty": "edge_case",
-        "notes": "Contains termination and survival elements",
-        "language": "en"
-      },
-      {
-        "id": "edge_003",
-        "category": "classification",
-        "input": "We reserve the right to modify features of the service. Material changes affecting pricing will be communicated 14 days in advance.",
-        "expected": "MEDIUM",
-        "difficulty": "edge_case",
-        "notes": "Some unilateral change rights but with notice for pricing",
-        "language": "en"
-      },
-      {
-        "id": "edge_004",
-        "category": "classification",
-        "input": "Confidential information shall remain confidential.",
-        "expected": "confidentiality",
-        "difficulty": "edge_case",
-        "notes": "Very short, minimal context",
-        "language": "en"
-      },
-      {
-        "id": "edge_005",
-        "category": "classification",
-        "input": "Subject to the terms of Section 8 (Confidentiality), Customer may disclose the terms of this Agreement solely to its legal counsel for purposes of enforcement, provided such counsel agrees to maintain confidentiality.",
-        "expected": "confidentiality",
-        "difficulty": "edge_case",
-        "notes": "Reference to other sections, complex structure",
-        "language": "en"
-      }
-    ],
-    "multilingual": [
-      {
-        "id": "fr_001",
-        "category": "classification",
-        "input": "Le Prestataire s'engage à indemniser et garantir le Client contre toute réclamation, perte ou dommage résultant de l'exécution des services.",
-        "expected": "indemnification",
-        "difficulty": "multilingual",
-        "language": "fr"
-      },
-      {
-        "id": "fr_002",
-        "category": "classification",
-        "input": "Toutes les informations communiquées par l'une ou l'autre des parties et identifiées comme confidentielles devront être traitées comme telles.",
-        "expected": "confidentiality",
-        "difficulty": "multilingual",
-        "language": "fr"
-      },
-      {
-        "id": "fr_003",
-        "category": "classification",
-        "input": "Le présent contrat est régi par le droit français. Tout litige sera soumis à la compétence exclusive des tribunaux de Paris.",
-        "expected": "governing_law",
-        "difficulty": "multilingual",
-        "language": "fr"
-      },
-      {
-        "id": "fr_004",
-        "category": "classification",
-        "input": "Chaque partie peut résilier le contrat moyennant un préavis écrit de trente (30) jours.",
-        "expected": "termination",
-        "difficulty": "multilingual",
-        "language": "fr"
-      },
-      {
-        "id": "fr_005",
-        "category": "risk",
-        "input": "Le Fournisseur n'assume aucune responsabilité pour les dommages indirects ou consécutifs.",
-        "expected": "HIGH",
-        "difficulty": "multilingual",
-        "language": "fr"
-      },
-      {
-        "id": "de_001",
-        "category": "classification",
-        "input": "Der Auftragnehmer verpflichtet sich, den Auftraggeber von allen Ansprüchen Dritter freizustellen, die im Zusammenhang mit der Leistungserbringung entstehen.",
-        "expected": "indemnification",
-        "difficulty": "multilingual",
-        "language": "de"
-      },
-      {
-        "id": "de_002",
-        "category": "classification",
-        "input": "Alle vertraulichen Informationen sind streng vertraulich zu behandeln und dürfen ohne vorherige schriftliche Zustimmung nicht an Dritte weitergegeben werden.",
-        "expected": "confidentiality",
-        "difficulty": "multilingual",
-        "language": "de"
-      },
-      {
-        "id": "de_003",
-        "category": "classification",
-        "input": "Dieser Vertrag unterliegt deutschem Recht. Gerichtsstand ist München.",
-        "expected": "governing_law",
-        "difficulty": "multilingual",
-        "language": "de"
-      },
-      {
-        "id": "de_004",
-        "category": "classification",
-        "input": "Jede Partei kann diesen Vertrag mit einer Frist von dreißig (30) Tagen schriftlich kündigen.",
-        "expected": "termination",
-        "difficulty": "multilingual",
-        "language": "de"
-      },
-      {
-        "id": "de_005",
-        "category": "risk",
-        "input": "Die Haftung des Anbieters ist auf Vorsatz und grobe Fahrlässigkeit beschränkt. Für leichte Fahrlässigkeit wird keine Haftung übernommen.",
-        "expected": "MEDIUM",
-        "difficulty": "multilingual",
-        "language": "de"
-      }
-    ]
-  }
+"version": "1.0",
+"total_cases": 38,
+"categories": {
+"classification": [
+{
+"id": "class_001",
+"category": "classification",
+"input": "The Vendor shall indemnify, defend, and hold harmless the Customer from and against any and all claims, losses, damages, liabilities, costs, and expenses arising from Vendor's breach of this Agreement.",
+"expected": "indemnification",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_002",
+"category": "classification",
+"input": "Contractor agrees to protect and indemnify Client against any liability arising from the services provided hereunder.",
+"expected": "indemnification",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_010",
+"category": "classification",
+"input": "Provider shall maintain commercial general liability insurance with coverage of not less than Two Million Dollars ($2,000,000) per occurrence.",
+"expected": "insurance",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_011",
+"category": "classification",
+"input": "The contractor must procure and keep in force professional liability insurance with a minimum limit of $1,000,000.",
+"expected": "insurance",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_020",
+"category": "classification",
+"input": "All information disclosed by either party that is marked as 'Confidential' or that a reasonable person would understand to be confidential shall be kept strictly confidential.",
+"expected": "confidentiality",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_021",
+"category": "classification",
+"input": "The receiving party agrees to maintain the confidentiality of all proprietary information and trade secrets disclosed during the term of this agreement.",
+"expected": "confidentiality",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_030",
+"category": "classification",
+"input": "Either party may terminate this Agreement upon thirty (30) days prior written notice to the other party.",
+"expected": "termination",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_031",
+"category": "classification",
+"input": "This Agreement may be terminated immediately by either party in the event of a material breach by the other party.",
+"expected": "termination",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_040",
+"category": "classification",
+"input": "This Agreement shall be governed by and construed in accordance with the laws of the State of Delaware, without regard to its conflicts of laws principles.",
+"expected": "governing_law",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_050",
+"category": "classification",
+"input": "Seller warrants that the Products shall be free from defects in materials and workmanship for a period of one (1) year from delivery.",
+"expected": "warranty",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_060",
+"category": "classification",
+"input": "All intellectual property created by Contractor in the performance of Services shall be the sole and exclusive property of Client.",
+"expected": "intellectual_property",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_070",
+"category": "classification",
+"input": "In no event shall either party be liable for any indirect, incidental, special, consequential, or punitive damages.",
+"expected": "liability",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_080",
+"category": "classification",
+"input": "Neither party shall be liable for any failure or delay in performing their obligations where such failure or delay results from Force Majeure events including acts of God, natural disasters, war, or pandemic.",
+"expected": "force_majeure",
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "class_090",
+"category": "classification",
+"input": "Any dispute arising out of this Agreement shall be resolved by binding arbitration in accordance with the rules of the American Arbitration Association.",
+"expected": "arbitration",
+"difficulty": "standard",
+"language": "en"
+}
+],
+"risk_detection": [
+{
+"id": "risk_001",
+"category": "risk_detection",
+"input": "Provider shall have no liability whatsoever for any damages, including but not limited to direct, indirect, consequential, or punitive damages, regardless of the cause of action.",
+"expected": "HIGH",
+"problems": [
+"no liability whatsoever",
+"regardless of cause"
+],
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "risk_002",
+"category": "risk_detection",
+"input": "We may modify these terms at any time without notice. Your continued use constitutes acceptance of new terms.",
+"expected": "HIGH",
+"problems": [
+"without notice",
+"continued use constitutes acceptance"
+],
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "risk_003",
+"category": "risk_detection",
+"input": "Any dispute shall be resolved exclusively through binding arbitration. You waive any right to a jury trial and to participate in class actions.",
+"expected": "HIGH",
+"problems": [
+"binding arbitration",
+"waive jury trial",
+"waive class actions"
+],
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "risk_004",
+"category": "risk_detection",
+"input": "By using our service, you grant us an irrevocable, perpetual, worldwide license to use, modify, distribute, and sublicense any content you submit.",
+"expected": "HIGH",
+"problems": [
+"irrevocable",
+"perpetual",
+"sublicense"
+],
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "risk_005",
+"category": "risk_detection",
+"input": "All disputes must be brought exclusively in courts located in Singapore. You consent to personal jurisdiction there and waive any objection to venue.",
+"expected": "HIGH",
+"problems": [
+"exclusively in Singapore",
+"waive objection"
+],
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "risk_020",
+"category": "risk_detection",
+"input": "Each party's liability for direct damages shall not exceed the fees paid in the preceding 12 months. Neither party excludes liability for gross negligence, willful misconduct, or personal injury.",
+"expected": "LOW",
+"problems": [],
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "risk_021",
+"category": "risk_detection",
+"input": "Either party may terminate with 30 days written notice. Upon termination, all prepaid fees will be prorated and refunded.",
+"expected": "LOW",
+"problems": [],
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "risk_022",
+"category": "risk_detection",
+"input": "We may modify these terms with 30 days advance notice via email. Material changes will allow you to terminate without penalty.",
+"expected": "LOW",
+"problems": [],
+"difficulty": "standard",
+"language": "en"
+},
+{
+"id": "risk_023",
+"category": "risk_detection",
+"input": "You retain all ownership rights to your content. We receive a limited license to display your content on our platform only while you use the service.",
+"expected": "LOW",
+"problems": [],
+"difficulty": "standard",
+"language": "en"
+}
+],
+"edge_cases": [
+{
+"id": "edge_001",
+"category": "classification",
+"input": "Vendor agrees to protect Customer from any claims arising from the services, including maintaining appropriate professional coverage.",
+"expected": "indemnification",
+"difficulty": "edge_case",
+"notes": "Contains both indemnification and insurance concepts",
+"language": "en"
+},
+{
+"id": "edge_002",
+"category": "classification",
+"input": "This agreement terminates automatically upon expiration. Confidentiality obligations shall survive for 5 years.",
+"expected": "termination",
+"difficulty": "edge_case",
+"notes": "Contains termination and survival elements",
+"language": "en"
+},
+{
+"id": "edge_003",
+"category": "classification",
+"input": "We reserve the right to modify features of the service. Material changes affecting pricing will be communicated 14 days in advance.",
+"expected": "MEDIUM",
+"difficulty": "edge_case",
+"notes": "Some unilateral change rights but with notice for pricing",
+"language": "en"
+},
+{
+"id": "edge_004",
+"category": "classification",
+"input": "Confidential information shall remain confidential.",
+"expected": "confidentiality",
+"difficulty": "edge_case",
+"notes": "Very short, minimal context",
+"language": "en"
+},
+{
+"id": "edge_005",
+"category": "classification",
+"input": "Subject to the terms of Section 8 (Confidentiality), Customer may disclose the terms of this Agreement solely to its legal counsel for purposes of enforcement, provided such counsel agrees to maintain confidentiality.",
+"expected": "confidentiality",
+"difficulty": "edge_case",
+"notes": "Reference to other sections, complex structure",
+"language": "en"
+}
+],
+"multilingual": [
+{
+"id": "fr_001",
+"category": "classification",
+"input": "Le Prestataire s'engage à indemniser et garantir le Client contre toute réclamation, perte ou dommage résultant de l'exécution des services.",
+"expected": "indemnification",
+"difficulty": "multilingual",
+"language": "fr"
+},
+{
+"id": "fr_002",
+"category": "classification",
+"input": "Toutes les informations communiquées par l'une ou l'autre des parties et identifiées comme confidentielles devront être traitées comme telles.",
+"expected": "confidentiality",
+"difficulty": "multilingual",
+"language": "fr"
+},
+{
+"id": "fr_003",
+"category": "classification",
+"input": "Le présent contrat est régi par le droit français. Tout litige sera soumis à la compétence exclusive des tribunaux de Paris.",
+"expected": "governing_law",
+"difficulty": "multilingual",
+"language": "fr"
+},
+{
+"id": "fr_004",
+"category": "classification",
+"input": "Chaque partie peut résilier le contrat moyennant un préavis écrit de trente (30) jours.",
+"expected": "termination",
+"difficulty": "multilingual",
+"language": "fr"
+},
+{
+"id": "fr_005",
+"category": "risk",
+"input": "Le Fournisseur n'assume aucune responsabilité pour les dommages indirects ou consécutifs.",
+"expected": "HIGH",
+"difficulty": "multilingual",
+"language": "fr"
+},
+{
+"id": "de_001",
+"category": "classification",
+"input": "Der Auftragnehmer verpflichtet sich, den Auftraggeber von allen Ansprüchen Dritter freizustellen, die im Zusammenhang mit der Leistungserbringung entstehen.",
+"expected": "indemnification",
+"difficulty": "multilingual",
+"language": "de"
+},
+{
+"id": "de_002",
+"category": "classification",
+"input": "Alle vertraulichen Informationen sind streng vertraulich zu behandeln und dürfen ohne vorherige schriftliche Zustimmung nicht an Dritte weitergegeben werden.",
+"expected": "confidentiality",
+"difficulty": "multilingual",
+"language": "de"
+},
+{
+"id": "de_003",
+"category": "classification",
+"input": "Dieser Vertrag unterliegt deutschem Recht. Gerichtsstand ist München.",
+"expected": "governing_law",
+"difficulty": "multilingual",
+"language": "de"
+},
+{
+"id": "de_004",
+"category": "classification",
+"input": "Jede Partei kann diesen Vertrag mit einer Frist von dreißig (30) Tagen schriftlich kündigen.",
+"expected": "termination",
+"difficulty": "multilingual",
+"language": "de"
+},
+{
+"id": "de_005",
+"category": "risk",
+"input": "Die Haftung des Anbieters ist auf Vorsatz und grobe Fahrlässigkeit beschränkt. Für leichte Fahrlässigkeit wird keine Haftung übernommen.",
+"expected": "MEDIUM",
+"difficulty": "multilingual",
+"language": "de"
+}
+]
+}
 }

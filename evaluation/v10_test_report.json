@@ -1,0 +1,291 @@
+{
+"metadata": {
+"contract_type": "MSA",
+"total_clauses": 15,
+"analysis_time_ms": 230,
+"engine_version": "V10"
+},
+"classifications": [
+{
+"id": "section_0",
+"clause_type": "termination",
+"confidence": 0.283,
+"text_preview": "MASTER SERVICES AGREEMENT FOR AI SOLUTIONS\n\nThis Master Services Agreement (\"Agreement\") is entered ..."
+},
+{
+"id": "section_2",
+"clause_type": "warranty",
+"confidence": 0.293,
+"text_preview": "1. AI SERVICES\n1.1 Services. Provider shall provide artificial intelligence and machine learning ser..."
+},
+{
+"id": "section_4",
+"clause_type": "warranty",
+"confidence": 0.252,
+"text_preview": "2. AI MODEL TRAINING\n2.1 Training Data. Customer may provide data to improve AI models (\"Training Da..."
+},
+{
+"id": "section_6",
+"clause_type": "intellectual_property",
+"confidence": 0.239,
+"text_preview": "3. AUTONOMOUS AGENTS\n3.1 Deployment. Customer may deploy AI agents to perform automated tasks. Custo..."
+},
+{
+"id": "section_8",
+"clause_type": "data_protection",
+"confidence": 0.46,
+"text_preview": "4. AI SAFETY AND ETHICS\n4.1 Use Restrictions. Customer shall not use Services to: (a) generate conte..."
+},
+{
+"id": "section_10",
+"clause_type": "termination",
+"confidence": 0.579,
+"text_preview": "5. TERM AND TERMINATION\n5.1 Term. This Agreement shall continue for an initial term of two (2) years..."
+},
+{
+"id": "section_12",
+"clause_type": "payment_terms",
+"confidence": 0.547,
+"text_preview": "6. FEES AND PAYMENT\n6.1 Usage-Based Fees. Customer shall pay based on API calls, compute units, and ..."
+},
+{
+"id": "section_14",
+"clause_type": "data_protection",
+"confidence": 0.594,
+"text_preview": "7. DATA PROTECTION\n7.1 Personal Data. Provider shall process personal data in accordance with applic..."
+},
+{
+"id": "section_16",
+"clause_type": "intellectual_property",
+"confidence": 0.415,
+"text_preview": "8. INTELLECTUAL PROPERTY\n8.1 Provider IP. Provider retains all rights in its AI models, algorithms, ..."
+},
+{
+"id": "section_18",
+"clause_type": "warranty",
+"confidence": 0.47,
+"text_preview": "9. WARRANTIES\n9.1 Performance. Provider warrants that Services will perform substantially as describ..."
+},
+{
+"id": "section_20",
+"clause_type": "indemnification",
+"confidence": 0.624,
+"text_preview": "10. INDEMNIFICATION\n10.1 Mutual. Each party shall indemnify the other from third-party claims arisin..."
+},
+{
+"id": "section_22",
+"clause_type": "indemnification",
+"confidence": 0.505,
+"text_preview": "11. LIMITATION OF LIABILITY\n11.1 Cap. Neither party's liability shall exceed fees paid in the twelve..."
+},
+{
+"id": "section_24",
+"clause_type": "data_protection",
+"confidence": 0.432,
+"text_preview": "12. REGULATORY COMPLIANCE\n12.1 Evolving Regulation. Customer acknowledges that AI regulation is evol..."
+},
+{
+"id": "section_26",
+"clause_type": "dispute_resolution",
+"confidence": 0.628,
+"text_preview": "13. DISPUTE RESOLUTION\nDisputes shall be resolved by binding arbitration in San Francisco under JAMS..."
+},
+{
+"id": "section_28",
+"clause_type": "governing_law",
+"confidence": 0.421,
+"text_preview": "14. GOVERNING LAW\nThis Agreement is governed by California law.\n\nIN WITNESS WHEREOF, the parties hav..."
+}
+],
+"graph_analysis": {
+"contract_type": "MSA",
+"total_clauses": 15,
+"total_edges": 6,
+"conflicts": [],
+"missing_dependencies": [
+{
+"clause_has": "indemnification",
+"clause_needs": "insurance",
+"description": "Indemnification obligations should be backed by insurance.",
+"severity": 0.5
+},
+{
+"clause_has": "data_protection",
+"clause_needs": "confidentiality",
+"description": "Data protection relies on confidentiality obligations.",
+"severity": 0.4
+},
+{
+"clause_has": "intellectual_property",
+"clause_needs": "confidentiality",
+"description": "IP protection depends on confidentiality of trade secrets.",
+"severity": 0.5
+}
+],
+"missing_expected": [
+{
+"clause_type": "limitation_of_liability",
+"expected_prevalence": 0.95,
+"risk_contribution": 38,
+"recommendation": "Consider adding a limitation of liability clause. Present in 95% of MSA contracts."
+},
+{
+"clause_type": "confidentiality",
+"expected_prevalence": 0.9,
+"risk_contribution": 36,
+"recommendation": "Consider adding a confidentiality clause. Present in 90% of MSA contracts."
+},
+{
+"clause_type": "force_majeure",
+"expected_prevalence": 0.7,
+"risk_contribution": 28,
+"recommendation": "Consider adding a force majeure clause. Present in 70% of MSA contracts."
+},
+{
+"clause_type": "assignment",
+"expected_prevalence": 0.7,
+"risk_contribution": 28,
+"recommendation": "Consider adding a assignment clause. Present in 70% of MSA contracts."
+},
+{
+"clause_type": "insurance",
+"expected_prevalence": 0.4,
+"risk_contribution": 16,
+"recommendation": "Consider adding a insurance clause. Present in 40% of MSA contracts."
+},
+{
+"clause_type": "audit_rights",
+"expected_prevalence": 0.35,
+"risk_contribution": 14,
+"recommendation": "Consider adding a audit rights clause. Present in 35% of MSA contracts."
+}
+],
+"structural_risk": 100,
+"conflict_count": 0,
+"dependency_gap_count": 3,
+"completeness_score": 0.57
+},
+"power_analysis": {
+"power_score": 15.0,
+"dominant_party": "Provider",
+"burdened_party": "Customer",
+"asymmetric_clauses": [
+{
+"clause_type": "warranty",
+"clause_id": "section_2",
+"triggers": [
+"solely responsible"
+],
+"text_preview": "1. AI SERVICES\n1.1 Services. Provider shall provide artificial intelligence and machine learning services as described h...",
+"favors": "Customer"
+},
+{
+"clause_type": "warranty",
+"clause_id": "section_4",
+"triggers": [
+"worldwide, perpetual license"
+],
+"text_preview": "2. AI MODEL TRAINING\n2.1 Training Data. Customer may provide data to improve AI models (\"Training Data\"). Customer grant...",
+"favors": "Customer"
+},
+{
+"clause_type": "intellectual_property",
+"clause_id": "section_6",
+"triggers": [
+"solely responsible"
+],
+"text_preview": "3. AUTONOMOUS AGENTS\n3.1 Deployment. Customer may deploy AI agents to perform automated tasks. Customer is solely respon...",
+"favors": "Customer"
+}
+],
+"total_obligations": 21,
+"total_protections": 6,
+"summary": "Contract appears relatively balanced between parties.",
+"parties": [
+{
+"name": "Provider",
+"obligations": 6,
+"protections": 2,
+"one_sided_burdens": 0,
+"burden_score": 46.7
+},
+{
+"name": "Customer",
+"obligations": 8,
+"protections": 3,
+"one_sided_burdens": 0,
+"burden_score": 46.7
+}
+]
+},
+"dispute_prediction": {
+"overall_dispute_risk": 71.7,
+"top_3_risks": [
+"MEDIUM: indemnification depends on insurance, but insurance is missing. Indemnification obligations should be backed by insurance.",
+"MEDIUM: intellectual_property depends on confidentiality, but confidentiality is missing. IP protection depends on confidentiality of trade secrets.",
+"MEDIUM: Expected clause 'limitation of liability' is missing. Present in 95% of similar contracts."
+],
+"dispute_count_prediction": "Low (0-1 potential disputes)",
+"hotspots": [
+{
+"clause_type": "indemnification",
+"clause_id": "?",
+"dispute_probability": 0.5,
+"severity": "MEDIUM",
+"reason": "indemnification depends on insurance, but insurance is missing. Indemnification obligations should be backed by insurance.",
+"category": "gap",
+"recommendation": "Add a insurance clause to support the indemnification provision."
+},
+{
+"clause_type": "intellectual_property",
+"clause_id": "?",
+"dispute_probability": 0.5,
+"severity": "MEDIUM",
+"reason": "intellectual_property depends on confidentiality, but confidentiality is missing. IP protection depends on confidentiality of trade secrets.",
+"category": "gap",
+"recommendation": "Add a confidentiality clause to support the intellectual property provision."
+},
+{
+"clause_type": "limitation_of_liability",
+"clause_id": "MISSING",
+"dispute_probability": 0.47,
+"severity": "MEDIUM",
+"reason": "Expected clause 'limitation of liability' is missing. Present in 95% of similar contracts.",
+"category": "gap",
+"recommendation": "Consider adding a limitation of liability clause. Present in 95% of MSA contracts."
+},
+{
+"clause_type": "warranty",
+"clause_id": "section_2",
+"dispute_probability": 0.46,
+"severity": "MEDIUM",
+"reason": "One-sided clause favoring Customer. Triggers: solely responsible",
+"category": "power",
+"recommendation": "Negotiate more balanced terms in warranty."
+},
+{
+"clause_type": "confidentiality",
+"clause_id": "MISSING",
+"dispute_probability": 0.45,
+"severity": "MEDIUM",
+"reason": "Expected clause 'confidentiality' is missing. Present in 90% of similar contracts.",
+"category": "gap",
+"recommendation": "Consider adding a confidentiality clause. Present in 90% of MSA contracts."
+},
+{
+"clause_type": "data_protection",
+"clause_id": "?",
+"dispute_probability": 0.43,
+"severity": "MEDIUM",
+"reason": "data_protection depends on confidentiality, but confidentiality is missing. Data protection relies on confidentiality obligations.",
+"category": "gap",
+"recommendation": "Add a confidentiality clause to support the data protection provision."
+}
+]
+},
+"overall": {
+"risk_score": 68.9,
+"risk_level": "MEDIUM",
+"executive_summary": "Contract Risk Level: MEDIUM. 3 missing clause dependency(ies). Missing expected clauses: limitation of liability, confidentiality, force majeure. Highest dispute risk: indemnification (50% probability). Completeness: 57%."
+}
+}

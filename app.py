@@ -4,267 +4,239 @@ import tempfile
 import json
 import plotly.graph_objects as go
 from dotenv import load_dotenv
-
 load_dotenv()
-
 from src.ingestion import PDFProcessor
-from src.vector_store import VectorEngine
-from src.graph import compile_graph
-
-st.set_page_config(page_title="BALE 2.2 - Legal Engine", page_icon="///", layout="wide")
-
-# Inject Custom CSS
+from src.v10.pipeline import V10Pipeline
+st.set_page_config(page_title="BALE V10 - Contract Intelligence", page_icon="///", layout="wide")
 def load_css(file_path):
-    with open(file_path) as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
-
+with open(file_path) as f:
+st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
 load_css("assets/style.css")
-
-# --- CHART HELPERS ---
-def create_radar_chart(metrics):
-    categories = [
-        'Civil Alignment', 'Common Alignment', 
-        'Certainty', 'Good Faith', 'Enforceability'
-    ]
-    
-    # Map from metrics keys to friendly names
-    values = [
-        metrics.get("civil_law_alignment", 50),
-        metrics.get("common_law_alignment", 50),
-        metrics.get("contract_certainty", 50),
-        metrics.get("good_faith_score", 50),
-        metrics.get("enforceability_score", 50)
-    ]
-    
-    fig = go.Figure()
-    fig.add_trace(go.Scatterpolar(
-        r=values,
-        theta=categories,
-        fill='toself',
-        fillcolor='rgba(15, 15, 15, 0.2)',
-        line=dict(color='black', width=2),
-        name='Contract Profile'
-    ))
-
-    fig.update_layout(
-        polar=dict(
-            radialaxis=dict(visible=True, range=[0, 100], showticklabels=False, linecolor='rgba(0,0,0,0.2)'),
-            angularaxis=dict(linecolor='black')
-        ),
-        showlegend=False,
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=40, r=40, t=40, b=40),
-        font=dict(family="Space Grotesk, sans-serif", size=12, color="black")
-    )
-    return fig
-
-def create_gauge(risk):
-    fig = go.Figure(go.Indicator(
-        mode = "gauge+number",
-        value = risk,
-        title = {'text': "LITIGATION RISK", 'font': {'size': 14, 'family': "Space Grotesk"}},
-        number = {'font': {'size': 40, 'family': "Space Grotesk", 'color': "black"}},
-        gauge = {
-            'axis': {'range': [None, 100], 'tickwidth': 1, 'tickcolor': "black"},
-            'bar': {'color': "black"},
-            'bgcolor': "white",
-            'borderwidth': 2,
-            'bordercolor': "black",
-            'steps': [
-                {'range': [0, 30], 'color': "#E6E8EB"},
-                {'range': [30, 70], 'color': "#D1D5DB"}
-            ],
-            'threshold': {
-                'line': {'color': "red", 'width': 4},
-                'thickness': 0.75,
-                'value': 90
-            }
-        }
-    ))
-    
-    fig.update_layout(
-        paper_bgcolor='rgba(0,0,0,0)',
-        height=250,
-        margin=dict(l=20, r=20, t=50, b=20),
-        font=dict(family="Space Grotesk, sans-serif", color="black")
-    )
-    return fig
-
-# --- HERO SECTION (Brutalist Top) ---
+# --- Chart Helpers ---
+def create_risk_gauge(risk_score, risk_level):
+color_map = {"HIGH": "#DC2626", "MEDIUM": "#F59E0B", "LOW": "#10B981"}
+bar_color = color_map.get(risk_level, "#6B7280")
+fig = go.Figure(go.Indicator(
+mode="gauge+number",
+value=risk_score,
+title={"text": "CONTRACT RISK", "font": {"size": 14, "family": "Space Grotesk"}},
+number={"font": {"size": 40, "family": "Space Grotesk", "color": "black"}},
+gauge={
+"axis": {"range": [None, 100], "tickwidth": 1, "tickcolor": "black"},
+"bar": {"color": bar_color},
+"bgcolor": "white",
+"borderwidth": 2,
+"bordercolor": "black",
+"steps": [
+{"range": [0, 30], "color": "#E6E8EB"},
+{"range": [30, 70], "color": "#D1D5DB"},
+],
+"threshold": {
+"line": {"color": "red", "width": 4},
+"thickness": 0.75,
+"value": 90,
+},
+},
+))
+fig.update_layout(
+paper_bgcolor="rgba(0,0,0,0)",
+height=250,
+margin=dict(l=20, r=20, t=50, b=20),
+font=dict(family="Space Grotesk, sans-serif", color="black"),
+)
+return fig
+def create_power_bar(power_data):
+parties = power_data.get("parties", [])
+if len(parties) < 2:
+return None
+fig = go.Figure()
+fig.add_trace(go.Bar(
+name=parties[0]["name"],
+x=["Obligations", "Protections", "Burden Score"],
+y=[parties[0]["obligations"], parties[0]["protections"], parties[0]["burden_score"]],
+marker_color="black",
+))
+fig.add_trace(go.Bar(
+name=parties[1]["name"],
+x=["Obligations", "Protections", "Burden Score"],
+y=[parties[1]["obligations"], parties[1]["protections"], parties[1]["burden_score"]],
+marker_color="#94A3B8",
+))
+fig.update_layout(
+barmode="group",
+paper_bgcolor="rgba(0,0,0,0)",
+plot_bgcolor="rgba(0,0,0,0)",
+height=280,
+margin=dict(l=20, r=20, t=20, b=40),
+font=dict(family="Space Grotesk, sans-serif", size=12, color="black"),
+legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+)
+return fig
+def create_completeness_chart(graph_data):
+completeness = graph_data.get("completeness_score", 0) * 100
+fig = go.Figure(go.Indicator(
+mode="gauge+number",
+value=completeness,
+title={"text": "COMPLETENESS", "font": {"size": 14, "family": "Space Grotesk"}},
+number={"font": {"size": 36, "family": "Space Grotesk"}, "suffix": "%"},
+gauge={
+"axis": {"range": [0, 100]},
+"bar": {"color": "#10B981" if completeness > 70 else "#F59E0B"},
+"borderwidth": 2,
+"bordercolor": "black",
+},
+))
+fig.update_layout(
+paper_bgcolor="rgba(0,0,0,0)",
+height=200,
+margin=dict(l=20, r=20, t=50, b=20),
+)
+return fig
+# --- Hero Section ---
 st.markdown("""
 <div class="hero-container">
-    <span class="hero-prefix">///</span>
-    <span class="hero-title">Your Ultimate Legal<br>Document <span class="hero-highlight">> Platform_</span></span>
+<span class="hero-prefix">///</span>
+<span class="hero-title">Contract Intelligence<br>Engine <span class="hero-highlight">> V10_</span></span>
 </div>
 """, unsafe_allow_html=True)
-
-# --- SIDEBAR (Minimalist Navigation) ---
+# --- Sidebar ---
 with st.sidebar:
-    st.markdown("### ⚙️ SYSTEM")
-    
-    # Inference Mode Selection
-    mode_selection = st.radio("INFERENCE CORE", ["LOCAL (Ollama)", "CLOUD (Mistral)"])
-    execution_mode = "local" if "LOCAL" in mode_selection else "mistral"
-    
-    if execution_mode == "local":
-        st.caption(f"Endpoint: {os.getenv('LOCAL_LLM_ENDPOINT', 'localhost')}")
-        st.success(f"Active: {os.getenv('LOCAL_LLM_MODEL', 'qwen2.5')}")
-    else:
-        if os.getenv("MISTRAL_API_KEY"):
-            st.success("Active: Mistral Large")
-        else:
-            st.error("Missing MISTRAL_API_KEY")
-
-    st.divider()
-    
-    uploaded_file = st.file_uploader("UPLOAD LEGAL_DOC", type=["pdf"])
-    st.markdown("""
-    <div style="margin-top: 20px;">
-        <span class="ui-tag">01/ LEGAL</span>
-        <span class="ui-tag">02/ AI</span>
-        <span class="ui-tag">03/ SECURITY</span>
-    </div>
-    """, unsafe_allow_html=True)
-
-# --- MAIN DASHBOARD ---
+st.markdown("### CONFIGURATION")
+contract_type = st.selectbox("CONTRACT TYPE", [
+"MSA", "NDA", "SLA", "Employment", "License", "Lease", "Supply",
+])
+st.divider()
+uploaded_file = st.file_uploader("UPLOAD CONTRACT", type=["pdf"])
+st.markdown("""
+<div style="margin-top: 20px;">
+<span class="ui-tag">01/ CLASSIFY</span>
+<span class="ui-tag">02/ GRAPH</span>
+<span class="ui-tag">03/ ANALYZE</span>
+</div>
+""", unsafe_allow_html=True)
+# --- Main Dashboard ---
 if uploaded_file:
-    # State Management
-    if "analysis_complete" not in st.session_state:
-        st.session_state.analysis_complete = False
-        st.session_state.report = {}
-
-    # File Handling
-    with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
-        tmp_file.write(uploaded_file.getvalue())
-        tmp_path = tmp_file.name
-
-    # Grid Layout: Left (Stream), Right (Verdict)
-    col_dash, col_log = st.columns([2, 1])
-
-    with col_dash:
-        st.markdown('<div class="section-header">/// LIVE INTELLIGENCE</div>', unsafe_allow_html=True)
-        
-        if st.button("RUN ANALYSIS >", type="primary", use_container_width=True):
-            st.session_state.analyzing = True
-        
-        # Streaming Area
-        stream_container = st.empty()
-        
-        # Dashboard Tabs (Visible after analysis)
-        dash_tabs = st.empty()
-        
-        if st.session_state.get("analyzing"):
-            
-            # Init Message
-            stream_html = '<div class="ui-card">'
-            stream_html += '<div class="stream-item"><div class="stream-agent">SYSTEM</div><div class="stream-content">Ingesting PDF...</div></div>'
-            stream_container.markdown(stream_html + '</div>', unsafe_allow_html=True)
-            
-            # Processing
-            processor = PDFProcessor()
-            text = processor.extract_layout_aware_text(tmp_path)
-            chunks = processor.semantic_chunking(text, "COMMERCIAL_LAW")
-            ve = VectorEngine()
-            ve.add_documents(chunks)
-            
-            # Run Graph
-            app = compile_graph()
-            initial_state = {"content": text, "execution_mode": execution_mode}
-            
-            simulated_result = {}
-            
-            for output in app.stream(initial_state):
-                for node_name, node_content in output.items():
-                    simulated_result.update(node_content)
-                    
-                    # Accumulate Streaming Log
-                    if node_name == "civilist":
-                        stream_html += '<div class="stream-item"><div class="stream-agent">01 / CIVILIST</div><div class="stream-content">Napoleonic Code Analysis: DONE</div></div>'
-                    elif node_name == "commonist":
-                        stream_html += '<div class="stream-item"><div class="stream-agent">02 / COMMONIST</div><div class="stream-content">Case Law Analysis: DONE</div></div>'
-                    elif node_name == "ip_specialist":
-                         ip_op = node_content.get("ip_opinion", "")
-                         status = "SKIPPED (No IP Terms)" if "N/A" in ip_op else "WIPO Analysis: DONE"
-                         stream_html += f'<div class="stream-item"><div class="stream-agent">03 / IP_NODE</div><div class="stream-content">{status}</div></div>'
-                    elif node_name == "synthesizer":
-                        gap = node_content.get("interpretive_gap", 0)
-                        stream_html += f'<div class="stream-item"><div class="stream-agent">04 / SYNTHESIZER</div><div class="stream-content">Gap Detected: {gap}%</div></div>'
-                    elif node_name == "simulation":
-                         stream_html += '<div class="stream-item"><div class="stream-agent">05 / SIMULATION</div><div class="stream-content">Mock Trial: CONCLUDED</div></div>'
-                    
-                    stream_container.markdown(stream_html + '</div>', unsafe_allow_html=True)
-            
-            st.session_state.report = simulated_result.get("final_report", {})
-            st.session_state.analysis_complete = True
-            os.remove(tmp_path)
-
-        # RENDER VISUALS IF COMPLETE
-        if st.session_state.analysis_complete:
-            with dash_tabs:
-                st.markdown('<div class="section-header" style="margin-top: 20px;">/// BALE VITALS</div>', unsafe_allow_html=True)
-                tab_v, tab_t = st.tabs(["VISUALS", "TRANSCRIPT"])
-                
-                with tab_v:
-                     metrics = st.session_state.report.get("metrics", {})
-                     # Default metrics if missing
-                     if not metrics:
-                         metrics = {"civil_law_alignment": 50, "common_law_alignment": 50, "contract_certainty": 50, "good_faith_score": 50, "enforceability_score": 50}
-                     
-                     st.plotly_chart(create_radar_chart(metrics), use_container_width=True)
-                
-                with tab_t:
-                    st.markdown(st.session_state.report.get("transcript", "N/A"))
-
-
-    # --- RESULT VIEW ---
-    with col_log:
-        if st.session_state.analysis_complete:
-            report = st.session_state.report
-            
-            # 1. VERDICT CARD (Black)
-            risk = report.get("risk", 50)
-            gap = report.get("gap", 0)
-            verdict_text = "PLAINTIFF FAVOR" if risk > 50 else "DEFENSE FAVOR"
-
-            st.markdown(f"""
-            <div class="verdict-card-black">
-                <div class="verdict-title">> Create new report</div>
-                
-                <div class="risk-stat">{risk}%</div>
-                <div class="risk-label">LITIGATION RISK PROBABILITY</div>
-                
-                <hr style="border-color: #333; margin: 20px 0;">
-                
-                <div style="font-family: 'Space Grotesk'; font-size: 1.2rem;">{verdict_text}</div>
-                <div class="risk-label">INTERPRETIVE GAP: {gap}%</div>
-                
-                <div style="margin-top: 30px; text-align: right;">
-                     <span class="ui-tag">EXPORT PDF</span>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # 2. DETAILS (Tabs)
-            st.markdown('<div class="section-header" style="margin-top: 30px;">/// DATA POINTS</div>', unsafe_allow_html=True)
-            
-            # GAUGE CHART HERE
-            st.plotly_chart(create_gauge(risk), use_container_width=True)
-            
-            st.info(f"Civilist: {report.get('civilist', 'N/A')[:100]}...")
-            gc_text = str(report.get('golden_clause', 'N/A'))
-            st.success(f"Golden: {gc_text[:100]}...")
-
+if "analysis_complete" not in st.session_state:
+st.session_state.analysis_complete = False
+st.session_state.report = {}
+st.session_state.v10_report = None
+with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp_file:
+tmp_file.write(uploaded_file.getvalue())
+tmp_path = tmp_file.name
+col_dash, col_log = st.columns([2, 1])
+with col_dash:
+st.markdown('<div class="section-header">/// CONTRACT ANALYSIS</div>', unsafe_allow_html=True)
+if st.button("RUN ANALYSIS >", type="primary", use_container_width=True):
+st.session_state.analyzing = True
+stream_container = st.empty()
+dash_tabs = st.empty()
+if st.session_state.get("analyzing"):
+stream_html = '<div class="ui-card">'
+stream_html += '<div class="stream-item"><div class="stream-agent">SYSTEM</div><div class="stream-content">Ingesting document...</div></div>'
+stream_container.markdown(stream_html + "</div>", unsafe_allow_html=True)
+# Step 1: Extract text
+processor = PDFProcessor()
+text = processor.extract_layout_aware_text(tmp_path)
+stream_html += '<div class="stream-item"><div class="stream-agent">01 / CLASSIFIER</div><div class="stream-content">Embedding-based clause classification...</div></div>'
+stream_container.markdown(stream_html + "</div>", unsafe_allow_html=True)
+# Step 2: Run V10 pipeline
+pipeline = V10Pipeline(multilingual=True)
+report = pipeline.analyze(text, contract_type)
+stream_html += f'<div class="stream-item"><div class="stream-agent">02 / GRAPH</div><div class="stream-content">Clause relationships mapped: {report.graph["conflict_count"]} conflicts, {report.graph["dependency_gap_count"]} gaps</div></div>'
+stream_container.markdown(stream_html + "</div>", unsafe_allow_html=True)
+stream_html += f'<div class="stream-item"><div class="stream-agent">03 / POWER</div><div class="stream-content">Asymmetry score: {report.power["power_score"]:.0f}/100</div></div>'
+stream_container.markdown(stream_html + "</div>", unsafe_allow_html=True)
+stream_html += f'<div class="stream-item"><div class="stream-agent">04 / DISPUTES</div><div class="stream-content">{len(report.disputes["hotspots"])} hotspots identified</div></div>'
+stream_container.markdown(stream_html + "</div>", unsafe_allow_html=True)
+stream_html += f'<div class="stream-item"><div class="stream-agent">VERDICT</div><div class="stream-content">Risk Level: {report.risk_level} ({report.overall_risk_score:.0f}/100) | {report.analysis_time_ms}ms</div></div>'
+stream_container.markdown(stream_html + "</div>", unsafe_allow_html=True)
+st.session_state.v10_report = report
+st.session_state.report = report.to_dict()
+st.session_state.analysis_complete = True
+st.session_state.analyzing = False
+os.remove(tmp_path)
+# Render visuals after analysis
+if st.session_state.analysis_complete and st.session_state.report:
+data = st.session_state.report
+with dash_tabs:
+st.markdown('<div class="section-header" style="margin-top: 20px;">/// ANALYSIS RESULTS</div>', unsafe_allow_html=True)
+tab_graph, tab_power, tab_disputes, tab_raw = st.tabs([
+"GRAPH", "POWER", "DISPUTES", "RAW JSON",
+])
+with tab_graph:
+graph = data.get("graph_analysis", {})
+st.plotly_chart(create_completeness_chart(graph), use_container_width=True)
+if graph.get("conflicts"):
+st.markdown("**Conflicts Detected:**")
+for c in graph["conflicts"]:
+st.warning(f"{c['clause_a']} vs {c['clause_b']}: {c['description']}")
+if graph.get("missing_dependencies"):
+st.markdown("**Missing Dependencies:**")
+for d in graph["missing_dependencies"]:
+st.error(f"{d['clause_has']} requires {d['clause_needs']}: {d['description']}")
+if graph.get("missing_expected"):
+st.markdown("**Missing Expected Clauses:**")
+for m in graph["missing_expected"][:5]:
+st.info(f"{m['clause_type'].replace('_', ' ').title()} -- expected in {int(m['expected_prevalence'] * 100)}% of similar contracts")
+with tab_power:
+power = data.get("power_analysis", {})
+power_fig = create_power_bar(power)
+if power_fig:
+st.plotly_chart(power_fig, use_container_width=True)
+st.markdown(f"**{power.get('summary', '')}**")
+with tab_disputes:
+disputes = data.get("dispute_prediction", {})
+st.markdown(f"**Predicted Dispute Volume:** {disputes.get('dispute_count_prediction', 'N/A')}")
+for h in disputes.get("hotspots", [])[:8]:
+severity = h["severity"]
+color = {"CRITICAL": "red", "HIGH": "orange", "MEDIUM": "blue"}.get(severity, "gray")
+st.markdown(
+f"<span style='color:{color}; font-weight:bold'>[{severity}]</span> "
+f"**{h['clause_type'].replace('_', ' ').title()}** -- {h['dispute_probability']:.0%} probability",
+unsafe_allow_html=True,
+)
+st.caption(h["reason"])
+st.caption(f"Recommendation: {h['recommendation']}")
+st.divider()
+with tab_raw:
+st.json(data)
+# --- Result sidebar ---
+with col_log:
+if st.session_state.analysis_complete and st.session_state.report:
+data = st.session_state.report
+overall = data.get("overall", {})
+risk = overall.get("risk_score", 50)
+risk_level = overall.get("risk_level", "MEDIUM")
+st.markdown(f"""
+<div class="verdict-card-black">
+<div class="verdict-title">> Contract Report</div>
+<div class="risk-stat">{risk:.0f}%</div>
+<div class="risk-label">CONTRACT RISK SCORE</div>
+<hr style="border-color: #333; margin: 20px 0;">
+<div style="font-family: 'Space Grotesk'; font-size: 1.2rem;">{risk_level} RISK</div>
+<div class="risk-label">COMPLETENESS: {data.get('graph_analysis', {}).get('completeness_score', 0):.0%}</div>
+<div style="margin-top: 30px; text-align: right;">
+<span class="ui-tag">EXPORT JSON</span>
+</div>
+</div>
+""", unsafe_allow_html=True)
+st.markdown('<div class="section-header" style="margin-top: 30px;">/// RISK GAUGE</div>', unsafe_allow_html=True)
+st.plotly_chart(create_risk_gauge(risk, risk_level), use_container_width=True)
+st.markdown('<div class="section-header" style="margin-top: 20px;">/// SUMMARY</div>', unsafe_allow_html=True)
+st.markdown(overall.get("executive_summary", ""))
+# Classifications
+st.markdown('<div class="section-header" style="margin-top: 20px;">/// CLASSIFICATIONS</div>', unsafe_allow_html=True)
+for c in data.get("classifications", [])[:10]:
+st.caption(f"{c['id']}: **{c['clause_type'].replace('_', ' ').title()}** ({c['confidence']:.0%})")
 else:
-    # Landing Page State (Empty State)
-    st.markdown("""
-    <div class="ui-card" style="text-align: center; padding: 60px;">
-        <h3 style="margin-bottom: 20px;">READY FOR INTELLIGENCE</h3>
-        <p style="color: #6B7280; margin-bottom: 30px;">Connect to Neural Core to begin processing.</p>
-        <div>
-           <span class="ui-tag">01/ UPLOAD PDF</span>
-           <span class="ui-tag">02/ ANALYZE</span>
-           <span class="ui-tag">03/ REPORT</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown("""
+<div class="ui-card" style="text-align: center; padding: 60px;">
+<h3 style="margin-bottom: 20px;">READY FOR ANALYSIS</h3>
+<p style="color: #6B7280; margin-bottom: 30px;">Upload a contract to begin V10 analysis.</p>
+<div>
+<span class="ui-tag">01/ CLASSIFY</span>
+<span class="ui-tag">02/ GRAPH</span>
+<span class="ui-tag">03/ ANALYZE</span>
+</div>
+</div>
+""", unsafe_allow_html=True)

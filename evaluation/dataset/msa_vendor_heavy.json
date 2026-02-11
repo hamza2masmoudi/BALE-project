@@ -1,29 +1,29 @@
 {
-    "id": "msa_002",
-    "name": "CloudVendor MSA - Vendor Heavy",
-    "type": "MSA",
-    "jurisdiction": "US",
-    "industry": "technology",
-    "effective_date": "2024-03-01",
-    "parties": [
-        "CloudVendor Global Inc.",
-        "StartupCo LLC"
-    ],
-    "expected_risk": "high",
-    "expected_findings": {
-        "silence": {
-            "missing_clauses": [
-                "insurance",
-                "audit_rights",
-                "data_portability"
-            ]
-        },
-        "power_asymmetry": "vendor_dominant",
-        "social_concerns": [
-            "exploitation_risk",
-            "unilateral_modification"
-        ],
-        "negotiation_priority": "must_rebalance"
-    },
-    "text": "MASTER SERVICES AGREEMENT\n\nThis Master Services Agreement (\"Agreement\") is entered into as of March 1, 2024 by and between CloudVendor Global Inc. (\"Provider\") and StartupCo LLC (\"Customer\").\n\nBY USING THE SERVICES, CUSTOMER AGREES TO BE BOUND BY THIS AGREEMENT.\n\n1. SERVICES\nProvider shall make its cloud platform services available to Customer. Provider may modify, suspend, or discontinue any aspect of the Services at any time in its sole discretion.\n\n2. TERM\nThis Agreement commences upon Customer's acceptance and continues until terminated. Provider may terminate immediately for any reason. Customer may terminate upon thirty (30) days written notice, but no refunds will be provided.\n\n3. FEES\n3.1 Fees. Customer shall pay all fees as set forth in Provider's pricing, which may change at any time upon notice.\n3.2 Auto-Renewal. Subscriptions automatically renew and Customer's payment method will be charged unless Customer cancels before renewal.\n3.3 Non-Refundable. All fees are non-refundable under any circumstances.\n3.4 Suspension. Provider may suspend Services immediately if Customer fails to pay any amount when due.\n\n4. INTELLECTUAL PROPERTY\nAll intellectual property rights in the Services, including all improvements, modifications, and derivative works, whether created by Provider or arising from Customer's use or suggestions, shall be owned exclusively by Provider. Customer hereby assigns all rights in any feedback or suggestions to Provider.\n\n5. CUSTOMER DATA\n5.1 License. Customer grants Provider a worldwide, perpetual, irrevocable license to use, copy, modify, and create derivative works from Customer Data for any purpose, including to improve Services and develop new products.\n5.2 Responsibility. Customer is solely responsible for Customer Data and its use of the Services.\n5.3 Deletion. Upon termination, Provider may delete Customer Data immediately with no obligation to retain or export.\n\n6. CONFIDENTIALITY\nCustomer shall maintain Provider's Confidential Information in strict confidence for ten (10) years. Provider has no confidentiality obligations with respect to Customer information.\n\n7. WARRANTIES\nTHE SERVICES ARE PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND. PROVIDER DISCLAIMS ALL WARRANTIES, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.\n\n8. INDEMNIFICATION\nCustomer shall indemnify, defend, and hold harmless Provider and its affiliates, officers, directors, employees, and agents from and against any and all claims, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising from or relating to: (a) Customer's use of the Services; (b) Customer Data; (c) Customer's breach of this Agreement; (d) any third-party claims; or (e) any act or omission of Customer.\n\nProvider shall have no indemnification obligations.\n\n9. LIMITATION OF LIABILITY\nIN NO EVENT SHALL PROVIDER BE LIABLE FOR ANY DAMAGES WHATSOEVER, INCLUDING DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.\n\nIF, NOTWITHSTANDING THE FOREGOING, PROVIDER IS FOUND LIABLE, PROVIDER'S TOTAL LIABILITY SHALL NOT EXCEED FIFTY DOLLARS ($50).\n\n10. MODIFICATIONS\nProvider may modify this Agreement at any time by posting updated terms. Customer's continued use constitutes acceptance. It is Customer's responsibility to review the terms regularly.\n\n11. DISPUTE RESOLUTION\nAny dispute shall be resolved exclusively by binding arbitration in Delaware, under Provider's chosen arbitration rules. Customer waives any right to participate in class actions. The arbitrator cannot award relief beyond what this Agreement permits.\n\n12. GOVERNING LAW\nThis Agreement shall be governed by Delaware law. Customer consents to exclusive jurisdiction in Delaware courts.\n\n13. GENERAL\n13.1 Entire Agreement. This Agreement is the entire agreement. Any Customer terms are rejected.\n13.2 Assignment. Provider may assign this Agreement. Customer may not assign without Provider's written consent, which may be withheld for any reason.\n13.3 Force Majeure. Provider is not liable for any failure caused by circumstances beyond its control.\n13.4 Severability. Invalid provisions shall be reformed to achieve Provider's intent.\n\nCustomer acknowledges reading this Agreement and agrees to be bound by all terms.\n\nCLOUDVENDOR GLOBAL INC.\n(No signature required - click-wrap agreement)"
+"id": "msa_002",
+"name": "CloudVendor MSA - Vendor Heavy",
+"type": "MSA",
+"jurisdiction": "US",
+"industry": "technology",
+"effective_date": "2024-03-01",
+"parties": [
+"CloudVendor Global Inc.",
+"StartupCo LLC"
+],
+"expected_risk": "high",
+"expected_findings": {
+"silence": {
+"missing_clauses": [
+"insurance",
+"audit_rights",
+"data_portability"
+]
+},
+"power_asymmetry": "vendor_dominant",
+"social_concerns": [
+"exploitation_risk",
+"unilateral_modification"
+],
+"negotiation_priority": "must_rebalance"
+},
+"text": "MASTER SERVICES AGREEMENT\n\nThis Master Services Agreement (\"Agreement\") is entered into as of March 1, 2024 by and between CloudVendor Global Inc. (\"Provider\") and StartupCo LLC (\"Customer\").\n\nBY USING THE SERVICES, CUSTOMER AGREES TO BE BOUND BY THIS AGREEMENT.\n\n1. SERVICES\nProvider shall make its cloud platform services available to Customer. Provider may modify, suspend, or discontinue any aspect of the Services at any time in its sole discretion.\n\n2. TERM\nThis Agreement commences upon Customer's acceptance and continues until terminated. Provider may terminate immediately for any reason. Customer may terminate upon thirty (30) days written notice, but no refunds will be provided.\n\n3. FEES\n3.1 Fees. Customer shall pay all fees as set forth in Provider's pricing, which may change at any time upon notice.\n3.2 Auto-Renewal. Subscriptions automatically renew and Customer's payment method will be charged unless Customer cancels before renewal.\n3.3 Non-Refundable. All fees are non-refundable under any circumstances.\n3.4 Suspension. Provider may suspend Services immediately if Customer fails to pay any amount when due.\n\n4. INTELLECTUAL PROPERTY\nAll intellectual property rights in the Services, including all improvements, modifications, and derivative works, whether created by Provider or arising from Customer's use or suggestions, shall be owned exclusively by Provider. Customer hereby assigns all rights in any feedback or suggestions to Provider.\n\n5. CUSTOMER DATA\n5.1 License. Customer grants Provider a worldwide, perpetual, irrevocable license to use, copy, modify, and create derivative works from Customer Data for any purpose, including to improve Services and develop new products.\n5.2 Responsibility. Customer is solely responsible for Customer Data and its use of the Services.\n5.3 Deletion. Upon termination, Provider may delete Customer Data immediately with no obligation to retain or export.\n\n6. CONFIDENTIALITY\nCustomer shall maintain Provider's Confidential Information in strict confidence for ten (10) years. Provider has no confidentiality obligations with respect to Customer information.\n\n7. WARRANTIES\nTHE SERVICES ARE PROVIDED \"AS IS\" WITHOUT WARRANTY OF ANY KIND. PROVIDER DISCLAIMS ALL WARRANTIES, EXPRESS, IMPLIED, OR STATUTORY, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.\n\n8. INDEMNIFICATION\nCustomer shall indemnify, defend, and hold harmless Provider and its affiliates, officers, directors, employees, and agents from and against any and all claims, damages, losses, costs, and expenses (including reasonable attorneys' fees) arising from or relating to: (a) Customer's use of the Services; (b) Customer Data; (c) Customer's breach of this Agreement; (d) any third-party claims; or (e) any act or omission of Customer.\n\nProvider shall have no indemnification obligations.\n\n9. LIMITATION OF LIABILITY\nIN NO EVENT SHALL PROVIDER BE LIABLE FOR ANY DAMAGES WHATSOEVER, INCLUDING DIRECT, INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, PUNITIVE, OR EXEMPLARY DAMAGES, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.\n\nIF, NOTWITHSTANDING THE FOREGOING, PROVIDER IS FOUND LIABLE, PROVIDER'S TOTAL LIABILITY SHALL NOT EXCEED FIFTY DOLLARS ($50).\n\n10. MODIFICATIONS\nProvider may modify this Agreement at any time by posting updated terms. Customer's continued use constitutes acceptance. It is Customer's responsibility to review the terms regularly.\n\n11. DISPUTE RESOLUTION\nAny dispute shall be resolved exclusively by binding arbitration in Delaware, under Provider's chosen arbitration rules. Customer waives any right to participate in class actions. The arbitrator cannot award relief beyond what this Agreement permits.\n\n12. GOVERNING LAW\nThis Agreement shall be governed by Delaware law. Customer consents to exclusive jurisdiction in Delaware courts.\n\n13. GENERAL\n13.1 Entire Agreement. This Agreement is the entire agreement. Any Customer terms are rejected.\n13.2 Assignment. Provider may assign this Agreement. Customer may not assign without Provider's written consent, which may be withheld for any reason.\n13.3 Force Majeure. Provider is not liable for any failure caused by circumstances beyond its control.\n13.4 Severability. Invalid provisions shall be reformed to achieve Provider's intent.\n\nCustomer acknowledges reading this Agreement and agrees to be bound by all terms.\n\nCLOUDVENDOR GLOBAL INC.\n(No signature required - click-wrap agreement)"
 }

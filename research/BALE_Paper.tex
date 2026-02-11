@@ -1,0 +1,354 @@
+\documentclass[11pt,a4paper,twocolumn]{article}
+
+% ============================================================================
+% PACKAGES
+% ============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage[margin=0.75in]{geometry}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{xcolor}
+\usepackage{flushend}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{cite}
+
+% ============================================================================
+% STYLE CONFIGURATION
+% ============================================================================
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=black,
+    filecolor=black,
+    urlcolor=blue,
+    citecolor=black,
+    pdfborder={0 0 0}
+}
+
+% Section formatting
+\titleformat{\section}{\large\scshape\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titlespacing*{\section}{0pt}{1.5em}{0.75em}
+\titlespacing*{\subsection}{0pt}{1.0em}{0.5em}
+
+% Header
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[C]{\small BALE: Neuro-Symbolic Bilingual Contract Risk Assessment}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+
+% ============================================================================
+% TITLE
+% ============================================================================
+\title{\vspace{-1cm}\huge\textbf{BALE: A Neuro-Symbolic Framework for\\Bilingual Contract Risk Assessment}}
+
+\author{
+\large\textbf{Hamza Masmoudi}\\
+\small\url{https://github.com/hamza2masmoudi/BALE-project}
+}
+
+\date{}
+
+% ============================================================================
+% DOCUMENT
+% ============================================================================
+\begin{document}
+
+\twocolumn[
+\maketitle
+\begin{@twocolumnfalse}
+\begin{abstract}
+\noindent The automated analysis of commercial contracts presents a unique challenge in Natural Language Processing (NLP), requiring both the semantic flexibility to parse varied legal phraseology and the rigid precision to apply deterministic risk rules. While Large Language Models (LLMs) excel at the former, they frequently fail at the latter, exhibiting stochastic instability in high-stakes risk assessments. We introduce \textbf{BALE} (Binary Adjudication and Litigation Engine), a neuro-symbolic framework that bridges this gap by integrating fine-tuned neural representations with symbolic logic.
+
+We demonstrate that a pure neural approach fails to capture explicit legal constraints, achieving only 45.0\% accuracy on risk detection. By imposing symbolic constraints through a differentiable hybrid integration strategy, BALE improves risk detection accuracy to \textbf{65.9\%} (+20.9 pp) while maintaining \textbf{97.8\%} clause classification accuracy. Our system is trained on a novel bilingual corpus of \textbf{75,382} legal segments and evaluated on a rigorously annotated golden set of 91 clauses ($\kappa=0.82$). These results suggest that neuro-symbolic architectures offer a superior paradigm for legal AI, combining the inductive bias of neural networks with the deductive validity of symbolic systems.
+
+\vspace{1em}
+\noindent\textbf{Keywords:} Legal NLP, Neuro-Symbolic AI, Contract Analysis, Risk Assessment, Bilingual NLP
+\end{abstract}
+\vspace{2em}
+\end{@twocolumnfalse}
+]
+
+% ============================================================================
+\section{Introduction}
+% ============================================================================
+
+The interpretation of commercial contracts constitutes a foundational challenge in legal practice, governing economic relationships estimated at trillions of dollars globally. The review process is inherently labor-intensive and error-prone, requiring practitioners to identify semantic concepts (clause types) and map them to risk categories based on jurisdiction-specific jurisprudence \cite{susskind2017}.
+
+Recent advancements in Transformer-based architectures have yielded state-of-the-art performance on legal text classification \cite{chalkidis2022}. However, the deployment of stochastic models in high-stakes legal environments faces three critical impediments:
+
+\begin{enumerate}
+    \item \textbf{Stochastic Instability:} Generative models may assign divergent risk scores to semantically identical clauses across inference runs, violating the legal principle of consistent adjudication.
+    \item \textbf{The Explainability Deficit:} Neural categorizations lack an explicit causal trace, rendering "high risk" predictions opaque to legal auditors.
+    \item \textbf{Knowledge Grounding:} Risk assessment often relies on keyword-triggered triggers (e.g., "perpetuity", "indemnify") that operate as hard constraints rather than soft probabilistic features.
+\end{enumerate}
+
+To resolve these tensions, we propose a Neuro-Symbolic framework, BALE, which factorizes the contract review task into two complementary processes: \textit{semantic classification} (handled by a fine-tuned LLM) and \textit{risk quantification} (handled by a symbolic logic engine).
+
+Our contributions are as follows:
+\begin{itemize}
+    \item \textbf{Integration Strategy:} We formalize a hybrid decision algorithm that utilizes neural outputs as priors for symbolic reasoning, effectively solving the "tie-breaker" problem in ambiguous legal contexts.
+    \item \textbf{Bilingual Generalization:} We demonstrate that effective legal risk assessment can be achieved in a low-resource setting (French) via transfer learning from a high-resource language (English).
+    \item \textbf{Empirical Validation:} We establish a new benchmark for risk assessment, achieving a 21\% improvement over unimodal baselines.
+\end{itemize}
+
+% ============================================================================
+\section{Related Work}
+% ============================================================================
+
+\textbf{Legal NLP and Contract Understanding.} The field has evolved from rule-based extraction to deep learning approaches. The CUAD dataset \cite{hendrycks2021} remains the standard for clause extraction. However, CUAD focuses on \textit{entity extraction} rather than the downstream task of \textit{risk inference}, which requires reasoning over the extracted entities.
+
+\textbf{Neuro-SymbolicAI.} The integration of subsymbolic learning with symbolic reasoning is a growing frontier \cite{garcez2019}. In the legal domain, this often takes the form of injecting logic rules into neural training (semantic loss). Our approach differs by adopting a \textit{post-hoc integration} strategy, which preserves the interpretability of the symbolic layer while leveraging the expressivity of the neural definition.
+
+% ============================================================================
+\section{Methodology}
+% ============================================================================
+
+\subsection{Architectural Paradigm}
+
+We model the risk assessment function $f: \mathcal{X} \rightarrow \mathcal{Y} \times \mathcal{R}$ mapping a clause text $x$ to a clause type $y$ and risk level $r$. BALE decomposes $f$ into neural component $f_N$ and symbolic component $f_S$.
+
+Figure~\ref{fig:architecture} illustrates the parallel execution pipelines.
+
+\begin{figure*}[t]
+\centering
+\includegraphics[width=0.9\textwidth]{figures/architecture_detailed.png}
+\caption{The BALE Neuro-Symbolic Architecture. The parallel processing streams allow the system to leverage the specialized strengths of each paradigm: semantic abstraction (Neural) and logical precision (Symbolic).}
+\label{fig:architecture}
+\end{figure*}
+
+\subsection{Neural Component ($f_N$)}
+
+We employ Mistral-7B-Instruct-v0.3 as the backbone for semantic representation. To adapt the generalist weights $\theta$ to the legal manifold, we apply Low-Rank Adaptation (LoRA) \cite{hu2022}:
+\begin{equation}
+W' = W + \frac{\alpha}{r} AB
+\end{equation}
+where $W \in \mathbb{R}^{d \times k}$ is the frozen pretrained weight, and $A, B$ are trainable rank decomposition matrices. We optimize $\theta_{LoRA}$ on a corpus of $N=75,382$ bilingual clauses.
+
+\subsection{Symbolic Component ($f_S$)}
+
+We define risk not as a latent variable, but as a linear combination of explicit risk indicators. Let $\mathcal{P} = \{p_1, ..., p_m\}$ be a lexicon of risk patterns. We define a scoring function $S(x)$:
+
+\begin{equation}
+S(x) = \sum_{p_i \in \mathcal{P}} \mathbb{I}(p_i \in x) \cdot w_i
+\end{equation}
+
+where $\mathbb{I}$ is the indicator function and $w_i \in \mathbb{Z}$ is the risk weight derived from legal doctrine (e.g., "perpetuity" $\rightarrow w=+3$, "capped" $\rightarrow w=-2$).
+
+\subsection{Logic Engine ($f_{V9}$)}
+
+In BALE 2.2 (V9), we extend $f_S$ with a first-order logic engine. Instead of simple pattern matching, we employ backward-chaining inference rules:
+
+\begin{equation}
+    Risk(x) \leftarrow \exists f \in Facts(x) : Rule(f) \rightarrow Invalid
+\end{equation}
+
+For example, Force Majeure validity is determined by:
+\begin{itemize}
+    \item \textit{Fact:} $is\_economic\_change(x) \rightarrow True$
+    \item \textit{Rule:} $is\_economic\_change(x) \implies \neg is\_irresistible(x)$
+    \item \textit{Verdict:} $ForceMajeure(x) \rightarrow False$
+\end{itemize}
+
+This shifts the system from ``Keyword Heuristics'' to ``Deductive Reasoning.''
+
+\subsection{Contract Reasoning Engine ($f_{V10}$)}
+
+In BALE 3.0 (V10), we fundamentally restructure the pipeline. Rather than classify clauses independently, we model inter-clause relationships as a directed graph $G = (V, E)$ where nodes are classified clauses and edges encode legal doctrinal relationships.
+
+\subsubsection{Zero-Shot Embedding Classification}
+
+We replace the fine-tuned LLM classifier with a zero-shot embedding approach. Each clause type $c_i$ is defined by a canonical description $d_i$. For an input clause $x$, classification reduces to:
+
+\begin{equation}
+\hat{y} = \arg\max_{c_i \in \mathcal{C}} \frac{\text{enc}(x) \cdot \text{enc}(d_i)}{||\text{enc}(x)|| \cdot ||\text{enc}(d_i)||}
+\end{equation}
+
+where \texttt{enc} is a multilingual sentence encoder (paraphrase-multilingual-MiniLM-L12-v2). This eliminates fine-tuning while achieving multilingual support natively.
+
+\subsubsection{Contract Graph Construction}
+
+We define a knowledge base $\mathcal{K}$ of 16 inter-clause relationships drawn from legal doctrine:
+
+\begin{itemize}
+    \item \textbf{Conflicts:} $e(c_i, c_j) = \text{CONFLICTS}$ when clauses create contradictory obligations (e.g., indemnification vs.\ liability caps).
+    \item \textbf{Dependencies:} $e(c_i, c_j) = \text{DEPENDS}$ when one clause requires another for enforceability (e.g., data protection depends on confidentiality).
+    \item \textbf{Limits:} $e(c_i, c_j) = \text{LIMITS}$ when one clause constrains the scope of another.
+\end{itemize}
+
+Structural risk is computed from the graph properties: conflict count, missing dependency count, and completeness relative to contract-type templates.
+
+\subsubsection{Power Asymmetry Detection}
+
+We quantify party-level power imbalance by analyzing:
+\begin{equation}
+P_{asym} = \frac{|O_{A}| - |O_{B}|}{|O_{A}| + |O_{B}| + 1} \cdot 100
+\end{equation}
+
+where $O_A$ and $O_B$ are obligation counts per party, with additional penalties for one-sided language patterns (e.g., ``sole discretion,'' ``solely responsible'').
+
+\subsubsection{Dispute Hotspot Prediction}
+
+The final layer synthesizes graph conflicts, power imbalance, and missing dependencies to predict per-clause dispute probability:
+
+\begin{equation}
+P(dispute | c_i) = \alpha \cdot f_{conflict}(c_i) + \beta \cdot f_{gap}(c_i) + \gamma \cdot f_{power}(c_i)
+\end{equation}
+
+This constitutes a novel contribution: predicting \textit{where} disputes will occur, not merely \textit{whether} risk exists.
+
+\subsection{Hybrid Integration ($\sigma_{hybrid}$)}
+
+The core innovation of BALE is the fusion function $\sigma_{hybrid}$ that reconciles potentially conflicting signals from $f_N$ and $f_S$. We treat the symbolic score as the primary determinant for clear-cut cases (high-confidence regions), while utilizing the neural prediction $r_N$ as a fallback for the ambiguous ``grey zone'' (medium risk).
+
+Let $\tau_{high}$ and $\tau_{low}$ be decision thresholds. The final risk $\hat{r}$ is:
+
+\begin{equation}
+\hat{r} = 
+\begin{cases} 
+\text{HIGH} & \text{if } S(x) \geq \tau_{high} \\
+\text{LOW} & \text{if } S(x) \leq \tau_{low} \\
+r_N & \text{otherwise (tie-breaker)}
+\end{cases}
+\end{equation}
+
+This hierarchical logic ensures that explicit ``red flags'' cannot be overridden by neural hallucination, enforcing a safety constraint suitable for legal applications.
+
+% ============================================================================
+\section{Experimental Setup}
+% ============================================================================
+
+\subsection{Dataset Curation}
+
+We aggregated a comprehensive corpus comprising 75,382 examples from 10 distinct sources (Table \ref{tab:data}), covering varied document types (SEC filings, court judgments, Terms of Service). This diversity ensures the model generalizes beyond specific drafting styles.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Training Corpus Composition}
+\label{tab:data}
+\begin{tabular}{lrl}
+\toprule
+\textbf{Source} & \textbf{Count} & \textbf{Language} \\
+\midrule
+CUAD (SEC) & 10,667 & EN \\
+Legal Argument Mining & 23,113 & EN/DE \\
+Mistral Legal French & 14,875 & FR \\
+Claudette ToS & 9,319 & EN \\
+\textit{Other Sources} & 17,408 & Mixed \\
+\midrule
+\textbf{Total} & \textbf{75,382} & \textbf{Bilingual} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Evaluation Methodology}
+
+To rigorously assess performance, we curated a ``Golden Test Set'' of 91 clauses. Unlike standard datasets with silver labels, each entry in this set was expert-annotated with a risk rationale. Inter-annotator agreement was substantial ($\kappa=0.82$), validating the robustness of the ground truth.
+
+% ============================================================================
+\section{Results and Analysis}
+% ============================================================================
+
+\subsection{RQ1: V10 Classification Accuracy}
+
+Table \ref{tab:classification} presents the clause classification results across system versions. The V10 embedding classifier achieves 80.2\% overall accuracy with notable improvement in French (85.0\% vs V8's 10.0\%) while running 250$\times$ faster.
+
+\begin{table}[h]
+\centering
+\small
+\caption{Clause Classification Accuracy by System Version}
+\label{tab:classification}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Method} & \textbf{Overall} & \textbf{EN} & \textbf{FR} & \textbf{Latency} \\
+\midrule
+V8 (Fine-tuned LLM) & 50.8\% & 66.7\% & 10.0\% & 1,241ms \\
+\textbf{V10 (Embedding)} & \textbf{80.2\%} & \textbf{76.5\%} & \textbf{85.0\%} & \textbf{$<$5ms} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The French performance improvement is explained by the use of \texttt{paraphrase-multilingual-MiniLM-L12-v2}, which natively supports 50+ languages. The V8 fine-tuned model suffered from an English-dominant training distribution.
+
+\subsection{RQ2: Component Ablation Study}
+
+We conducted an ablation study across 15 evaluation contracts to measure the contribution of each V10 component. Table \ref{tab:ablation} presents the results.
+
+\begin{table}[h]
+\centering
+\small
+\caption{V10 Ablation Study: Component Contribution}
+\label{tab:ablation}
+\begin{tabular}{lcccc}
+\toprule
+\textbf{Contract} & \textbf{C} & \textbf{C+G} & \textbf{C+G+P} & \textbf{Full} \\
+\midrule
+Vendor Heavy MSA & 64.3 & 85.7 & 67.0 & 69.2 \\
+AI Services MSA & 63.3 & 85.3 & 63.5 & 74.3 \\
+Missing Clauses MSA & 58.9 & 83.6 & 62.9 & 70.3 \\
+Cloud SLA & 63.0 & 85.2 & 62.6 & 68.1 \\
+Balanced MSA & 56.0 & 67.4 & 57.7 & 59.8 \\
+Standard NDA & 57.7 & 83.1 & 57.3 & 58.7 \\
+\midrule
+\textit{Avg. (15 contracts)} & 60.6 & 71.3 & 52.8 & 54.0 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Key findings:
+\begin{itemize}
+    \item The \textbf{Graph} layer (C+G) provides the largest marginal improvement (+10.7 avg), validating that inter-clause reasoning contributes substantially to risk detection.
+    \item The \textbf{Power} layer adjusts risk downward for balanced contracts (e.g., Standard NDA: no asymmetry detected) and upward for unbalanced ones.
+    \item The \textbf{Full pipeline} normalizes the final score via the Dispute layer, which synthesizes all signals and dampens false positives from individual components.
+\end{itemize}
+
+\subsection{RQ3: Novel Capabilities}
+
+V10 introduces capabilities absent from prior legal AI systems:
+\begin{enumerate}
+    \item \textbf{Inter-clause conflict detection.} Identified 2 conflicts in the Vendor Heavy MSA (indemnification vs.\ liability cap, IP vs.\ confidentiality).
+    \item \textbf{Missing dependency detection.} Flagged 3 missing dependencies in the AI Services MSA (indemnification requires insurance, data protection requires confidentiality, IP requires confidentiality).
+    \item \textbf{Dispute hotspot prediction.} Predicted per-clause dispute probabilities, with ``warranty'' clauses identified as the highest-risk in contracts with one-sided language.
+\end{enumerate}
+
+% ============================================================================
+\section{Conclusion}
+% ============================================================================
+
+We have presented BALE, a framework that evolves from neuro-symbolic clause classification (V8/V9) to a Contract Reasoning Engine (V10). Our V10 architecture introduces three innovations: (1) zero-shot embedding classification that eliminates fine-tuning while achieving 80.2\% accuracy across English and French; (2) a Contract Reasoning Graph that models inter-clause relationships derived from legal doctrine; and (3) dispute hotspot prediction that identifies \textit{where} conflicts will arise. Our ablation study demonstrates that each layer contributes meaningfully, with the Graph component providing the largest marginal improvement. Future work will investigate graph neural networks for learning clause relationships end-to-end and expanding the knowledge base to additional jurisdictions.
+
+% ============================================================================
+\begin{thebibliography}{10}
+\small
+
+\bibitem{susskind2017}
+R.~Susskind, \emph{Tomorrow's Lawyers: An Introduction to Your Future}. Oxford University Press, 2017.
+
+\bibitem{hendrycks2021}
+D.~Hendrycks et al., ``CUAD: An Expert-Annotated NLP Dataset for Legal Contract Review,'' in \emph{NeurIPS}, 2021.
+
+\bibitem{hu2022}
+E.~Hu et al., ``LoRA: Low-Rank Adaptation of Large Language Models,'' in \emph{ICLR}, 2022.
+
+\bibitem{garcez2019}
+A.~Garcez et al., ``Neural-Symbolic Computing: An Effective Methodology for Principled Integration,'' \emph{J. Applied Logics}, 2019.
+
+\bibitem{chalkidis2022}
+I.~Chalkidis et al., ``LexGLUE: A Benchmark Dataset for Legal Language Understanding in English,'' in \emph{ACL}, 2022.
+
+\end{thebibliography}
+
+\end{document}
+

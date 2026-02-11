@@ -1,0 +1,950 @@
+{
+"engine": "V10",
+"english_accuracy": 62.7,
+"french_accuracy": 80.0,
+"overall_accuracy": 70.3,
+"en_correct": 32,
+"en_total": 51,
+"fr_correct": 32,
+"fr_total": 40,
+"all_correct": 64,
+"all_total": 91,
+"errors": {
+"english": {
+"correct": [
+{
+"id": "EN_IND_001",
+"expected": "indemnification",
+"predicted": "indemnification",
+"confidence": 0.478
+},
+{
+"id": "EN_IND_002",
+"expected": "indemnification",
+"predicted": "indemnification",
+"confidence": 0.682
+},
+{
+"id": "EN_TERM_001",
+"expected": "termination",
+"predicted": "termination",
+"confidence": 0.563
+},
+{
+"id": "EN_CONF_001",
+"expected": "confidentiality",
+"predicted": "confidentiality",
+"confidence": 0.6
+},
+{
+"id": "EN_CONF_002",
+"expected": "confidentiality",
+"predicted": "confidentiality",
+"confidence": 0.521
+},
+{
+"id": "EN_CONF_003",
+"expected": "confidentiality",
+"predicted": "confidentiality",
+"confidence": 0.661
+},
+{
+"id": "EN_IP_001",
+"expected": "intellectual_property",
+"predicted": "intellectual_property",
+"confidence": 0.528
+},
+{
+"id": "EN_IP_003",
+"expected": "intellectual_property",
+"predicted": "intellectual_property",
+"confidence": 0.53
+},
+{
+"id": "EN_GOV_001",
+"expected": "governing_law",
+"predicted": "governing_law",
+"confidence": 0.429
+},
+{
+"id": "EN_GOV_002",
+"expected": "governing_law",
+"predicted": "governing_law",
+"confidence": 0.422
+},
+{
+"id": "EN_GOV_003",
+"expected": "governing_law",
+"predicted": "governing_law",
+"confidence": 0.575
+},
+{
+"id": "EN_FM_001",
+"expected": "force_majeure",
+"predicted": "force_majeure",
+"confidence": 0.415
+},
+{
+"id": "EN_FM_003",
+"expected": "force_majeure",
+"predicted": "force_majeure",
+"confidence": 0.584
+},
+{
+"id": "EN_WAR_001",
+"expected": "warranty",
+"predicted": "warranty",
+"confidence": 0.438
+},
+{
+"id": "EN_WAR_002",
+"expected": "warranty",
+"predicted": "warranty",
+"confidence": 0.453
+},
+{
+"id": "EN_PAY_001",
+"expected": "payment_terms",
+"predicted": "payment_terms",
+"confidence": 0.609
+},
+{
+"id": "EN_PAY_002",
+"expected": "payment_terms",
+"predicted": "payment_terms",
+"confidence": 0.538
+},
+{
+"id": "EN_PAY_003",
+"expected": "payment_terms",
+"predicted": "payment_terms",
+"confidence": 0.526
+},
+{
+"id": "EN_NC_001",
+"expected": "non_compete",
+"predicted": "non_compete",
+"confidence": 0.427
+},
+{
+"id": "EN_NC_002",
+"expected": "non_compete",
+"predicted": "non_compete",
+"confidence": 0.469
+},
+{
+"id": "EN_NC_003",
+"expected": "non_compete",
+"predicted": "non_compete",
+"confidence": 0.513
+},
+{
+"id": "EN_DP_002",
+"expected": "data_protection",
+"predicted": "data_protection",
+"confidence": 0.441
+},
+{
+"id": "EN_DP_003",
+"expected": "data_protection",
+"predicted": "data_protection",
+"confidence": 0.538
+},
+{
+"id": "EN_ASS_001",
+"expected": "assignment",
+"predicted": "assignment",
+"confidence": 0.678
+},
+{
+"id": "EN_DR_001",
+"expected": "dispute_resolution",
+"predicted": "dispute_resolution",
+"confidence": 0.555
+},
+{
+"id": "EN_DR_002",
+"expected": "dispute_resolution",
+"predicted": "dispute_resolution",
+"confidence": 0.679
+},
+{
+"id": "EN_DR_003",
+"expected": "dispute_resolution",
+"predicted": "dispute_resolution",
+"confidence": 0.759
+},
+{
+"id": "EN_INS_001",
+"expected": "insurance",
+"predicted": "insurance",
+"confidence": 0.475
+},
+{
+"id": "EN_AUD_001",
+"expected": "audit_rights",
+"predicted": "audit_rights",
+"confidence": 0.456
+},
+{
+"id": "EN_AUD_003",
+"expected": "audit_rights",
+"predicted": "audit_rights",
+"confidence": 0.465
+},
+{
+"id": "EN_MIXED_001",
+"expected": "confidentiality",
+"predicted": "confidentiality",
+"confidence": 0.677
+},
+{
+"id": "EN_MIXED_002",
+"expected": "termination",
+"predicted": "termination",
+"confidence": 0.535
+}
+],
+"incorrect": [
+{
+"id": "EN_IND_003",
+"expected": "indemnification",
+"predicted": "intellectual_property",
+"confidence": 0.461,
+"top_3": [
+[
+"intellectual_property",
+0.461
+],
+[
+"non_compete",
+0.434
+],
+[
+"confidentiality",
+0.398
+]
+]
+},
+{
+"id": "EN_LOL_001",
+"expected": "limitation_of_liability",
+"predicted": "indemnification",
+"confidence": 0.417,
+"top_3": [
+[
+"indemnification",
+0.417
+],
+[
+"limitation_of_liability",
+0.404
+],
+[
+"force_majeure",
+0.394
+]
+]
+},
+{
+"id": "EN_LOL_002",
+"expected": "limitation_of_liability",
+"predicted": "indemnification",
+"confidence": 0.597,
+"top_3": [
+[
+"indemnification",
+0.597
+],
+[
+"limitation_of_liability",
+0.448
+],
+[
+"assignment",
+0.377
+]
+]
+},
+{
+"id": "EN_LOL_003",
+"expected": "limitation_of_liability",
+"predicted": "indemnification",
+"confidence": 0.625,
+"top_3": [
+[
+"indemnification",
+0.625
+],
+[
+"limitation_of_liability",
+0.619
+],
+[
+"confidentiality",
+0.571
+]
+]
+},
+{
+"id": "EN_TERM_002",
+"expected": "termination",
+"predicted": "indemnification",
+"confidence": 0.505,
+"top_3": [
+[
+"indemnification",
+0.505
+],
+[
+"termination",
+0.49
+],
+[
+"limitation_of_liability",
+0.401
+]
+]
+},
+{
+"id": "EN_TERM_003",
+"expected": "termination",
+"predicted": "indemnification",
+"confidence": 0.471,
+"top_3": [
+[
+"indemnification",
+0.471
+],
+[
+"termination",
+0.442
+],
+[
+"limitation_of_liability",
+0.383
+]
+]
+},
+{
+"id": "EN_IP_002",
+"expected": "intellectual_property",
+"predicted": "assignment",
+"confidence": 0.462,
+"top_3": [
+[
+"assignment",
+0.462
+],
+[
+"intellectual_property",
+0.413
+],
+[
+"confidentiality",
+0.404
+]
+]
+},
+{
+"id": "EN_FM_002",
+"expected": "force_majeure",
+"predicted": "indemnification",
+"confidence": 0.459,
+"top_3": [
+[
+"indemnification",
+0.459
+],
+[
+"termination",
+0.42
+],
+[
+"limitation_of_liability",
+0.395
+]
+]
+},
+{
+"id": "EN_WAR_003",
+"expected": "warranty",
+"predicted": "intellectual_property",
+"confidence": 0.513,
+"top_3": [
+[
+"intellectual_property",
+0.513
+],
+[
+"non_compete",
+0.476
+],
+[
+"warranty",
+0.434
+]
+]
+},
+{
+"id": "EN_DP_001",
+"expected": "data_protection",
+"predicted": "intellectual_property",
+"confidence": 0.399,
+"top_3": [
+[
+"intellectual_property",
+0.399
+],
+[
+"data_protection",
+0.363
+],
+[
+"confidentiality",
+0.352
+]
+]
+},
+{
+"id": "EN_ASS_002",
+"expected": "assignment",
+"predicted": "indemnification",
+"confidence": 0.612,
+"top_3": [
+[
+"indemnification",
+0.612
+],
+[
+"assignment",
+0.521
+],
+[
+"confidentiality",
+0.469
+]
+]
+},
+{
+"id": "EN_ASS_003",
+"expected": "assignment",
+"predicted": "indemnification",
+"confidence": 0.619,
+"top_3": [
+[
+"indemnification",
+0.619
+],
+[
+"assignment",
+0.564
+],
+[
+"confidentiality",
+0.472
+]
+]
+},
+{
+"id": "EN_INS_002",
+"expected": "insurance",
+"predicted": "indemnification",
+"confidence": 0.474,
+"top_3": [
+[
+"indemnification",
+0.474
+],
+[
+"insurance",
+0.399
+],
+[
+"limitation_of_liability",
+0.326
+]
+]
+},
+{
+"id": "EN_INS_003",
+"expected": "insurance",
+"predicted": "indemnification",
+"confidence": 0.584,
+"top_3": [
+[
+"indemnification",
+0.584
+],
+[
+"insurance",
+0.571
+],
+[
+"confidentiality",
+0.419
+]
+]
+},
+{
+"id": "EN_AUD_002",
+"expected": "audit_rights",
+"predicted": "payment_terms",
+"confidence": 0.412,
+"top_3": [
+[
+"payment_terms",
+0.412
+],
+[
+"audit_rights",
+0.409
+],
+[
+"indemnification",
+0.402
+]
+]
+},
+{
+"id": "EN_EDGE_001",
+"expected": "limitation_of_liability",
+"predicted": "payment_terms",
+"confidence": 0.436,
+"top_3": [
+[
+"payment_terms",
+0.436
+],
+[
+"limitation_of_liability",
+0.407
+],
+[
+"assignment",
+0.333
+]
+]
+},
+{
+"id": "EN_EDGE_002",
+"expected": "warranty",
+"predicted": "confidentiality",
+"confidence": 0.386,
+"top_3": [
+[
+"confidentiality",
+0.386
+],
+[
+"warranty",
+0.296
+],
+[
+"non_compete",
+0.294
+]
+]
+},
+{
+"id": "EN_EDGE_003",
+"expected": "governing_law",
+"predicted": "data_protection",
+"confidence": 0.604,
+"top_3": [
+[
+"data_protection",
+0.604
+],
+[
+"intellectual_property",
+0.541
+],
+[
+"governing_law",
+0.487
+]
+]
+},
+{
+"id": "EN_EDGE_004",
+"expected": "indemnification",
+"predicted": "non_compete",
+"confidence": 0.547,
+"top_3": [
+[
+"non_compete",
+0.547
+],
+[
+"termination",
+0.401
+],
+[
+"payment_terms",
+0.382
+]
+]
+}
+]
+},
+"french": {
+"correct": [
+{
+"id": "FR_IND_001",
+"expected": "indemnification",
+"predicted": "indemnification",
+"confidence": 0.584
+},
+{
+"id": "FR_IND_002",
+"expected": "indemnification",
+"predicted": "indemnification",
+"confidence": 0.689
+},
+{
+"id": "FR_TERM_001",
+"expected": "termination",
+"predicted": "termination",
+"confidence": 0.366
+},
+{
+"id": "FR_TERM_002",
+"expected": "termination",
+"predicted": "termination",
+"confidence": 0.439
+},
+{
+"id": "FR_TERM_003",
+"expected": "termination",
+"predicted": "termination",
+"confidence": 0.403
+},
+{
+"id": "FR_CONF_001",
+"expected": "confidentiality",
+"predicted": "confidentiality",
+"confidence": 0.561
+},
+{
+"id": "FR_CONF_002",
+"expected": "confidentiality",
+"predicted": "confidentiality",
+"confidence": 0.544
+},
+{
+"id": "FR_CONF_003",
+"expected": "confidentiality",
+"predicted": "confidentiality",
+"confidence": 0.605
+},
+{
+"id": "FR_IP_001",
+"expected": "intellectual_property",
+"predicted": "intellectual_property",
+"confidence": 0.535
+},
+{
+"id": "FR_IP_002",
+"expected": "intellectual_property",
+"predicted": "intellectual_property",
+"confidence": 0.332
+},
+{
+"id": "FR_IP_003",
+"expected": "intellectual_property",
+"predicted": "intellectual_property",
+"confidence": 0.651
+},
+{
+"id": "FR_GOV_001",
+"expected": "governing_law",
+"predicted": "governing_law",
+"confidence": 0.518
+},
+{
+"id": "FR_GOV_002",
+"expected": "governing_law",
+"predicted": "governing_law",
+"confidence": 0.521
+},
+{
+"id": "FR_GOV_003",
+"expected": "governing_law",
+"predicted": "governing_law",
+"confidence": 0.616
+},
+{
+"id": "FR_FM_001",
+"expected": "force_majeure",
+"predicted": "force_majeure",
+"confidence": 0.548
+},
+{
+"id": "FR_FM_002",
+"expected": "force_majeure",
+"predicted": "force_majeure",
+"confidence": 0.38
+},
+{
+"id": "FR_FM_003",
+"expected": "force_majeure",
+"predicted": "force_majeure",
+"confidence": 0.503
+},
+{
+"id": "FR_WAR_001",
+"expected": "warranty",
+"predicted": "warranty",
+"confidence": 0.513
+},
+{
+"id": "FR_WAR_002",
+"expected": "warranty",
+"predicted": "warranty",
+"confidence": 0.445
+},
+{
+"id": "FR_PAY_001",
+"expected": "payment_terms",
+"predicted": "payment_terms",
+"confidence": 0.545
+},
+{
+"id": "FR_PAY_002",
+"expected": "payment_terms",
+"predicted": "payment_terms",
+"confidence": 0.61
+},
+{
+"id": "FR_PAY_003",
+"expected": "payment_terms",
+"predicted": "payment_terms",
+"confidence": 0.529
+},
+{
+"id": "FR_NC_001",
+"expected": "non_compete",
+"predicted": "non_compete",
+"confidence": 0.465
+},
+{
+"id": "FR_NC_002",
+"expected": "non_compete",
+"predicted": "non_compete",
+"confidence": 0.358
+},
+{
+"id": "FR_NC_003",
+"expected": "non_compete",
+"predicted": "non_compete",
+"confidence": 0.466
+},
+{
+"id": "FR_DP_001",
+"expected": "data_protection",
+"predicted": "data_protection",
+"confidence": 0.452
+},
+{
+"id": "FR_ASS_001",
+"expected": "assignment",
+"predicted": "assignment",
+"confidence": 0.557
+},
+{
+"id": "FR_ASS_002",
+"expected": "assignment",
+"predicted": "assignment",
+"confidence": 0.543
+},
+{
+"id": "FR_ASS_003",
+"expected": "assignment",
+"predicted": "assignment",
+"confidence": 0.506
+},
+{
+"id": "FR_DR_001",
+"expected": "dispute_resolution",
+"predicted": "dispute_resolution",
+"confidence": 0.517
+},
+{
+"id": "FR_DR_002",
+"expected": "dispute_resolution",
+"predicted": "dispute_resolution",
+"confidence": 0.569
+},
+{
+"id": "FR_DR_003",
+"expected": "dispute_resolution",
+"predicted": "dispute_resolution",
+"confidence": 0.728
+}
+],
+"incorrect": [
+{
+"id": "FR_IND_003",
+"expected": "indemnification",
+"predicted": "limitation_of_liability",
+"confidence": 0.422,
+"top_3": [
+[
+"limitation_of_liability",
+0.422
+],
+[
+"indemnification",
+0.42
+],
+[
+"data_protection",
+0.405
+]
+]
+},
+{
+"id": "FR_LOL_001",
+"expected": "limitation_of_liability",
+"predicted": "indemnification",
+"confidence": 0.441,
+"top_3": [
+[
+"indemnification",
+0.441
+],
+[
+"warranty",
+0.421
+],
+[
+"assignment",
+0.419
+]
+]
+},
+{
+"id": "FR_LOL_002",
+"expected": "limitation_of_liability",
+"predicted": "indemnification",
+"confidence": 0.457,
+"top_3": [
+[
+"indemnification",
+0.457
+],
+[
+"limitation_of_liability",
+0.443
+],
+[
+"assignment",
+0.311
+]
+]
+},
+{
+"id": "FR_LOL_003",
+"expected": "limitation_of_liability",
+"predicted": "indemnification",
+"confidence": 0.585,
+"top_3": [
+[
+"indemnification",
+0.585
+],
+[
+"limitation_of_liability",
+0.583
+],
+[
+"confidentiality",
+0.576
+]
+]
+},
+{
+"id": "FR_WAR_003",
+"expected": "warranty",
+"predicted": "intellectual_property",
+"confidence": 0.566,
+"top_3": [
+[
+"intellectual_property",
+0.566
+],
+[
+"non_compete",
+0.482
+],
+[
+"confidentiality",
+0.443
+]
+]
+},
+{
+"id": "FR_DP_002",
+"expected": "data_protection",
+"predicted": "non_compete",
+"confidence": 0.436,
+"top_3": [
+[
+"non_compete",
+0.436
+],
+[
+"confidentiality",
+0.429
+],
+[
+"data_protection",
+0.401
+]
+]
+},
+{
+"id": "FR_DP_003",
+"expected": "data_protection",
+"predicted": "indemnification",
+"confidence": 0.469,
+"top_3": [
+[
+"indemnification",
+0.469
+],
+[
+"data_protection",
+0.462
+],
+[
+"termination",
+0.456
+]
+]
+},
+{
+"id": "FR_EDGE_001",
+"expected": "termination",
+"predicted": "limitation_of_liability",
+"confidence": 0.261,
+"top_3": [
+[
+"limitation_of_liability",
+0.261
+],
+[
+"termination",
+0.213
+],
+[
+"warranty",
+0.198
+]
+]
+}
+]
+}
+}
+}

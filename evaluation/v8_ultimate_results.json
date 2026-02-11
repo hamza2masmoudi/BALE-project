@@ -1,231 +1,231 @@
 {
-  "english_classification": {
-    "accuracy": 0.6666666666666666,
-    "correct": 14,
-    "total": 21,
-    "results": [
-      {
-        "text": "Provider shall indemnify, defend and hold harmless",
-        "expected": "indemnification",
-        "predicted": "indemnification_broad",
-        "correct": true
-      },
-      {
-        "text": "Each party shall indemnify the other against third",
-        "expected": "indemnification",
-        "predicted": "indemnification_broad",
-        "correct": true
-      },
-      {
-        "text": "Supplier agrees to fully indemnify Buyer from all ",
-        "expected": "indemnification",
-        "predicted": "indemnification_broad",
-        "correct": true
-      },
-      {
-        "text": "IN NO EVENT SHALL EITHER PARTY BE LIABLE FOR INDIR",
-        "expected": "limitation_liability",
-        "predicted": "limitation_liability",
-        "correct": true
-      },
-      {
-        "text": "Total liability shall not exceed fees paid in the ",
-        "expected": "limitation_liability",
-        "predicted": "limitation_liability",
-        "correct": true
-      },
-      {
-        "text": "Neither party shall be liable for consequential or",
-        "expected": "limitation_liability",
-        "predicted": "general",
-        "correct": false
-      },
-      {
-        "text": "Either party may terminate with 90 days written no",
-        "expected": "termination",
-        "predicted": "termination_cause",
-        "correct": true
-      },
-      {
-        "text": "This Agreement may be terminated for convenience u",
-        "expected": "termination",
-        "predicted": "termination_cause",
-        "correct": true
-      },
-      {
-        "text": "Customer may terminate immediately upon material b",
-        "expected": "termination",
-        "predicted": "termination_cause",
-        "correct": true
-      },
-      {
-        "text": "Each party shall maintain confidentiality of propr",
-        "expected": "confidentiality",
-        "predicted": "confidentiality_mutual",
-        "correct": true
-      },
-      {
-        "text": "Receiving party agrees not to disclose Confidentia",
-        "expected": "confidentiality",
-        "predicted": "confidentiality_mutual",
-        "correct": true
-      },
-      {
-        "text": "This Agreement shall be governed by the laws of En",
-        "expected": "governing_law",
-        "predicted": "governing_law_uk",
-        "correct": true
-      },
-      {
-        "text": "The laws of Delaware shall govern this Agreement.",
-        "expected": "governing_law",
-        "predicted": "governing_law_uk",
-        "correct": true
-      },
-      {
-        "text": "Neither party liable for delays due to acts of God",
-        "expected": "force_majeure",
-        "predicted": "general",
-        "correct": false
-      },
-      {
-        "text": "Force majeure includes natural disasters and gover",
-        "expected": "force_majeure",
-        "predicted": "governing_law_uk",
-        "correct": false
-      },
-      {
-        "text": "All intellectual property created shall be owned b",
-        "expected": "ip_ownership",
-        "predicted": "general",
-        "correct": false
-      },
-      {
-        "text": "Provider grants Customer a non-exclusive license.",
-        "expected": "license",
-        "predicted": "ip_license_nonexclusive",
-        "correct": true
-      },
-      {
-        "text": "Employee shall not compete for 12 months after ter",
-        "expected": "non_compete",
-        "predicted": "termination_cause",
-        "correct": false
-      },
-      {
-        "text": "Seller agrees not to engage in competing business ",
-        "expected": "non_compete",
-        "predicted": "general",
-        "correct": false
-      },
-      {
-        "text": "Provider warrants services will be performed profe",
-        "expected": "warranty",
-        "predicted": "general",
-        "correct": false
-      },
-      {
-        "text": "Goods are warranted free from defects for 12 month",
-        "expected": "warranty",
-        "predicted": "warranty_express",
-        "correct": true
-      }
-    ]
-  },
-  "french_classification": {
-    "accuracy": 0.1,
-    "correct": 1,
-    "total": 10,
-    "results": [
-      {
-        "text": "Le Prestataire s'engage \u00e0 indemniser et garantir l",
-        "expected": "indemnification",
-        "predicted": "g\u00e9n\u00e9ral",
-        "correct": false
-      },
-      {
-        "text": "Le Fournisseur garantit l'Acheteur contre toute r\u00e9",
-        "expected": "indemnification",
-        "predicted": "g\u00e9n\u00e9ral",
-        "correct": false
-      },
-      {
-        "text": "La responsabilit\u00e9 totale du Prestataire ne saurait",
-        "expected": "limitation",
-        "predicted": "exclusion_totale",
-        "correct": false
-      },
-      {
-        "text": "EN AUCUN CAS LE PRESTATAIRE NE POURRA \u00caTRE TENU RE",
-        "expected": "limitation",
-        "predicted": "exclusion_totale",
-        "correct": false
-      },
-      {
-        "text": "Les parties s'engagent \u00e0 maintenir la confidential",
-        "expected": "confidentialite",
-        "predicted": "confidentiality_mutual",
-        "correct": true
-      },
-      {
-        "text": "Le pr\u00e9sent Contrat est r\u00e9gi par le droit fran\u00e7ais.",
-        "expected": "droit",
-        "predicted": "general",
-        "correct": false
-      },
-      {
-        "text": "Tout litige sera soumis aux tribunaux de Paris.",
-        "expected": "juridiction",
-        "predicted": "general",
-        "correct": false
-      },
-      {
-        "text": "Chaque partie peut r\u00e9silier le Contrat moyennant u",
-        "expected": "resiliation",
-        "predicted": "termination_cause",
-        "correct": false
-      },
-      {
-        "text": "Aucune des parties ne sera responsable en cas de f",
-        "expected": "force_majeure",
-        "predicted": "exclusion_total",
-        "correct": false
-      },
-      {
-        "text": "Le Sous-traitant traite les donn\u00e9es conform\u00e9ment \u00e0",
-        "expected": "rgpd",
-        "predicted": "g\u00e9n\u00e9ral",
-        "correct": false
-      }
-    ]
-  },
-  "risk_detection": {
-    "accuracy": 0.6666666666666666,
-    "correct": 6,
-    "total": 9
-  },
-  "latency": {
-    "avg_ms": 1241,
-    "p50_ms": 1244,
-    "p95_ms": 1247
-  },
-  "edge_cases": {
-    "accuracy": 0.8,
-    "correct": 4,
-    "total": 5
-  },
-  "cuad_samples": {
-    "accuracy": 0.6,
-    "correct": 3,
-    "total": 5
-  },
-  "overall": {
-    "english_accuracy": 0.6666666666666666,
-    "french_accuracy": 0.1,
-    "risk_accuracy": 0.6666666666666666,
-    "edge_case_accuracy": 0.8,
-    "cuad_accuracy": 0.6,
-    "avg_latency_ms": 1241,
-    "combined_accuracy": 0.5083333333333333
-  }
+"english_classification": {
+"accuracy": 0.6666666666666666,
+"correct": 14,
+"total": 21,
+"results": [
+{
+"text": "Provider shall indemnify, defend and hold harmless",
+"expected": "indemnification",
+"predicted": "indemnification_broad",
+"correct": true
+},
+{
+"text": "Each party shall indemnify the other against third",
+"expected": "indemnification",
+"predicted": "indemnification_broad",
+"correct": true
+},
+{
+"text": "Supplier agrees to fully indemnify Buyer from all ",
+"expected": "indemnification",
+"predicted": "indemnification_broad",
+"correct": true
+},
+{
+"text": "IN NO EVENT SHALL EITHER PARTY BE LIABLE FOR INDIR",
+"expected": "limitation_liability",
+"predicted": "limitation_liability",
+"correct": true
+},
+{
+"text": "Total liability shall not exceed fees paid in the ",
+"expected": "limitation_liability",
+"predicted": "limitation_liability",
+"correct": true
+},
+{
+"text": "Neither party shall be liable for consequential or",
+"expected": "limitation_liability",
+"predicted": "general",
+"correct": false
+},
+{
+"text": "Either party may terminate with 90 days written no",
+"expected": "termination",
+"predicted": "termination_cause",
+"correct": true
+},
+{
+"text": "This Agreement may be terminated for convenience u",
+"expected": "termination",
+"predicted": "termination_cause",
+"correct": true
+},
+{
+"text": "Customer may terminate immediately upon material b",
+"expected": "termination",
+"predicted": "termination_cause",
+"correct": true
+},
+{
+"text": "Each party shall maintain confidentiality of propr",
+"expected": "confidentiality",
+"predicted": "confidentiality_mutual",
+"correct": true
+},
+{
+"text": "Receiving party agrees not to disclose Confidentia",
+"expected": "confidentiality",
+"predicted": "confidentiality_mutual",
+"correct": true
+},
+{
+"text": "This Agreement shall be governed by the laws of En",
+"expected": "governing_law",
+"predicted": "governing_law_uk",
+"correct": true
+},
+{
+"text": "The laws of Delaware shall govern this Agreement.",
+"expected": "governing_law",
+"predicted": "governing_law_uk",
+"correct": true
+},
+{
+"text": "Neither party liable for delays due to acts of God",
+"expected": "force_majeure",
+"predicted": "general",
+"correct": false
+},
+{
+"text": "Force majeure includes natural disasters and gover",
+"expected": "force_majeure",
+"predicted": "governing_law_uk",
+"correct": false
+},
+{
+"text": "All intellectual property created shall be owned b",
+"expected": "ip_ownership",
+"predicted": "general",
+"correct": false
+},
+{
+"text": "Provider grants Customer a non-exclusive license.",
+"expected": "license",
+"predicted": "ip_license_nonexclusive",
+"correct": true
+},
+{
+"text": "Employee shall not compete for 12 months after ter",
+"expected": "non_compete",
+"predicted": "termination_cause",
+"correct": false
+},
+{
+"text": "Seller agrees not to engage in competing business ",
+"expected": "non_compete",
+"predicted": "general",
+"correct": false
+},
+{
+"text": "Provider warrants services will be performed profe",
+"expected": "warranty",
+"predicted": "general",
+"correct": false
+},
+{
+"text": "Goods are warranted free from defects for 12 month",
+"expected": "warranty",
+"predicted": "warranty_express",
+"correct": true
+}
+]
+},
+"french_classification": {
+"accuracy": 0.1,
+"correct": 1,
+"total": 10,
+"results": [
+{
+"text": "Le Prestataire s'engage \u00e0 indemniser et garantir l",
+"expected": "indemnification",
+"predicted": "g\u00e9n\u00e9ral",
+"correct": false
+},
+{
+"text": "Le Fournisseur garantit l'Acheteur contre toute r\u00e9",
+"expected": "indemnification",
+"predicted": "g\u00e9n\u00e9ral",
+"correct": false
+},
+{
+"text": "La responsabilit\u00e9 totale du Prestataire ne saurait",
+"expected": "limitation",
+"predicted": "exclusion_totale",
+"correct": false
+},
+{
+"text": "EN AUCUN CAS LE PRESTATAIRE NE POURRA \u00caTRE TENU RE",
+"expected": "limitation",
+"predicted": "exclusion_totale",
+"correct": false
+},
+{
+"text": "Les parties s'engagent \u00e0 maintenir la confidential",
+"expected": "confidentialite",
+"predicted": "confidentiality_mutual",
+"correct": true
+},
+{
+"text": "Le pr\u00e9sent Contrat est r\u00e9gi par le droit fran\u00e7ais.",
+"expected": "droit",
+"predicted": "general",
+"correct": false
+},
+{
+"text": "Tout litige sera soumis aux tribunaux de Paris.",
+"expected": "juridiction",
+"predicted": "general",
+"correct": false
+},
+{
+"text": "Chaque partie peut r\u00e9silier le Contrat moyennant u",
+"expected": "resiliation",
+"predicted": "termination_cause",
+"correct": false
+},
+{
+"text": "Aucune des parties ne sera responsable en cas de f",
+"expected": "force_majeure",
+"predicted": "exclusion_total",
+"correct": false
+},
+{
+"text": "Le Sous-traitant traite les donn\u00e9es conform\u00e9ment \u00e0",
+"expected": "rgpd",
+"predicted": "g\u00e9n\u00e9ral",
+"correct": false
+}
+]
+},
+"risk_detection": {
+"accuracy": 0.6666666666666666,
+"correct": 6,
+"total": 9
+},
+"latency": {
+"avg_ms": 1241,
+"p50_ms": 1244,
+"p95_ms": 1247
+},
+"edge_cases": {
+"accuracy": 0.8,
+"correct": 4,
+"total": 5
+},
+"cuad_samples": {
+"accuracy": 0.6,
+"correct": 3,
+"total": 5
+},
+"overall": {
+"english_accuracy": 0.6666666666666666,
+"french_accuracy": 0.1,
+"risk_accuracy": 0.6666666666666666,
+"edge_case_accuracy": 0.8,
+"cuad_accuracy": 0.6,
+"avg_latency_ms": 1241,
+"combined_accuracy": 0.5083333333333333
+}
 }

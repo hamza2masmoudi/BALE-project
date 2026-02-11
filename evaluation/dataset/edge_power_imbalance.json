@@ -1,29 +1,29 @@
 {
-    "id": "edge_003",
-    "name": "Vendor Agreement - Extreme Power Imbalance",
-    "type": "Vendor",
-    "jurisdiction": "US",
-    "industry": "retail",
-    "effective_date": "2024-05-01",
-    "parties": [
-        "MegaRetailer Inc.",
-        "SmallSupplier Co."
-    ],
-    "expected_risk": "high",
-    "expected_findings": {
-        "power_asymmetry": {
-            "score": 0.85,
-            "dominant": "MegaRetailer"
-        },
-        "social_concerns": [
-            "exploitation",
-            "monitoring_intensity",
-            "unilateral_deductions"
-        ],
-        "dispute_attractors": [
-            "chargeback_clause",
-            "price_adjustments"
-        ]
-    },
-    "text": "VENDOR SUPPLY AGREEMENT\n\nThis Vendor Supply Agreement (\"Agreement\") is made as of May 1, 2024 between MegaRetailer Inc. (\"Buyer\") and SmallSupplier Co. (\"Vendor\").\n\nVENDOR ACKNOWLEDGMENT: BY SIGNING THIS AGREEMENT, VENDOR AGREES TO ALL TERMS WITHOUT MODIFICATION.\n\n1. PRODUCTS AND PRICING\n1.1 Products. Vendor shall supply Products as specified by Buyer from time to time.\n1.2 Pricing. Prices are as set forth in Buyer's pricing schedule. Buyer may adjust prices at any time with 30 days' notice. If Vendor does not accept adjusted prices, Buyer may terminate.\n1.3 Most Favored Customer. Vendor warrants that prices are the lowest offered to any customer. If lower prices are offered elsewhere, Buyer's prices shall be automatically reduced.\n\n2. ORDERS AND DELIVERY\n2.1 Orders. Vendor shall accept all purchase orders within 24 hours.\n2.2 Delivery. Vendor shall deliver 100% of orders on time. Delivery is FOB Buyer's distribution centers.\n2.3 Lead Time. Maximum lead time is 14 days. Buyer may change delivery dates up to 48 hours before shipment.\n\n3. COMPLIANCE\n3.1 Standards. Vendor shall comply with Buyer's Vendor Standards Manual, which may be updated at Buyer's sole discretion.\n3.2 Audits. Buyer may audit Vendor's facilities at any time without notice.\n3.3 Social Compliance. Vendor shall comply with Buyer's ethical sourcing requirements.\n\n4. CHARGEBACKS AND DEDUCTIONS\n4.1 Non-Compliance. Buyer may deduct chargebacks for any non-compliance, including:\n- Late shipment: 5% of order value per day\n- Incorrect labeling: $500 per incident\n- Quality issues: Full order value plus handling\n- Documentation errors: $100 per incident\n\n4.2 Returns. Buyer may return unsold inventory at any time for full credit.\n4.3 Markdowns. Vendor shall fund 50% of any markdowns on Vendor products.\n4.4 Advertising. Vendor shall contribute to co-op advertising at rates determined by Buyer.\n\n5. PAYMENT\n5.1 Terms. Payment terms are Net 90 from invoice date.\n5.2 Deductions. Buyer may deduct any amounts owed by Vendor from payments.\n5.3 Setoff. Buyer may setoff any claims against Vendor against amounts owed.\n\n6. WARRANTIES AND INDEMNIFICATION\n6.1 Vendor Warranties. Vendor warrants that Products: (a) are merchantable; (b) conform to specifications; (c) are free of defects; (d) do not infringe IP rights; and (e) comply with all laws.\n6.2 Indemnification. Vendor shall indemnify, defend, and hold harmless Buyer from any claims relating to Products, including product liability, IP infringement, and regulatory violations.\n\n7. INSURANCE\nVendor shall maintain: product liability ($5,000,000), commercial general liability ($2,000,000), and workers' compensation insurance. Buyer shall be named as additional insured.\n\n8. TERM AND TERMINATION\n8.1 Term. This Agreement continues until terminated.\n8.2 Buyer Termination. Buyer may terminate immediately for any reason or no reason.\n8.3 Vendor Termination. Vendor may terminate with 180 days' written notice, subject to completing all outstanding orders.\n\n9. CONFIDENTIALITY\nVendor shall maintain all Buyer information as strictly confidential in perpetuity.\n\n10. EXCLUSIVITY\nBuyer is not obligated to purchase any minimum quantities. Buyer may source competing products from any supplier.\n\n11. GOVERNING LAW\nThis Agreement is governed by Arkansas law. Disputes shall be resolved in Arkansas courts.\n\n12. GENERAL\n12.1 Entire Agreement. This Agreement supersedes all prior agreements.\n12.2 Amendment. Buyer may amend this Agreement upon notice to Vendor.\n12.3 Assignment. Vendor may not assign without Buyer's consent.\n\nVENDOR:\nSmallSupplier Co.\nBy: _________________________\n\nBUYER:\nMegaRetailer Inc.\nBy: _________________________"
+"id": "edge_003",
+"name": "Vendor Agreement - Extreme Power Imbalance",
+"type": "Vendor",
+"jurisdiction": "US",
+"industry": "retail",
+"effective_date": "2024-05-01",
+"parties": [
+"MegaRetailer Inc.",
+"SmallSupplier Co."
+],
+"expected_risk": "high",
+"expected_findings": {
+"power_asymmetry": {
+"score": 0.85,
+"dominant": "MegaRetailer"
+},
+"social_concerns": [
+"exploitation",
+"monitoring_intensity",
+"unilateral_deductions"
+],
+"dispute_attractors": [
+"chargeback_clause",
+"price_adjustments"
+]
+},
+"text": "VENDOR SUPPLY AGREEMENT\n\nThis Vendor Supply Agreement (\"Agreement\") is made as of May 1, 2024 between MegaRetailer Inc. (\"Buyer\") and SmallSupplier Co. (\"Vendor\").\n\nVENDOR ACKNOWLEDGMENT: BY SIGNING THIS AGREEMENT, VENDOR AGREES TO ALL TERMS WITHOUT MODIFICATION.\n\n1. PRODUCTS AND PRICING\n1.1 Products. Vendor shall supply Products as specified by Buyer from time to time.\n1.2 Pricing. Prices are as set forth in Buyer's pricing schedule. Buyer may adjust prices at any time with 30 days' notice. If Vendor does not accept adjusted prices, Buyer may terminate.\n1.3 Most Favored Customer. Vendor warrants that prices are the lowest offered to any customer. If lower prices are offered elsewhere, Buyer's prices shall be automatically reduced.\n\n2. ORDERS AND DELIVERY\n2.1 Orders. Vendor shall accept all purchase orders within 24 hours.\n2.2 Delivery. Vendor shall deliver 100% of orders on time. Delivery is FOB Buyer's distribution centers.\n2.3 Lead Time. Maximum lead time is 14 days. Buyer may change delivery dates up to 48 hours before shipment.\n\n3. COMPLIANCE\n3.1 Standards. Vendor shall comply with Buyer's Vendor Standards Manual, which may be updated at Buyer's sole discretion.\n3.2 Audits. Buyer may audit Vendor's facilities at any time without notice.\n3.3 Social Compliance. Vendor shall comply with Buyer's ethical sourcing requirements.\n\n4. CHARGEBACKS AND DEDUCTIONS\n4.1 Non-Compliance. Buyer may deduct chargebacks for any non-compliance, including:\n- Late shipment: 5% of order value per day\n- Incorrect labeling: $500 per incident\n- Quality issues: Full order value plus handling\n- Documentation errors: $100 per incident\n\n4.2 Returns. Buyer may return unsold inventory at any time for full credit.\n4.3 Markdowns. Vendor shall fund 50% of any markdowns on Vendor products.\n4.4 Advertising. Vendor shall contribute to co-op advertising at rates determined by Buyer.\n\n5. PAYMENT\n5.1 Terms. Payment terms are Net 90 from invoice date.\n5.2 Deductions. Buyer may deduct any amounts owed by Vendor from payments.\n5.3 Setoff. Buyer may setoff any claims against Vendor against amounts owed.\n\n6. WARRANTIES AND INDEMNIFICATION\n6.1 Vendor Warranties. Vendor warrants that Products: (a) are merchantable; (b) conform to specifications; (c) are free of defects; (d) do not infringe IP rights; and (e) comply with all laws.\n6.2 Indemnification. Vendor shall indemnify, defend, and hold harmless Buyer from any claims relating to Products, including product liability, IP infringement, and regulatory violations.\n\n7. INSURANCE\nVendor shall maintain: product liability ($5,000,000), commercial general liability ($2,000,000), and workers' compensation insurance. Buyer shall be named as additional insured.\n\n8. TERM AND TERMINATION\n8.1 Term. This Agreement continues until terminated.\n8.2 Buyer Termination. Buyer may terminate immediately for any reason or no reason.\n8.3 Vendor Termination. Vendor may terminate with 180 days' written notice, subject to completing all outstanding orders.\n\n9. CONFIDENTIALITY\nVendor shall maintain all Buyer information as strictly confidential in perpetuity.\n\n10. EXCLUSIVITY\nBuyer is not obligated to purchase any minimum quantities. Buyer may source competing products from any supplier.\n\n11. GOVERNING LAW\nThis Agreement is governed by Arkansas law. Disputes shall be resolved in Arkansas courts.\n\n12. GENERAL\n12.1 Entire Agreement. This Agreement supersedes all prior agreements.\n12.2 Amendment. Buyer may amend this Agreement upon notice to Vendor.\n12.3 Assignment. Vendor may not assign without Buyer's consent.\n\nVENDOR:\nSmallSupplier Co.\nBy: _________________________\n\nBUYER:\nMegaRetailer Inc.\nBy: _________________________"
 }

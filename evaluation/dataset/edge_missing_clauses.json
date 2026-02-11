@@ -1,32 +1,32 @@
 {
-    "id": "edge_001",
-    "name": "MSA with Missing Clauses",
-    "type": "MSA",
-    "jurisdiction": "US",
-    "industry": "technology",
-    "effective_date": "2024-02-15",
-    "parties": [
-        "QuickDeal Software",
-        "Customer Corp."
-    ],
-    "expected_risk": "high",
-    "expected_findings": {
-        "silence": {
-            "missing_clauses": [
-                "indemnification",
-                "limitation_of_liability",
-                "insurance",
-                "data_protection",
-                "force_majeure",
-                "dispute_resolution",
-                "assignment"
-            ],
-            "silence_score": 70
-        },
-        "archaeology": {
-            "template_incomplete": true,
-            "placeholder_scars": 3
-        }
-    },
-    "text": "MASTER SERVICES AGREEMENT\n\nThis Agreement is made between QuickDeal Software (\"Provider\") and Customer Corp. (\"Customer\") effective February 15, 2024.\n\n1. SERVICES\nProvider will provide software development services as described in Statements of Work.\n\n2. TERM\nThis Agreement is effective for one (1) year and will automatically renew.\n\n3. FEES\nCustomer shall pay [FEE AMOUNT] per month. Payment is due within [PAYMENT TERMS] of invoice.\n\n4. INTELLECTUAL PROPERTY\nProvider retains all intellectual property rights. Customer receives a license to use deliverables.\n\n5. CONFIDENTIALITY\nBoth parties agree to keep confidential information confidential for [DURATION] years.\n\n6. WARRANTIES\nProvider warrants that services will be performed professionally. NO OTHER WARRANTIES ARE PROVIDED.\n\n7. TERMINATION\nEither party may terminate upon written notice.\n\n8. GENERAL\nThis Agreement is the entire agreement between the parties.\n\n[SIGNATURE BLOCK TO BE ADDED]\n\nProvider: QuickDeal Software\nCustomer: Customer Corp."
+"id": "edge_001",
+"name": "MSA with Missing Clauses",
+"type": "MSA",
+"jurisdiction": "US",
+"industry": "technology",
+"effective_date": "2024-02-15",
+"parties": [
+"QuickDeal Software",
+"Customer Corp."
+],
+"expected_risk": "high",
+"expected_findings": {
+"silence": {
+"missing_clauses": [
+"indemnification",
+"limitation_of_liability",
+"insurance",
+"data_protection",
+"force_majeure",
+"dispute_resolution",
+"assignment"
+],
+"silence_score": 70
+},
+"archaeology": {
+"template_incomplete": true,
+"placeholder_scars": 3
+}
+},
+"text": "MASTER SERVICES AGREEMENT\n\nThis Agreement is made between QuickDeal Software (\"Provider\") and Customer Corp. (\"Customer\") effective February 15, 2024.\n\n1. SERVICES\nProvider will provide software development services as described in Statements of Work.\n\n2. TERM\nThis Agreement is effective for one (1) year and will automatically renew.\n\n3. FEES\nCustomer shall pay [FEE AMOUNT] per month. Payment is due within [PAYMENT TERMS] of invoice.\n\n4. INTELLECTUAL PROPERTY\nProvider retains all intellectual property rights. Customer receives a license to use deliverables.\n\n5. CONFIDENTIALITY\nBoth parties agree to keep confidential information confidential for [DURATION] years.\n\n6. WARRANTIES\nProvider warrants that services will be performed professionally. NO OTHER WARRANTIES ARE PROVIDED.\n\n7. TERMINATION\nEither party may terminate upon written notice.\n\n8. GENERAL\nThis Agreement is the entire agreement between the parties.\n\n[SIGNATURE BLOCK TO BE ADDED]\n\nProvider: QuickDeal Software\nCustomer: Customer Corp."
 }

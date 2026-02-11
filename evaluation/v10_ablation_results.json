@@ -1,0 +1,454 @@
+{
+"ablation_study": [
+{
+"contract": "CloudVendor MSA - Vendor Heavy",
+"expected_risk": "high",
+"clauses": 14,
+"classifier_only": {
+"risk_score": 64.3,
+"time_ms": 1060
+},
+"classifier_graph": {
+"risk_score": 85.7,
+"conflicts": 2,
+"gaps": 1,
+"missing": 4,
+"completeness": 0.71,
+"time_ms": 1061
+},
+"classifier_graph_power": {
+"risk_score": 67.0,
+"power_score": 25.8,
+"dominant": "Customer",
+"asymmetric_clauses": 2,
+"time_ms": 1063
+},
+"full_v10": {
+"risk_score": 69.2,
+"hotspots": 3,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 1063
+}
+},
+{
+"contract": "AI Solutions MSA - Novel AI Clauses",
+"expected_risk": "medium",
+"clauses": 15,
+"classifier_only": {
+"risk_score": 63.3,
+"time_ms": 659
+},
+"classifier_graph": {
+"risk_score": 85.3,
+"conflicts": 1,
+"gaps": 3,
+"missing": 5,
+"completeness": 0.64,
+"time_ms": 659
+},
+"classifier_graph_power": {
+"risk_score": 63.5,
+"power_score": 15.0,
+"dominant": "Provider",
+"asymmetric_clauses": 3,
+"time_ms": 659
+},
+"full_v10": {
+"risk_score": 74.3,
+"hotspots": 5,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 659
+}
+},
+{
+"contract": "Outdated 2018 MSA",
+"expected_risk": "high",
+"clauses": 12,
+"classifier_only": {
+"risk_score": 59.2,
+"time_ms": 434
+},
+"classifier_graph": {
+"risk_score": 83.7,
+"conflicts": 0,
+"gaps": 1,
+"missing": 6,
+"completeness": 0.57,
+"time_ms": 434
+},
+"classifier_graph_power": {
+"risk_score": 64.0,
+"power_score": 21.0,
+"dominant": "Client",
+"asymmetric_clauses": 0,
+"time_ms": 435
+},
+"full_v10": {
+"risk_score": 66.4,
+"hotspots": 4,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 435
+}
+},
+{
+"contract": "Mutual NDA - Standard",
+"expected_risk": "low",
+"clauses": 13,
+"classifier_only": {
+"risk_score": 57.7,
+"time_ms": 530
+},
+"classifier_graph": {
+"risk_score": 83.1,
+"conflicts": 0,
+"gaps": 2,
+"missing": 3,
+"completeness": 0.57,
+"time_ms": 530
+},
+"classifier_graph_power": {
+"risk_score": 57.3,
+"power_score": 0.0,
+"dominant": "Party A",
+"asymmetric_clauses": 0,
+"time_ms": 531
+},
+"full_v10": {
+"risk_score": 58.7,
+"hotspots": 3,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 531
+}
+},
+{
+"contract": "Executive Employment with Non-Compete",
+"expected_risk": "high",
+"clauses": 13,
+"classifier_only": {
+"risk_score": 68.5,
+"time_ms": 385
+},
+"classifier_graph": {
+"risk_score": 56.8,
+"conflicts": 1,
+"gaps": 0,
+"missing": 1,
+"completeness": 0.88,
+"time_ms": 385
+},
+"classifier_graph_power": {
+"risk_score": 40.1,
+"power_score": 0.0,
+"dominant": "Company",
+"asymmetric_clauses": 0,
+"time_ms": 386
+},
+"full_v10": {
+"risk_score": 30.1,
+"hotspots": 2,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 386
+}
+},
+{
+"contract": "HIPAA Business Associate Agreement",
+"expected_risk": "medium",
+"clauses": 13,
+"classifier_only": {
+"risk_score": 60.0,
+"time_ms": 613
+},
+"classifier_graph": {
+"risk_score": 51.0,
+"conflicts": 1,
+"gaps": 2,
+"missing": 0,
+"completeness": 1.0,
+"time_ms": 613
+},
+"classifier_graph_power": {
+"risk_score": 37.0,
+"power_score": 3.5,
+"dominant": "Covered Entity",
+"asymmetric_clauses": 0,
+"time_ms": 614
+},
+"full_v10": {
+"risk_score": 30.9,
+"hotspots": 2,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 614
+}
+},
+{
+"contract": "Vendor Agreement - Extreme Power Imbalance",
+"expected_risk": "high",
+"clauses": 13,
+"classifier_only": {
+"risk_score": 63.1,
+"time_ms": 287
+},
+"classifier_graph": {
+"risk_score": 50.7,
+"conflicts": 1,
+"gaps": 2,
+"missing": 0,
+"completeness": 1.0,
+"time_ms": 287
+},
+"classifier_graph_power": {
+"risk_score": 37.4,
+"power_score": 5.0,
+"dominant": "Buyer",
+"asymmetric_clauses": 1,
+"time_ms": 288
+},
+"full_v10": {
+"risk_score": 29.5,
+"hotspots": 2,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 288
+}
+},
+{
+"contract": "Commercial Lending Agreement",
+"expected_risk": "high",
+"clauses": 13,
+"classifier_only": {
+"risk_score": 56.9,
+"time_ms": 391
+},
+"classifier_graph": {
+"risk_score": 33.3,
+"conflicts": 0,
+"gaps": 1,
+"missing": 0,
+"completeness": 1.0,
+"time_ms": 391
+},
+"classifier_graph_power": {
+"risk_score": 27.6,
+"power_score": 11.7,
+"dominant": "Lender",
+"asymmetric_clauses": 0,
+"time_ms": 392
+},
+"full_v10": {
+"risk_score": 15.8,
+"hotspots": 1,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 392
+}
+},
+{
+"contract": "Cloud Services SLA",
+"expected_risk": "medium",
+"clauses": 10,
+"classifier_only": {
+"risk_score": 63.0,
+"time_ms": 382
+},
+"classifier_graph": {
+"risk_score": 85.2,
+"conflicts": 1,
+"gaps": 1,
+"missing": 7,
+"completeness": 0.22,
+"time_ms": 382
+},
+"classifier_graph_power": {
+"risk_score": 62.6,
+"power_score": 12.2,
+"dominant": "SLA",
+"asymmetric_clauses": 0,
+"time_ms": 383
+},
+"full_v10": {
+"risk_score": 68.1,
+"hotspots": 5,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 383
+}
+},
+{
+"contract": "MSA with Missing Clauses",
+"expected_risk": "high",
+"clauses": 9,
+"classifier_only": {
+"risk_score": 58.9,
+"time_ms": 322
+},
+"classifier_graph": {
+"risk_score": 83.6,
+"conflicts": 0,
+"gaps": 1,
+"missing": 9,
+"completeness": 0.36,
+"time_ms": 322
+},
+"classifier_graph_power": {
+"risk_score": 62.9,
+"power_score": 17.5,
+"dominant": "Customer",
+"asymmetric_clauses": 0,
+"time_ms": 323
+},
+"full_v10": {
+"risk_score": 70.3,
+"hotspots": 5,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 323
+}
+},
+{
+"contract": "EU Data Processing Agreement",
+"expected_risk": "medium",
+"clauses": 12,
+"classifier_only": {
+"risk_score": 65.0,
+"time_ms": 331
+},
+"classifier_graph": {
+"risk_score": 86.0,
+"conflicts": 1,
+"gaps": 2,
+"missing": 2,
+"completeness": 0.67,
+"time_ms": 331
+},
+"classifier_graph_power": {
+"risk_score": 61.1,
+"power_score": 5.3,
+"dominant": "DPA",
+"asymmetric_clauses": 0,
+"time_ms": 331
+},
+"full_v10": {
+"risk_score": 63.3,
+"hotspots": 4,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 331
+}
+},
+{
+"contract": "Web3 Platform Terms of Service",
+"expected_risk": "high",
+"clauses": 18,
+"classifier_only": {
+"risk_score": 61.1,
+"time_ms": 626
+},
+"classifier_graph": {
+"risk_score": 24.4,
+"conflicts": 0,
+"gaps": 0,
+"missing": 0,
+"completeness": 1.0,
+"time_ms": 626
+},
+"classifier_graph_power": {
+"risk_score": 36.9,
+"power_score": 61.7,
+"dominant": "dApp",
+"asymmetric_clauses": 2,
+"time_ms": 631
+},
+"full_v10": {
+"risk_score": 23.7,
+"hotspots": 2,
+"dispute_prediction": "Medium (2-4 potential disputes)",
+"time_ms": 631
+}
+},
+{
+"contract": "One-Sided NDA - Investor Disclosure",
+"expected_risk": "medium",
+"clauses": 11,
+"classifier_only": {
+"risk_score": 57.3,
+"time_ms": 436
+},
+"classifier_graph": {
+"risk_score": 82.9,
+"conflicts": 1,
+"gaps": 1,
+"missing": 5,
+"completeness": 0.29,
+"time_ms": 436
+},
+"classifier_graph_power": {
+"risk_score": 58.9,
+"power_score": 5.8,
+"dominant": "Discloser",
+"asymmetric_clauses": 0,
+"time_ms": 436
+},
+"full_v10": {
+"risk_score": 55.5,
+"hotspots": 2,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 436
+}
+},
+{
+"contract": "TechCorp MSA - Balanced Terms",
+"expected_risk": "low",
+"clauses": 15,
+"classifier_only": {
+"risk_score": 56.0,
+"time_ms": 405
+},
+"classifier_graph": {
+"risk_score": 67.4,
+"conflicts": 1,
+"gaps": 0,
+"missing": 2,
+"completeness": 0.86,
+"time_ms": 405
+},
+"classifier_graph_power": {
+"risk_score": 57.7,
+"power_score": 36.5,
+"dominant": "Effective Date",
+"asymmetric_clauses": 1,
+"time_ms": 406
+},
+"full_v10": {
+"risk_score": 59.8,
+"hotspots": 3,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 406
+}
+},
+{
+"contract": "Highly Ambiguous MSA",
+"expected_risk": "medium",
+"clauses": 11,
+"classifier_only": {
+"risk_score": 57.3,
+"time_ms": 194
+},
+"classifier_graph": {
+"risk_score": 82.9,
+"conflicts": 0,
+"gaps": 2,
+"missing": 7,
+"completeness": 0.5,
+"time_ms": 194
+},
+"classifier_graph_power": {
+"risk_score": 57.5,
+"power_score": 1.0,
+"dominant": "Provider",
+"asymmetric_clauses": 0,
+"time_ms": 194
+},
+"full_v10": {
+"risk_score": 66.5,
+"hotspots": 5,
+"dispute_prediction": "Low (0-1 potential disputes)",
+"time_ms": 194
+}
+}
+]
+}

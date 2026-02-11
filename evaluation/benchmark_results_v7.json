@@ -1,186 +1,186 @@
 {
-  "classification": {
-    "correct": 4,
-    "total": 5,
-    "details": [
-      {
-        "id": "class_001",
-        "input": "The Vendor shall indemnify, defend, and hold harml...",
-        "expected": "indemnification",
-        "got": "indemnification",
-        "correct": true
-      },
-      {
-        "id": "class_020",
-        "input": "All information marked 'Confidential' shall be kep...",
-        "expected": "confidentiality",
-        "got": "confidentiality",
-        "correct": true
-      },
-      {
-        "id": "class_030",
-        "input": "Either party may terminate this Agreement upon thi...",
-        "expected": "termination",
-        "got": "termination",
-        "correct": true
-      },
-      {
-        "id": "class_040",
-        "input": "This Agreement shall be governed by the laws of th...",
-        "expected": "governing_law",
-        "got": "governing_law",
-        "correct": false
-      },
-      {
-        "id": "class_090",
-        "input": "Any dispute shall be resolved by binding arbitrati...",
-        "expected": "arbitration",
-        "got": "arbitration",
-        "correct": true
-      }
-    ]
-  },
-  "risk_detection": {
-    "correct": 3,
-    "total": 3,
-    "details": [
-      {
-        "id": "risk_001",
-        "input": "Provider shall have no liability whatsoever for an...",
-        "expected": "HIGH",
-        "got": "HIGH",
-        "correct": true
-      },
-      {
-        "id": "risk_002",
-        "input": "We may modify these terms at any time without noti...",
-        "expected": "HIGH",
-        "got": "HIGH",
-        "correct": true
-      },
-      {
-        "id": "risk_020",
-        "input": "Liability limited to fees paid in last 12 months....",
-        "expected": "LOW",
-        "got": "LOW",
-        "correct": true
-      }
-    ]
-  },
-  "multilingual": {
-    "correct": 3,
-    "total": 4,
-    "details": [
-      {
-        "id": "fr_001",
-        "input": "Le Prestataire s'engage \u00e0 indemniser le Client....",
-        "expected": "indemnification",
-        "got": "indemnification",
-        "correct": true
-      },
-      {
-        "id": "fr_005",
-        "input": "Le Fournisseur n'assume aucune responsabilit\u00e9 pour...",
-        "expected": "HIGH",
-        "got": "HIGH",
-        "correct": true
-      },
-      {
-        "id": "de_001",
-        "input": "Der Auftragnehmer verpflichtet sich, den Auftragge...",
-        "expected": "indemnification",
-        "got": "termination",
-        "correct": false
-      },
-      {
-        "id": "de_005",
-        "input": "Wir behalten uns das Recht vor, diese Bedingungen ...",
-        "expected": "HIGH",
-        "got": "HIGH",
-        "correct": true
-      }
-    ]
-  },
-  "employment": {
-    "correct": 3,
-    "total": 5,
-    "details": [
-      {
-        "id": "emp_001",
-        "input": "Employee agrees not to work for any competitor wit...",
-        "expected": "non_compete",
-        "got": "unknown",
-        "correct": false
-      },
-      {
-        "id": "emp_002",
-        "input": "Upon termination without cause, Employee shall rec...",
-        "expected": "termination",
-        "got": "termination",
-        "correct": true
-      },
-      {
-        "id": "emp_003",
-        "input": "All inventions created during employment belong ex...",
-        "expected": "intellectual_property",
-        "got": "intellectual_property",
-        "correct": false
-      },
-      {
-        "id": "emp_risk",
-        "input": "Employee waives all claims including discriminatio...",
-        "expected": "HIGH",
-        "got": "HIGH",
-        "correct": true
-      },
-      {
-        "id": "emp_low",
-        "input": "Employment is at-will and may be terminated by eit...",
-        "expected": "LOW",
-        "got": "LOW",
-        "correct": true
-      }
-    ]
-  },
-  "ma": {
-    "correct": 3,
-    "total": 5,
-    "details": [
-      {
-        "id": "ma_001",
-        "input": "Seller represents that there are no pending legal ...",
-        "expected": "representations",
-        "got": "unknown",
-        "correct": false
-      },
-      {
-        "id": "ma_002",
-        "input": "Seller shall indemnify Buyer for valid claims up t...",
-        "expected": "indemnification",
-        "got": "indemnification",
-        "correct": true
-      },
-      {
-        "id": "ma_003",
-        "input": "Closing is conditioned upon receipt of HSR antitru...",
-        "expected": "closing_condition",
-        "got": "unknown",
-        "correct": false
-      },
-      {
-        "id": "ma_risk",
-        "input": "Seller provides property 'as is' with no represent...",
-        "expected": "HIGH",
-        "got": "HIGH",
-        "correct": true
-      },
-      {
-        "id": "ma_low",
-        "input": "10% of Purchase Price shall be held in escrow for ...",
-        "expected": "LOW",
-        "got": "LOW",
-        "correct": true
-      }
-    ]
-  }
+"classification": {
+"correct": 4,
+"total": 5,
+"details": [
+{
+"id": "class_001",
+"input": "The Vendor shall indemnify, defend, and hold harml...",
+"expected": "indemnification",
+"got": "indemnification",
+"correct": true
+},
+{
+"id": "class_020",
+"input": "All information marked 'Confidential' shall be kep...",
+"expected": "confidentiality",
+"got": "confidentiality",
+"correct": true
+},
+{
+"id": "class_030",
+"input": "Either party may terminate this Agreement upon thi...",
+"expected": "termination",
+"got": "termination",
+"correct": true
+},
+{
+"id": "class_040",
+"input": "This Agreement shall be governed by the laws of th...",
+"expected": "governing_law",
+"got": "governing_law",
+"correct": false
+},
+{
+"id": "class_090",
+"input": "Any dispute shall be resolved by binding arbitrati...",
+"expected": "arbitration",
+"got": "arbitration",
+"correct": true
+}
+]
+},
+"risk_detection": {
+"correct": 3,
+"total": 3,
+"details": [
+{
+"id": "risk_001",
+"input": "Provider shall have no liability whatsoever for an...",
+"expected": "HIGH",
+"got": "HIGH",
+"correct": true
+},
+{
+"id": "risk_002",
+"input": "We may modify these terms at any time without noti...",
+"expected": "HIGH",
+"got": "HIGH",
+"correct": true
+},
+{
+"id": "risk_020",
+"input": "Liability limited to fees paid in last 12 months....",
+"expected": "LOW",
+"got": "LOW",
+"correct": true
+}
+]
+},
+"multilingual": {
+"correct": 3,
+"total": 4,
+"details": [
+{
+"id": "fr_001",
+"input": "Le Prestataire s'engage \u00e0 indemniser le Client....",
+"expected": "indemnification",
+"got": "indemnification",
+"correct": true
+},
+{
+"id": "fr_005",
+"input": "Le Fournisseur n'assume aucune responsabilit\u00e9 pour...",
+"expected": "HIGH",
+"got": "HIGH",
+"correct": true
+},
+{
+"id": "de_001",
+"input": "Der Auftragnehmer verpflichtet sich, den Auftragge...",
+"expected": "indemnification",
+"got": "termination",
+"correct": false
+},
+{
+"id": "de_005",
+"input": "Wir behalten uns das Recht vor, diese Bedingungen ...",
+"expected": "HIGH",
+"got": "HIGH",
+"correct": true
+}
+]
+},
+"employment": {
+"correct": 3,
+"total": 5,
+"details": [
+{
+"id": "emp_001",
+"input": "Employee agrees not to work for any competitor wit...",
+"expected": "non_compete",
+"got": "unknown",
+"correct": false
+},
+{
+"id": "emp_002",
+"input": "Upon termination without cause, Employee shall rec...",
+"expected": "termination",
+"got": "termination",
+"correct": true
+},
+{
+"id": "emp_003",
+"input": "All inventions created during employment belong ex...",
+"expected": "intellectual_property",
+"got": "intellectual_property",
+"correct": false
+},
+{
+"id": "emp_risk",
+"input": "Employee waives all claims including discriminatio...",
+"expected": "HIGH",
+"got": "HIGH",
+"correct": true
+},
+{
+"id": "emp_low",
+"input": "Employment is at-will and may be terminated by eit...",
+"expected": "LOW",
+"got": "LOW",
+"correct": true
+}
+]
+},
+"ma": {
+"correct": 3,
+"total": 5,
+"details": [
+{
+"id": "ma_001",
+"input": "Seller represents that there are no pending legal ...",
+"expected": "representations",
+"got": "unknown",
+"correct": false
+},
+{
+"id": "ma_002",
+"input": "Seller shall indemnify Buyer for valid claims up t...",
+"expected": "indemnification",
+"got": "indemnification",
+"correct": true
+},
+{
+"id": "ma_003",
+"input": "Closing is conditioned upon receipt of HSR antitru...",
+"expected": "closing_condition",
+"got": "unknown",
+"correct": false
+},
+{
+"id": "ma_risk",
+"input": "Seller provides property 'as is' with no represent...",
+"expected": "HIGH",
+"got": "HIGH",
+"correct": true
+},
+{
+"id": "ma_low",
+"input": "10% of Purchase Price shall be held in escrow for ...",
+"expected": "LOW",
+"got": "LOW",
+"correct": true
+}
+]
+}
 }

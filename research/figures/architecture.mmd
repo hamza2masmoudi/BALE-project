@@ -1,0 +1,29 @@
+graph TD
+    subgraph Client
+        PDF[Contract PDF] --> Ingest[Ingestion API]
+    end
+
+    subgraph "BALE V9 Core"
+        Ingest --> Classifier[Clause Classifier<br/>(Mistral-7B LoRA)]
+        Classifier -- "Target Clause" --> DebateLoop
+        
+        subgraph "Neural Perception (System 1)"
+            DebateLoop[Adversarial Debate Loop]
+            Plaintiff[Plaintiff Agent] <--> Defense[Defense Agent]
+            Plaintiff -.-> DebateLoop
+            Defense -.-> DebateLoop
+            DebateLoop --> Judge[Judge Agent<br/>(Fact Extraction)]
+        end
+        
+        Judge -- "Extracted Facts<br/>{is_economic: True}" --> LogicEngine
+        
+        subgraph "Symbolic Logic (System 2)"
+            LogicEngine[Inference Engine<br/>(Backward Chaining)]
+            RulesDB[(Legal Rules DB)] --> LogicEngine
+            LogicEngine --> Proof{Prove Validity}
+            Proof -- "False" --> Verdict[Verdict: INVALID]
+            Proof -- "True" --> Verdict2[Verdict: VALID]
+        end
+    end
+    
+    Verdict --> Report[JSON Risk Report]

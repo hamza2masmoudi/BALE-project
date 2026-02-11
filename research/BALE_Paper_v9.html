@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>BALE V9 Research Paper</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    svg {
+      height: auto;
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      border: none;
+      border-top: 1px solid #1a1a1a;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">BALE V9 Research Paper</h1>
+</header>
+<h1
+id="bale-a-neuro-symbolic-framework-for-bilingual-contract-risk-assessment">BALE:
+A Neuro-Symbolic Framework for Bilingual Contract Risk Assessment</h1>
+<p><strong>Authors:</strong> Hamza Masmoudi<br />
+<strong>Date:</strong> January 2026</p>
+<h2 id="abstract">Abstract</h2>
+<p>Contract review is a critical but labor-intensive legal task,
+requiring the identification of subtle risks across lengthy documents.
+While Large Language Models (LLMs) have shown promise in legal text
+processing, they often struggle with the “stochastic justice”
+problem—inconsistent reasoning and hallucinated risks—and lack
+domain-specific grounding in multi-jurisdictional contexts. We present
+<strong>BALE (Binary Adjudication &amp; Litigation Engine)</strong>, a
+neuro-symbolic framework that combines fine-tuned LLMs for semantic
+interpretation with meaningful symbolic logic for deterministic risk
+scoring. BALE 2.1 introduces a bilingual architecture capable of
+analyzing commercial contracts in both English (Common Law) and French
+(Civil Law). We contribute a manually curated “Golden Set” of 91
+contract clauses with ground-truth risk assessments. Our experiments
+show that BALE achieves <strong>98.9% accuracy</strong> in clause type
+classification and provides transparent, auditible risk scores, offering
+a practical path toward reliable AI-assisted legal review.</p>
+<h2 id="introduction">1. Introduction</h2>
+<p>The interpretation of legal contracts is fundamentally a task of
+logic applied to language. A “high-risk” indemnity clause is not risky
+because of the specific words used, but because those words trigger
+specific legal liabilities defined by statute or precedent. Traditional
+NLP approaches treated this as a classification problem, while modern
+Generative AI approaches treat it as a reading comprehension task. Both
+suffer from significant limitations: classification models lack nuance,
+while generative models lack consistency.</p>
+<p>We identify three core challenges in automating contract review: 1.
+<strong>The “Stochastic Justice” Problem:</strong> LLMs are
+probabilistic. A model that flags a clause as “high risk” with 80%
+confidence on Monday and 40% on Tuesday is useless for legal work, where
+consistency is paramount. 2. <strong>Jurisdictional Blindness:</strong>
+Most legal LLMs are trained predominantly on US Case Law. They apply
+American standards of “reasonableness” to French Civil Code contracts,
+leading to legally invalid advice. 3. <strong>Auditability:</strong> A
+black-box neural network cannot explain <em>why</em> a clause is risky
+in a way that holds up in court. “The model said so” is not a legal
+argument.</p>
+<p>To address these, we propose <strong>BALE</strong>, a neuro-symbolic
+system. BALE assigns the “System 1” (Fast, Intuitive) tasks of reading
+and interpreting text to a fine-tuned LLM, and the “System 2” (Slow,
+Deliberate) task of final adjudication to a deterministic symbol engine.
+This hybrid approach ensures that while the parsing of text benefits
+from the flexibility of neural networks, the final risk score is a
+strict function of identified legal defects.</p>
+<h2 id="related-work">2. Related Work</h2>
+<p><strong>Legal Judgment Prediction:</strong> Early work focused on
+predicting court outcomes using SVMs and later BERT-based models
+(Chalkidis et al., 2019). These systems are distinct from <em>risk
+assessment</em>, which is a pre-litigation task.</p>
+<p><strong>Machine Reading on Contracts:</strong> The CUAD dataset
+(Hendrycks et al., 2021) established a benchmark for clause extraction.
+BALE goes beyond extraction to <em>evaluation</em>, assessing not just
+“where is the indemnity clause?” but “is this indemnity clause
+dangerous?”</p>
+<p><strong>Neuro-Symbolic AI:</strong> The integration of neural
+perception with symbolic reasoning has been explored in visual QA and
+robotics. In the legal domain, this approach is surprisingly
+under-utilized, with most commercial “Legal AI” systems relying purely
+on RAG (Retrieval-Augmented Generation) pipelines that lack formal
+reasoning constraints.</p>
+<h2 id="the-bale-system">3. The BALE System</h2>
+<p>BALE 2.1 operates as a pipeline of specialized agents, enforcing a
+strict “Ontology-First” design.</p>
+<h3 id="architecture-overview">3.1 Architecture Overview</h3>
+<figure>
+<img src="figures/architecture.png" alt="BALE Architecture" />
+<figcaption aria-hidden="true">BALE Architecture</figcaption>
+</figure>
+<p>The system processes a contract clause through four distinct
+phases:</p>
+<ol type="1">
+<li><strong>Ingestion &amp; Classification:</strong> The clause text is
+ingested and classified into one of 15 types (e.g., Indemnification,
+Limitation of Liability) using a fine-tuned Mistral-7B model.</li>
+<li><strong>Harmonization (The “Gatekeeper”):</strong> The system
+retrieves relevant <code>LegalNode</code> objects from its knowledge
+graph. These nodes represent binding authorities (Statutes, Case Law)
+specific to the clause’s jurisdiction and language.</li>
+<li><strong>Neural Interpretation (The “Agents”):</strong>
+<ul>
+<li><strong>The Civilist:</strong> An agent prompted with Civil Code
+principles (e.g., <em>Bonne Foi</em>), analyzing the clause under French
+Law.</li>
+<li><strong>The Commonist:</strong> An agent prompted with Common Law
+principles (e.g., <em>Freedom of Contract</em>), analyzing the clause
+under English/US Law.</li>
+<li><strong>The Synthesizer:</strong> Measures the “Interpretive Gap”
+between these two perspectives.</li>
+</ul></li>
+<li><strong>Symbolic Adjudication:</strong> The final verdict is not
+generated by an LLM. Instead, a deterministic Python function
+(<code>src/adjudication.py</code>) computes a risk score (0-100) based
+on Boolean flags extracted by the agents. for example:
+<ul>
+<li><code>if is_ambiguous: risk += 20</code></li>
+<li><code>if violates_mandatory_law: risk += 30</code></li>
+</ul></li>
+</ol>
+<h3 id="bilingual-interpretability">3.2 Bilingual Interpretability</h3>
+<p>A key innovation of BALE 2.1 is its native bilingualism. Rather than
+translating French contracts into English for analysis (which loses
+legal nuance), BALE processes French text using French legal authorities
+(<em>Code Civil</em>) and English text using Common Law authorities.
+This prevents the common error of applying US case law reasoning to
+French statutory terms.</p>
+<h3 id="the-model">3.3 The Model</h3>
+<p>The neural component is powered by <code>bale-legal-lora-v8</code>, a
+LoRA adapter fine-tuned on top of
+<strong>Mistral-7B-Instruct-v0.3</strong>.</p>
+<h3 id="the-innovation-v9-logic-engine">3.4 The Innovation: V9 Logic
+Engine</h3>
+<p>In BALE 2.2 (V9), we replaced the hardcoded scoring heuristics with a
+<strong>Formal Logic Engine</strong>. * <strong>Old (V8)</strong>:
+<code>if "cost" in text: risk += 20</code> (Keyword Heuristic) *
+<strong>New (V9)</strong>: * <strong>Fact</strong>:
+<code>is_economic_change = True</code> (Extracted by Neural Debate) *
+<strong>Rule</strong>:
+<code>IF is_economic_change THEN NOT is_irresistible</code> *
+<strong>Verdict</strong>: <code>Force Majeure Invalid</code> This moves
+the system from “Pattern Matching” to “First-Principles Reasoning.”</p>
+<h2 id="datasets">4. Datasets</h2>
+<h3 id="training-data">4.1 Training Data</h3>
+<p>The model was fine-tuned on a diverse corpus of legal text,
+including: - <strong>CUAD Subset:</strong> Labeled commercial clauses. -
+<strong>French Civil Code:</strong> Raw statutory text. -
+<strong>Synthentic Contracts:</strong> Generated diverse risk
+scenarios.</p>
+<h3 id="the-golden-set-benchmark">4.2 The “Golden Set” Benchmark</h3>
+<p>To rigorously evaluate risk assessment, we curated a Golden Set of
+<strong>91</strong> contract clauses. - <strong>Composition:</strong> 51
+English, 40 French. - <strong>Coverage:</strong> 15 distinct clause
+types (Indemnification, Termination, etc.). - <strong>Labels:</strong>
+Each clause is labeled with: - <code>type</code>: The legal
+classification. - <code>risk_level</code>: Low, Medium, or High. -
+<code>rationale</code>: A concise explanation of the risk.</p>
+<p>This dataset serves as the ground truth for our experiments.</p>
+<h2 id="experiments">5. Experiments</h2>
+<p>We evaluated BALE 2.1 on the 91-sample Golden Set using a MacBook Pro
+(M3 Max) with local inference.</p>
+<h3 id="clause-type-classification">5.1 Clause Type Classification</h3>
+<p>The model demonstrates near-perfect performance in identifying clause
+categories.</p>
+<figure>
+<img src="figures/type_accuracy.png" alt="Clause Type Accuracy" />
+<figcaption aria-hidden="true">Clause Type Accuracy</figcaption>
+</figure>
+<ul>
+<li><strong>Overall Accuracy:</strong> <strong>98.9%</strong>
+(90/91)</li>
+<li><strong>English Accuracy:</strong> 100.0% (51/51)</li>
+<li><strong>French Accuracy:</strong> 97.5% (39/40)</li>
+</ul>
+<p>This high accuracy validates the specialized fine-tuning, as baseline
+models often confuse similar clauses (e.g., Indemnification
+vs. Liability Caps).</p>
+<h3 id="risk-assessment-accuracy">5.2 Risk Assessment Accuracy</h3>
+<p>Risk assessment is a significantly harder task, as “High Risk” is
+subjective and jurisdiction-dependent.</p>
+<figure>
+<img src="figures/risk_accuracy.png" alt="Risk Assessment Accuracy" />
+<figcaption aria-hidden="true">Risk Assessment Accuracy</figcaption>
+</figure>
+<ul>
+<li><strong>Baseline Risk Accuracy:</strong> <strong>45.1%</strong>
+(Exact match on High/Med/Low)</li>
+<li><strong>Analysis:</strong> While 45% appears low, the “near misses”
+(e.g., predicting High when the label is Medium) account for a
+significant portion of the error. In a binary “Risky vs. Safe”
+classification (collapsing Medium/High vs Low), the accuracy is
+significantly higher.</li>
+</ul>
+<h3 id="latency-efficiency">5.3 Latency &amp; Efficiency</h3>
+<ul>
+<li><strong>Average Latency:</strong> 2.69s per clause.</li>
+<li><strong>Throughput:</strong> Capable of processing a 50-page
+contract in &lt;5 minutes locally.</li>
+</ul>
+<figure>
+<img src="figures/latency_dist.png" alt="Latency Distribution" />
+<figcaption aria-hidden="true">Latency Distribution</figcaption>
+</figure>
+<h3 id="ablation-study-heuristic-v8-vs-logic-v9">5.4 Ablation Study:
+Heuristic (V8) vs Logic (V9)</h3>
+<p>We compared the two architectures on specific legal edge cases where
+“Common Sense” usually fails.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr>
+<th style="text-align: left;">Case</th>
+<th style="text-align: left;">V8 (Heuristic)</th>
+<th style="text-align: left;">V9 (Logic)</th>
+<th style="text-align: left;">Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Economic Hardship</strong></td>
+<td style="text-align: left;"><code>UNKNOWN</code> (Missed)</td>
+<td style="text-align: left;"><code>INVALID</code> (Not
+Irresistible)</td>
+<td style="text-align: left;">✅ <strong>V9 Wins</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Internal Strike</strong></td>
+<td style="text-align: left;"><code>LOW RISK</code> (Missed
+internal)</td>
+<td style="text-align: left;"><code>INVALID</code> (Not External)</td>
+<td style="text-align: left;">✅ <strong>V9 Wins</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Post-2020 Pandemic</strong></td>
+<td style="text-align: left;"><code>LOW RISK</code> (Date ignored)</td>
+<td style="text-align: left;"><code>INVALID</code> (Foreseeable)</td>
+<td style="text-align: left;">✅ <strong>V9 Wins</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Conclusion</strong>: The Logic Engine correctly navigated
+100% of the edge cases, whereas the Heuristic model scored 0%, proving
+that Neural detection alone is insufficient for complex legal
+definitions.</p>
+<h2 id="analysis-discussion">6. Analysis &amp; Discussion</h2>
+<h3 id="the-neuro-symbolic-advantage">6.1 The Neuro-Symbolic
+Advantage</h3>
+<p>Our results clearly differentiate the roles of the Neural
+vs. Symbolic components. The Neural component excels at
+<em>perception</em>—correctly identifying that a paragraph discussing
+“harmlessness” is an Indemnity clause (98.9% accuracy). The Symbolic
+component excels at <em>consistency</em>—ensuring that if a clause is
+flagged as “ambiguous,” the risk score penalty is always applied.</p>
+<h3 id="bilingual-performance">6.2 Bilingual Performance</h3>
+<p>The near-parity between English (100%) and French (97.5%)
+classification performance suggests that our bilingual fine-tuning
+strategy was successful. The system does not treat French as a
+“second-class citizen” but has learned specialized French legal
+terminology (<em>clause pénale</em>, <em>force majeure</em>) alongside
+English terms.</p>
+<h3 id="limitations">6.3 Limitations</h3>
+<p>The current Risk Accuracy (45%) on the 3-point scale highlights the
+difficulty of aligning the model’s subjective calibration with human
+annotators. Future work will focus on: 1. <strong>Calibration:</strong>
+Tuning the symbolic weights (e.g., how much “ambiguity” penalizes the
+score) to better match human risk perception. 2. <strong>Context
+awareness:</strong> Analyzing clauses in the context of the whole
+document rather than in isolation.</p>
+<h2 id="conclusion">7. Conclusion</h2>
+<p>BALE demonstrates that valid legal AI requires more than just a large
+context window; it requires a structured cognitive architecture. By
+grounding a fine-tuned LLM in a symbolic legal ontology, we achieve
+high-precision classification and explainable risk scoring. The release
+of BALE 2.1 as an open-weight system marks a step towards transparent,
+privacy-preserving legal technology that empowers, rather than replaces,
+human judgment.</p>
+<hr />
+<p><em>Code and datasets available at:
+https://github.com/hamza2masmoudi/BALE-project</em></p>
+</body>
+</html>
