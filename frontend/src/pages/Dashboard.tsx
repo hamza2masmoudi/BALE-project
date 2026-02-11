@@ -4,8 +4,8 @@ import { useCorpusStats, useAnalysisList } from '../api/client'
 
 function Dashboard() {
     const navigate = useNavigate()
-    const { stats, loading: statsLoading, refresh: refreshStats } = useCorpusStats()
-    const { analyses, loading: analysesLoading, load: loadAnalyses } = useAnalysisList()
+    const { stats, loading: _statsLoading, refresh: refreshStats } = useCorpusStats()
+    const { analyses, loading: _analysesLoading, load: loadAnalyses } = useAnalysisList()
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {

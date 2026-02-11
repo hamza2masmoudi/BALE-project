@@ -156,6 +156,80 @@ export interface EntityProfile {
     last_updated: string
 }
 
+// ==================== V11 TYPES ====================
+
+export interface V11AnalyzeRequest {
+    contract_text: string
+    contract_type: string
+    contract_name: string
+    use_semantic_chunking: boolean
+    suggest_rewrites: boolean
+    simulate_risk: boolean
+    corpus_compare: boolean
+}
+
+export interface V11AnalyzeResponse {
+    engine_version: string
+    contract_type: string
+    total_clauses: number
+    analysis_time_ms: number
+    overall_risk_score: number
+    risk_level: string
+    executive_summary: string
+    classifications: V11Classification[]
+    graph_analysis: Record<string, any>
+    power_analysis: Record<string, any>
+    dispute_prediction: Record<string, any>
+    suggested_rewrites?: V11RewriteSuggestion[]
+    risk_simulation?: V11RiskSimulation
+    corpus_comparison?: V11CorpusComparison
+}
+
+export interface V11Classification {
+    clause_text: string
+    clause_type: string
+    confidence: number
+    calibrated_confidence?: number
+    entropy_ratio?: number
+    margin?: number
+    needs_human_review?: boolean
+}
+
+export interface V11RewriteSuggestion {
+    clause_type: string
+    original_snippet: string
+    suggested_text: string
+    risk_reduction_pct: number
+    protection_level: string
+    explanation: string
+}
+
+export interface V11RiskSimulation {
+    mean_risk: number
+    std_risk: number
+    ci_95_lower: number
+    ci_95_upper: number
+    worst_case: number
+    best_case: number
+    volatility_label: string
+    dominant_uncertainty_source: string
+    num_iterations: number
+}
+
+export interface V11CorpusComparison {
+    contracts_in_corpus: number
+    anomalies: V11Anomaly[]
+    percentiles: Record<string, number>
+}
+
+export interface V11Anomaly {
+    metric: string
+    z_score: number
+    contract_value: number
+    corpus_mean: number
+    direction: string
+}
+
 // ==================== API CLIENT ====================
 
 class BaleApiClient {
@@ -275,6 +349,15 @@ class BaleApiClient {
 
     async getMarketBenchmarks(): Promise<Record<string, any>> {
         return this.request<Record<string, any>>('/frontier/benchmarks')
+    }
+
+    // ==================== V11 ANALYSIS ====================
+
+    async analyzeV11(request: V11AnalyzeRequest): Promise<V11AnalyzeResponse> {
+        return this.request<V11AnalyzeResponse>('/frontier/v11-analyze', {
+            method: 'POST',
+            body: JSON.stringify(request),
+        })
     }
 
     // ==================== HEALTH ====================
@@ -430,4 +513,29 @@ export function useAnalysisList() {
     }, [])
 
     return { analyses, loading, load }
+}
+
+export function useV11Analysis() {
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [result, setResult] = useState<V11AnalyzeResponse | null>(null)
+
+    const analyze = useCallback(async (request: V11AnalyzeRequest) => {
+        setLoading(true)
+        setError(null)
+
+        try {
+            const response = await baleApi.analyzeV11(request)
+            setResult(response)
+            return response
+        } catch (e) {
+            const message = e instanceof Error ? e.message : 'V11 analysis failed'
+            setError(message)
+            throw e
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    return { analyze, loading, error, result }
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { baleApi, useFrontierAnalysis, FrontierAnalyzeRequest } from '../api/client'
+import { useFrontierAnalysis, FrontierAnalyzeRequest } from '../api/client'
 
 const contractTypes = [
     { value: 'msa', label: 'Master Services Agreement' },
@@ -49,6 +49,11 @@ function Analyze() {
         contractName: '',
         runFrontier: true,
         yourPosition: 'buyer',
+        // V11 innovations
+        semanticChunking: true,
+        suggestRewrites: true,
+        simulateRisk: true,
+        corpusCompare: true,
     })
 
     // Navigate to results when analysis completes
@@ -303,6 +308,64 @@ function Analyze() {
                             </div>
                         </div>
                     )}
+
+                    {/* V11 Innovations */}
+                    <div className="mt-6 pt-6 border-t border-[var(--bale-border)]">
+                        <div className="text-small font-medium text-[var(--bale-accent)] mb-4">⚡ V11 Innovations</div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg bg-[var(--bale-surface-elevated)]">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.semanticChunking ?? true}
+                                    onChange={(e) => setFormData({ ...formData, semanticChunking: e.target.checked })}
+                                    className="w-4 h-4 rounded accent-[var(--bale-accent)]"
+                                />
+                                <div>
+                                    <div className="text-small font-medium">Semantic Chunking</div>
+                                    <div className="text-caption text-[var(--bale-text-muted)]">Embedding-based topic boundary detection</div>
+                                </div>
+                            </label>
+
+                            <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg bg-[var(--bale-surface-elevated)]">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.suggestRewrites ?? true}
+                                    onChange={(e) => setFormData({ ...formData, suggestRewrites: e.target.checked })}
+                                    className="w-4 h-4 rounded accent-[var(--bale-accent)]"
+                                />
+                                <div>
+                                    <div className="text-small font-medium">Clause Rewrite Engine</div>
+                                    <div className="text-caption text-[var(--bale-text-muted)]">Suggest safer clause alternatives</div>
+                                </div>
+                            </label>
+
+                            <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg bg-[var(--bale-surface-elevated)]">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.simulateRisk ?? true}
+                                    onChange={(e) => setFormData({ ...formData, simulateRisk: e.target.checked })}
+                                    className="w-4 h-4 rounded accent-[var(--bale-accent)]"
+                                />
+                                <div>
+                                    <div className="text-small font-medium">Monte Carlo Simulation</div>
+                                    <div className="text-caption text-[var(--bale-text-muted)]">Risk uncertainty quantification</div>
+                                </div>
+                            </label>
+
+                            <label className="flex items-center gap-3 cursor-pointer p-3 rounded-lg bg-[var(--bale-surface-elevated)]">
+                                <input
+                                    type="checkbox"
+                                    checked={formData.corpusCompare ?? true}
+                                    onChange={(e) => setFormData({ ...formData, corpusCompare: e.target.checked })}
+                                    className="w-4 h-4 rounded accent-[var(--bale-accent)]"
+                                />
+                                <div>
+                                    <div className="text-small font-medium">Corpus Intelligence</div>
+                                    <div className="text-caption text-[var(--bale-text-muted)]">Cross-contract anomaly detection</div>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Submit */}

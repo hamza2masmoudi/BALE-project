@@ -79,7 +79,7 @@ export function ClauseRiskBadge({
     clauseText,
     showDetails = false,
     size = 'md',
-    autoAnalyze = false
+    autoAnalyze: _autoAnalyze = false
 }: ClauseRiskBadgeProps) {
     const { analyze, loading, error, result } = useV7RiskAnalysis()
     const [expanded, setExpanded] = useState(false)

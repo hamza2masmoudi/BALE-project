@@ -96,6 +96,49 @@ const mockResult = {
             alerts: [],
         },
     },
+
+    // V11 Innovation Data
+    v11: {
+        rewrites: [
+            { clause_type: 'limitation_liability', original_snippet: 'Liability shall not exceed fees paid in the 12 months...', suggested_text: 'Liability shall not exceed 2x aggregate fees paid...', risk_reduction_pct: 35, protection_level: 'balanced', explanation: 'Doubles the cap while maintaining reasonable limits' },
+            { clause_type: 'indemnification', original_snippet: 'Party shall indemnify and hold harmless...', suggested_text: 'Each Party shall indemnify the other for direct damages...', risk_reduction_pct: 28, protection_level: 'mutual', explanation: 'Makes indemnification mutual and limits to direct damages' },
+            { clause_type: 'termination', original_snippet: 'Provider may terminate at any time with 30 days notice...', suggested_text: 'Either Party may terminate with 90 days written notice...', risk_reduction_pct: 22, protection_level: 'balanced', explanation: 'Extends notice period and makes termination bilateral' },
+        ],
+        calibration: {
+            avg_confidence: 0.847,
+            avg_entropy: 0.312,
+            avg_margin: 0.534,
+            human_review_flagged: 3,
+            total_classified: 12,
+            classifications: [
+                { type: 'limitation_liability', confidence: 0.92, entropy: 0.15, margin: 0.71, needs_review: false },
+                { type: 'indemnification', confidence: 0.88, entropy: 0.22, margin: 0.58, needs_review: false },
+                { type: 'termination', confidence: 0.71, entropy: 0.68, margin: 0.12, needs_review: true },
+                { type: 'force_majeure', confidence: 0.65, entropy: 0.74, margin: 0.08, needs_review: true },
+                { type: 'warranty', confidence: 0.94, entropy: 0.11, margin: 0.82, needs_review: false },
+                { type: 'assignment', confidence: 0.62, entropy: 0.78, margin: 0.06, needs_review: true },
+            ],
+        },
+        simulation: {
+            mean_risk: 42.3,
+            std_risk: 8.7,
+            ci_95_lower: 25.6,
+            ci_95_upper: 59.0,
+            worst_case: 78.4,
+            best_case: 18.2,
+            volatility_label: 'moderate',
+            dominant_source: 'classification_uncertainty',
+            num_iterations: 1000,
+        },
+        corpus: {
+            contracts_in_corpus: 47,
+            anomalies: [
+                { metric: 'risk_score', z_score: 2.31, contract_value: 29.67, corpus_mean: 18.4, direction: 'above' },
+                { metric: 'power_asymmetry', z_score: 2.85, contract_value: 0.80, corpus_mean: 0.35, direction: 'above' },
+                { metric: 'clause_count', z_score: -1.92, contract_value: 12, corpus_mean: 22.1, direction: 'below' },
+            ],
+        },
+    },
 }
 
 const FRONTIERS = [
@@ -111,8 +154,15 @@ const FRONTIERS = [
     { num: 'X', name: 'Reflexive', key: 'reflexive', color: 'var(--frontier-reflexive)', question: 'How does analysis change law?' },
 ]
 
+const V11_FRONTIERS = [
+    { num: 'XI', name: 'Rewrite', key: 'rewrite', color: '#10b981', question: 'How can risky clauses be improved?' },
+    { num: 'XII', name: 'Confidence', key: 'confidence', color: '#8b5cf6', question: 'How reliable are the classifications?' },
+    { num: 'XIII', name: 'Simulation', key: 'simulation', color: '#f59e0b', question: 'What is the range of possible risk?' },
+    { num: 'XIV', name: 'Corpus', key: 'corpus', color: '#06b6d4', question: 'How does this contract compare?' },
+]
+
 function FrontierAnalysis() {
-    const { id } = useParams()
+    const { id: _id } = useParams()
     const [loading, setLoading] = useState(true)
     const [activeFrontier, setActiveFrontier] = useState<string | null>(null)
 
@@ -197,13 +247,13 @@ function FrontierAnalysis() {
             {/* Frontier Navigator */}
             <div className="mb-6">
                 <div className="flex gap-2 overflow-x-auto pb-2">
-                    {FRONTIERS.map(f => (
+                    {[...FRONTIERS, ...V11_FRONTIERS].map(f => (
                         <button
                             key={f.key}
                             onClick={() => setActiveFrontier(activeFrontier === f.key ? null : f.key)}
                             className={`flex-shrink-0 px-4 py-2 rounded-lg border transition-all ${activeFrontier === f.key
-                                    ? 'border-[var(--bale-accent)] bg-[var(--bale-surface-elevated)]'
-                                    : 'border-[var(--bale-border)] bg-[var(--bale-surface)] hover:border-[var(--bale-border-strong)]'
+                                ? 'border-[var(--bale-accent)] bg-[var(--bale-surface-elevated)]'
+                                : 'border-[var(--bale-border)] bg-[var(--bale-surface)] hover:border-[var(--bale-border-strong)]'
                                 }`}
                             style={{ borderLeftColor: f.color, borderLeftWidth: '3px' }}
                         >
@@ -391,6 +441,163 @@ function FrontierAnalysis() {
                     </div>
                 </FrontierCard>
             </div>
+
+            {/* ======================== V11 INNOVATION CARDS ======================== */}
+            <div className="mt-8 mb-4">
+                <h2 className="text-title text-lg flex items-center gap-2">
+                    <span style={{ color: '#10b981' }}>⚡</span> V11 Innovations
+                </h2>
+                <p className="text-small text-[var(--bale-text-muted)] mt-1">Adaptive reasoning innovations powered by semantic analysis</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* XI. Rewrite Engine */}
+                <FrontierCard
+                    frontier={V11_FRONTIERS[0]}
+                    expanded={activeFrontier === 'rewrite'}
+                >
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-2xl font-bold" style={{ color: '#10b981' }}>{mockResult.v11.rewrites.length}</span>
+                            <span className="text-small text-[var(--bale-text-muted)]">suggestions generated</span>
+                        </div>
+                        {mockResult.v11.rewrites.map((rw, idx) => (
+                            <div key={idx} className="p-3 rounded-lg bg-[var(--bale-surface-elevated)]" style={{ borderLeft: '3px solid #10b981' }}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-small font-medium capitalize">{rw.clause_type.replace('_', ' ')}</span>
+                                    <span className="text-caption px-2 py-0.5 rounded-full" style={{ background: 'rgba(16,185,129,0.15)', color: '#10b981' }}>
+                                        -{rw.risk_reduction_pct}% risk
+                                    </span>
+                                </div>
+                                <div className="text-caption text-[var(--bale-text-muted)] line-through mb-1">{rw.original_snippet.substring(0, 60)}...</div>
+                                <div className="text-caption" style={{ color: '#10b981' }}>{rw.suggested_text.substring(0, 80)}...</div>
+                            </div>
+                        ))}
+                    </div>
+                </FrontierCard>
+
+                {/* XII. Confidence Calibration */}
+                <FrontierCard
+                    frontier={V11_FRONTIERS[1]}
+                    expanded={activeFrontier === 'confidence'}
+                >
+                    <div className="space-y-3">
+                        <div className="grid grid-cols-3 gap-3 mb-3">
+                            <div className="text-center">
+                                <div className="text-xl font-bold" style={{ color: '#8b5cf6' }}>{(mockResult.v11.calibration.avg_confidence * 100).toFixed(0)}%</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Avg Confidence</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-xl font-bold" style={{ color: mockResult.v11.calibration.avg_entropy > 0.5 ? 'var(--risk-high)' : '#8b5cf6' }}>{(mockResult.v11.calibration.avg_entropy * 100).toFixed(0)}%</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Avg Entropy</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-xl font-bold text-[var(--risk-medium)]">{mockResult.v11.calibration.human_review_flagged}</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Need Review</div>
+                            </div>
+                        </div>
+                        {mockResult.v11.calibration.classifications.map((cls, idx) => (
+                            <div key={idx} className="flex items-center gap-3">
+                                <span className="text-caption w-28 truncate capitalize">{cls.type.replace('_', ' ')}</span>
+                                <div className="flex-1 h-2 bg-[var(--bale-surface-elevated)] rounded-full overflow-hidden">
+                                    <div
+                                        className="h-full rounded-full transition-all"
+                                        style={{
+                                            width: `${cls.confidence * 100}%`,
+                                            backgroundColor: cls.needs_review ? 'var(--risk-medium)' : '#8b5cf6'
+                                        }}
+                                    />
+                                </div>
+                                <span className="text-caption w-10 text-right">{(cls.confidence * 100).toFixed(0)}%</span>
+                                {cls.needs_review && <span className="text-caption text-[var(--risk-medium)]">⚠</span>}
+                            </div>
+                        ))}
+                    </div>
+                </FrontierCard>
+
+                {/* XIII. Risk Simulation */}
+                <FrontierCard
+                    frontier={V11_FRONTIERS[2]}
+                    expanded={activeFrontier === 'simulation'}
+                >
+                    <div className="space-y-4">
+                        <div className="text-center">
+                            <div className="text-3xl font-bold" style={{ color: '#f59e0b' }}>{mockResult.v11.simulation.mean_risk.toFixed(1)}</div>
+                            <div className="text-small text-[var(--bale-text-muted)]">Mean Simulated Risk (n={mockResult.v11.simulation.num_iterations})</div>
+                        </div>
+
+                        {/* CI Bar */}
+                        <div className="relative">
+                            <div className="text-caption text-[var(--bale-text-muted)] flex justify-between mb-1">
+                                <span>95% Confidence Interval</span>
+                                <span>{mockResult.v11.simulation.ci_95_lower.toFixed(1)} — {mockResult.v11.simulation.ci_95_upper.toFixed(1)}</span>
+                            </div>
+                            <div className="relative h-6 bg-[var(--bale-surface-elevated)] rounded-full overflow-hidden">
+                                <div
+                                    className="absolute h-full rounded-full opacity-30"
+                                    style={{
+                                        left: `${mockResult.v11.simulation.ci_95_lower}%`,
+                                        width: `${mockResult.v11.simulation.ci_95_upper - mockResult.v11.simulation.ci_95_lower}%`,
+                                        backgroundColor: '#f59e0b',
+                                    }}
+                                />
+                                <div
+                                    className="absolute top-0 h-full w-0.5"
+                                    style={{
+                                        left: `${mockResult.v11.simulation.mean_risk}%`,
+                                        backgroundColor: '#f59e0b',
+                                    }}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-3">
+                            <MetricRow label="Best Case" value={mockResult.v11.simulation.best_case.toFixed(1)} />
+                            <MetricRow label="Worst Case" value={mockResult.v11.simulation.worst_case.toFixed(1)} warning />
+                            <MetricRow label="Std Dev" value={`±${mockResult.v11.simulation.std_risk.toFixed(1)}`} />
+                            <MetricRow label="Volatility" value={mockResult.v11.simulation.volatility_label} />
+                        </div>
+
+                        <div className="text-caption text-[var(--bale-text-muted)] text-center">
+                            Dominant uncertainty: {mockResult.v11.simulation.dominant_source.replace('_', ' ')}
+                        </div>
+                    </div>
+                </FrontierCard>
+
+                {/* XIV. Corpus Intelligence */}
+                <FrontierCard
+                    frontier={V11_FRONTIERS[3]}
+                    expanded={activeFrontier === 'corpus'}
+                >
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-small text-[var(--bale-text-muted)]">{mockResult.v11.corpus.contracts_in_corpus} contracts in corpus</span>
+                            <span className="text-xl font-bold" style={{ color: mockResult.v11.corpus.anomalies.length > 0 ? 'var(--risk-medium)' : '#06b6d4' }}>
+                                {mockResult.v11.corpus.anomalies.length} anomalies
+                            </span>
+                        </div>
+                        {mockResult.v11.corpus.anomalies.map((a, idx) => (
+                            <div key={idx} className="p-3 rounded-lg bg-[var(--bale-surface-elevated)]">
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-small font-medium capitalize">{a.metric.replace('_', ' ')}</span>
+                                    <span className={`text-caption px-2 py-0.5 rounded-full ${Math.abs(a.z_score) > 2.5 ? 'bg-[var(--risk-bg-high)] text-[var(--risk-high)]' : 'bg-[var(--risk-bg-medium)] text-[var(--risk-medium)]'}`}>
+                                        z={a.z_score.toFixed(2)}
+                                    </span>
+                                </div>
+                                <div className="flex items-center gap-2 text-caption text-[var(--bale-text-muted)]">
+                                    <span>This: {typeof a.contract_value === 'number' && a.contract_value % 1 !== 0 ? a.contract_value.toFixed(2) : a.contract_value}</span>
+                                    <span>•</span>
+                                    <span>Corpus avg: {a.corpus_mean.toFixed(1)}</span>
+                                    <span>•</span>
+                                    <span className={a.direction === 'above' ? 'text-[var(--risk-medium)]' : 'text-[var(--risk-low)]'}>
+                                        {a.direction === 'above' ? '↑ Above' : '↓ Below'} average
+                                    </span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </FrontierCard>
+            </div>
         </div>
     )
 }
@@ -441,7 +648,7 @@ function RiskGauge({ value }: { value: number }) {
 
 function FrontierCard({
     frontier,
-    expanded,
+    expanded: _expanded,
     children
 }: {
     frontier: typeof FRONTIERS[0]
@@ -515,7 +722,7 @@ function PowerDiagram({
 function DisputeBar({
     clause,
     probability,
-    timeframe
+    timeframe: _timeframe
 }: {
     clause: string
     probability: number
