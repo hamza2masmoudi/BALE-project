@@ -1,0 +1,517 @@
+{
+  "test_suite": "V12 Quad-Innovation Unit Tests",
+  "timestamp": "2026-02-12T19:17:49",
+  "summary": {
+    "total": 37,
+    "passed": 37,
+    "failed": 0,
+    "pass_rate": 100.0,
+    "total_time_ms": 417
+  },
+  "results": [
+    {
+      "name": "Symbolic: initialization",
+      "passed": true,
+      "duration_ms": 268,
+      "message": "",
+      "details": {
+        "rule_count": 42
+      }
+    },
+    {
+      "name": "Symbolic: rule families",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "families": [
+          "formation",
+          "gap_filling",
+          "good_faith",
+          "interpretation",
+          "proportionality",
+          "public_policy",
+          "unconscionability"
+        ],
+        "count": 7
+      }
+    },
+    {
+      "name": "Symbolic: standard contract",
+      "passed": true,
+      "duration_ms": 3,
+      "message": "",
+      "details": {
+        "violations_triggered": 8,
+        "symbolic_risk": 81.0,
+        "neural_risk": 42.0,
+        "fused_risk": 60.56,
+        "alpha": 0.524
+      }
+    },
+    {
+      "name": "Symbolic: high-risk contract",
+      "passed": true,
+      "duration_ms": 1,
+      "message": "",
+      "details": {
+        "violations": 9,
+        "symbolic_risk": 86.0,
+        "fused_risk": 81.93
+      }
+    },
+    {
+      "name": "Symbolic: low-risk contract",
+      "passed": true,
+      "duration_ms": 3,
+      "message": "",
+      "details": {
+        "violations": 8,
+        "symbolic_risk": 81.0,
+        "fused_risk": 46.42
+      }
+    },
+    {
+      "name": "Symbolic: risk ordering (low < std < high)",
+      "passed": true,
+      "duration_ms": 5,
+      "message": "",
+      "details": {
+        "low_fused": 46.42,
+        "standard_fused": 60.56,
+        "high_fused": 81.93,
+        "monotonic": true
+      }
+    },
+    {
+      "name": "Symbolic: alpha adaptation",
+      "passed": true,
+      "duration_ms": 3,
+      "message": "",
+      "details": {
+        "low_risk_alpha": 0.524,
+        "adversarial_alpha": 0.509,
+        "alpha_decreased": true
+      }
+    },
+    {
+      "name": "Symbolic: serialization",
+      "passed": true,
+      "duration_ms": 1,
+      "message": "",
+      "details": {
+        "serializable": true,
+        "json_size": 6712
+      }
+    },
+    {
+      "name": "RAG: initialization",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "case_count": 25
+      }
+    },
+    {
+      "name": "RAG: case coverage",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "clause_types": 15,
+        "jurisdictions": [
+          "EU",
+          "UK",
+          "US",
+          "international"
+        ],
+        "year_range": "1854-2020",
+        "types": [
+          "assignment",
+          "audit_rights",
+          "confidentiality",
+          "data_protection",
+          "dispute_resolution",
+          "force_majeure",
+          "governing_law",
+          "indemnification",
+          "insurance",
+          "intellectual_property",
+          "limitation_of_liability",
+          "non_compete",
+          "payment_terms",
+          "termination",
+          "warranty"
+        ]
+      }
+    },
+    {
+      "name": "RAG: retrieval standard",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "searched": 25,
+        "retrieved": 10,
+        "jurisdictions": [
+          "EU",
+          "UK",
+          "US"
+        ],
+        "clause_types": [
+          "data_protection",
+          "indemnification",
+          "intellectual_property",
+          "limitation_of_liability",
+          "non_compete",
+          "termination"
+        ]
+      }
+    },
+    {
+      "name": "RAG: high-risk more citations",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "low_risk_citations": 2,
+        "high_risk_citations": 10,
+        "high_retrieves_more": true
+      }
+    },
+    {
+      "name": "RAG: relevance scores",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "top_scores": [
+          0.85,
+          0.85,
+          0.85,
+          0.85,
+          0.85
+        ],
+        "all_have_rewrites": true
+      }
+    },
+    {
+      "name": "RAG: serialization",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "serializable": true,
+        "json_size": 10349
+      }
+    },
+    {
+      "name": "GAT: initialization",
+      "passed": true,
+      "duration_ms": 27,
+      "message": "",
+      "details": {
+        "layer1": "400\u2192256",
+        "layer2": "256\u2192128",
+        "heads": 4
+      }
+    },
+    {
+      "name": "GAT: layer forward pass",
+      "passed": true,
+      "duration_ms": 2,
+      "message": "",
+      "details": {
+        "output_shape": [
+          5,
+          32
+        ],
+        "attention_shape": [
+          5,
+          5
+        ]
+      }
+    },
+    {
+      "name": "GAT: standard contract",
+      "passed": true,
+      "duration_ms": 6,
+      "message": "",
+      "details": {
+        "nodes": 12,
+        "graph_risk": 54.43,
+        "anomaly": 0.0,
+        "heuristic_risk": 48.75,
+        "top_edges": 6
+      }
+    },
+    {
+      "name": "GAT: empty contract",
+      "passed": true,
+      "duration_ms": 5,
+      "message": "",
+      "details": {
+        "empty_handled": true
+      }
+    },
+    {
+      "name": "GAT: risk differentiation",
+      "passed": true,
+      "duration_ms": 4,
+      "message": "",
+      "details": {
+        "low_graph_risk": 52.16,
+        "high_graph_risk": 51.71,
+        "differentiated": true
+      }
+    },
+    {
+      "name": "GAT: attention meaningful",
+      "passed": true,
+      "duration_ms": 3,
+      "message": "",
+      "details": {
+        "all_risks_valid": true,
+        "all_importances_valid": true
+      }
+    },
+    {
+      "name": "GAT: serialization",
+      "passed": true,
+      "duration_ms": 3,
+      "message": "",
+      "details": {
+        "serializable": true,
+        "json_size": 3417
+      }
+    },
+    {
+      "name": "Debate: initialization",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "initialized": true
+      }
+    },
+    {
+      "name": "Debate: standard contract",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "prosecution_args": 8,
+        "defense_args": 8,
+        "rulings": 8,
+        "verdict": "high_risk",
+        "risk_adjustment": 0.38,
+        "duration_ms": 0
+      }
+    },
+    {
+      "name": "Debate: high-risk sustained",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "sustained": 11,
+        "overruled": 0,
+        "verdict": "high_risk",
+        "sustained_majority": true
+      }
+    },
+    {
+      "name": "Debate: low-risk balanced",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "verdict": "acceptable",
+        "prosecution_args": 5,
+        "defense_args": 5
+      }
+    },
+    {
+      "name": "Debate: summary generated",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "summary_length": 333
+      }
+    },
+    {
+      "name": "Debate: ruling reasoning",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "all_have_reasoning": true,
+        "avg_reasoning_len": 182
+      }
+    },
+    {
+      "name": "Debate: serialization",
+      "passed": true,
+      "duration_ms": 0,
+      "message": "",
+      "details": {
+        "serializable": true,
+        "json_size": 10335
+      }
+    },
+    {
+      "name": "Engine: initialization",
+      "passed": true,
+      "duration_ms": 19,
+      "message": "",
+      "details": {
+        "initialized": true
+      }
+    },
+    {
+      "name": "Engine: full analysis",
+      "passed": true,
+      "duration_ms": 5,
+      "message": "",
+      "details": {
+        "fused_risk": 58.63,
+        "confidence": 0.922,
+        "analysis_time_ms": 1,
+        "innovations_active": 4
+      }
+    },
+    {
+      "name": "Engine: selective innovations",
+      "passed": true,
+      "duration_ms": 4,
+      "message": "",
+      "details": {
+        "selective_worked": true
+      }
+    },
+    {
+      "name": "Engine: risk fusion quality",
+      "passed": true,
+      "duration_ms": 6,
+      "message": "",
+      "details": {
+        "low_v11": 15.0,
+        "low_v12": 30.18,
+        "high_v11": 78.0,
+        "high_v12": 78.57,
+        "ordering_preserved": true
+      }
+    },
+    {
+      "name": "Engine: all scenarios",
+      "passed": true,
+      "duration_ms": 9,
+      "message": "",
+      "details": {
+        "low_risk": {
+          "fused_risk": 30.18,
+          "confidence": 0.827,
+          "violations": 8,
+          "citations": 2,
+          "debate_verdict": "acceptable"
+        },
+        "standard": {
+          "fused_risk": 59.25,
+          "confidence": 0.925,
+          "violations": 8,
+          "citations": 10,
+          "debate_verdict": "high_risk"
+        },
+        "high_risk": {
+          "fused_risk": 78.57,
+          "confidence": 0.894,
+          "violations": 9,
+          "citations": 10,
+          "debate_verdict": "high_risk"
+        },
+        "adversarial": {
+          "fused_risk": 84.98,
+          "confidence": 0.87,
+          "violations": 9,
+          "citations": 10,
+          "debate_verdict": "high_risk"
+        }
+      }
+    },
+    {
+      "name": "Engine: full serialization",
+      "passed": true,
+      "duration_ms": 6,
+      "message": "",
+      "details": {
+        "serializable": true,
+        "json_size": 37358
+      }
+    },
+    {
+      "name": "Engine: latency (<5s)",
+      "passed": true,
+      "duration_ms": 25,
+      "message": "",
+      "details": {
+        "avg_ms": 2,
+        "min_ms": 1,
+        "max_ms": 2
+      }
+    },
+    {
+      "name": "Cross: symbolic-RAG consistency",
+      "passed": true,
+      "duration_ms": 4,
+      "message": "",
+      "details": {
+        "violation_types": [
+          "absent:GDPR|data protection act|data ",
+          "absent:consequential|indirect|special",
+          "absent:fraud|willful|gross negligence",
+          "absent:material breach|material defau",
+          "absent:mutual|each party|reciprocal|b",
+          "absent:remedy|remedies|replacement|re",
+          "dispute_resolution",
+          "indemnification",
+          "limitation_of_liability",
+          "non_compete",
+          "pattern:breach of|any breach|breach of",
+          "pattern:personal data|data subject|dat",
+          "pattern:shall indemnify|agrees to inde",
+          "pattern:waives? all claims|releases? a",
+          "pattern:worldwide|perpetual|indefinite",
+          "termination",
+          "warranty"
+        ],
+        "rag_types": [
+          "data_protection",
+          "indemnification",
+          "intellectual_property",
+          "limitation_of_liability",
+          "non_compete",
+          "termination"
+        ],
+        "overlap": [
+          "indemnification",
+          "limitation_of_liability",
+          "non_compete",
+          "termination"
+        ]
+      }
+    },
+    {
+      "name": "Cross: debate respects GNN",
+      "passed": true,
+      "duration_ms": 4,
+      "message": "",
+      "details": {
+        "gnn_risk": 54.35,
+        "debate_verdict": "high_risk",
+        "high_risk_agreement": true
+      }
+    }
+  ]
+}
