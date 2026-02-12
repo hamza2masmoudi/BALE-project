@@ -139,6 +139,67 @@ const mockResult = {
             ],
         },
     },
+
+    // V12 Quad-Innovation Data
+    v12: {
+        symbolic: {
+            violations_triggered: 4,
+            total_rules: 42,
+            symbolic_risk: 38.2,
+            fused_risk: 35.7,
+            alpha: 0.62,
+            violations: [
+                { rule: 'Proportionality — Limitation of Liability', severity: 'high', confidence: 0.91, remedy: 'Cap liability at 2x contract value per Cavendish Square test' },
+                { rule: 'Good Faith — Implied Duty', severity: 'medium', confidence: 0.78, remedy: 'Add express good faith provision with dispute escalation' },
+                { rule: 'Unconscionability — Unilateral Indemnification', severity: 'high', confidence: 0.85, remedy: 'Make indemnification mutual per Williams v Walker-Thomas' },
+                { rule: 'Gap-Filling — Missing Force Majeure', severity: 'medium', confidence: 0.72, remedy: 'Add FM clause with pandemic/cyber events per Taylor v Caldwell' },
+            ],
+        },
+        rag: {
+            cases_searched: 30,
+            citations_retrieved: 6,
+            jurisdictions: ['UK', 'US', 'EU'],
+            citations: [
+                { case: 'Cavendish Square v Makdessi [2015] UKSC 67', relevance: 0.94, type: 'limitation_of_liability', principle: 'Proportionality test for penalty clauses' },
+                { case: 'Williams v Walker-Thomas (1965)', relevance: 0.89, type: 'indemnification', principle: 'Unconscionability in one-sided terms' },
+                { case: 'Hongkong Fir v Kawasaki [1962]', relevance: 0.86, type: 'termination', principle: 'Innominate term doctrine' },
+                { case: 'Schrems II — CJEU C-311/18 (2020)', relevance: 0.82, type: 'data_protection', principle: 'Cross-border data transfer safeguards' },
+                { case: 'Taylor v Caldwell [1863]', relevance: 0.79, type: 'force_majeure', principle: 'Frustration doctrine' },
+                { case: 'Nordenfelt v Maxim [1894]', relevance: 0.75, type: 'non_compete', principle: 'Reasonable restraint of trade' },
+            ],
+        },
+        gnn: {
+            graph_risk: 41.3,
+            heuristic_risk: 38.5,
+            anomaly_score: 0.234,
+            top_nodes: [
+                { type: 'indemnification', learned_risk: 0.82, structural_importance: 0.31, delta: 0.12 },
+                { type: 'limitation_of_liability', learned_risk: 0.78, structural_importance: 0.28, delta: 0.08 },
+                { type: 'termination', learned_risk: 0.65, structural_importance: 0.19, delta: -0.05 },
+                { type: 'confidentiality', learned_risk: 0.42, structural_importance: 0.12, delta: -0.08 },
+            ],
+            top_edges: [
+                { source: 'indemnification', target: 'limitation_of_liability', attention: 0.89 },
+                { source: 'termination', target: 'force_majeure', attention: 0.76 },
+                { source: 'confidentiality', target: 'intellectual_property', attention: 0.68 },
+            ],
+        },
+        debate: {
+            verdict: 'moderate_risk',
+            sustained: 5,
+            overruled: 2,
+            risk_adjustment: 0.15,
+            duration_ms: 47,
+            summary: 'Legal Debate Concluded: 7 clauses debated. Prosecution raised 8 arguments; Defense countered with 7 arguments. Judge sustained 5 prosecution arguments and overruled 2. Critical rulings on: indemnification, limitation of liability. Contract presents MODERATE RISK with specific areas requiring attention.',
+            rulings: [
+                { clause: 'indemnification', verdict: 'sustained', pro_strength: 0.92, def_strength: 0.48, reasoning: 'One-sided indemnification exceeds acceptable commercial practice' },
+                { clause: 'limitation_of_liability', verdict: 'sustained', pro_strength: 0.87, def_strength: 0.52, reasoning: 'Liability cap disproportionate to contract value' },
+                { clause: 'termination', verdict: 'sustained', pro_strength: 0.74, def_strength: 0.61, reasoning: 'Close call; erring on side of caution regarding cure period' },
+                { clause: 'confidentiality', verdict: 'overruled', pro_strength: 0.55, def_strength: 0.72, reasoning: 'Confidentiality terms within acceptable industry standards' },
+                { clause: 'governing_law', verdict: 'overruled', pro_strength: 0.42, def_strength: 0.68, reasoning: 'Choice of law is neutral and parties exercised autonomy' },
+            ],
+        },
+    },
 }
 
 const FRONTIERS = [
@@ -159,6 +220,13 @@ const V11_FRONTIERS = [
     { num: 'XII', name: 'Confidence', key: 'confidence', color: '#8b5cf6', question: 'How reliable are the classifications?' },
     { num: 'XIII', name: 'Simulation', key: 'simulation', color: '#f59e0b', question: 'What is the range of possible risk?' },
     { num: 'XIV', name: 'Corpus', key: 'corpus', color: '#06b6d4', question: 'How does this contract compare?' },
+]
+
+const V12_FRONTIERS = [
+    { num: 'XV', name: 'Symbolic', key: 'symbolic', color: '#ec4899', question: 'Which legal doctrines are violated?' },
+    { num: 'XVI', name: 'Case Law', key: 'caselaw', color: '#14b8a6', question: 'What do the courts say?' },
+    { num: 'XVII', name: 'Graph NN', key: 'gnn', color: '#a855f7', question: 'What does clause structure reveal?' },
+    { num: 'XVIII', name: 'Debate', key: 'debate', color: '#f97316', question: 'Can the risk withstand adversarial scrutiny?' },
 ]
 
 function FrontierAnalysis() {
@@ -595,6 +663,172 @@ function FrontierAnalysis() {
                                 </div>
                             </div>
                         ))}
+                    </div>
+                </FrontierCard>
+            </div>
+
+            {/* ======================== V12 QUAD-INNOVATION CARDS ======================== */}
+            <div className="mt-8 mb-4">
+                <h2 className="text-title text-lg flex items-center gap-2">
+                    <span style={{ color: '#ec4899' }}>🧠</span> V12 Quad-Innovation
+                </h2>
+                <p className="text-small text-[var(--bale-text-muted)] mt-1">Neuro-Symbolic × Case Law RAG × Graph Neural Network × Adversarial Debate</p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* XV. Neuro-Symbolic Reasoning */}
+                <FrontierCard
+                    frontier={V12_FRONTIERS[0]}
+                    expanded={activeFrontier === 'symbolic'}
+                >
+                    <div className="space-y-3">
+                        <div className="grid grid-cols-3 gap-3 mb-3">
+                            <div className="text-center">
+                                <div className="text-xl font-bold" style={{ color: '#ec4899' }}>{mockResult.v12.symbolic.violations_triggered}</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Violations</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-xl font-bold" style={{ color: '#ec4899' }}>{mockResult.v12.symbolic.fused_risk.toFixed(1)}</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Fused Risk</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-xl font-bold text-[var(--bale-text-muted)]">α={mockResult.v12.symbolic.alpha.toFixed(2)}</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Blend Factor</div>
+                            </div>
+                        </div>
+                        {mockResult.v12.symbolic.violations.map((v, idx) => (
+                            <div key={idx} className="p-3 rounded-lg bg-[var(--bale-surface-elevated)]" style={{ borderLeft: `3px solid ${v.severity === 'high' ? 'var(--risk-high)' : '#ec4899'}` }}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-small font-medium">{v.rule}</span>
+                                    <span className={`text-caption px-2 py-0.5 rounded-full ${v.severity === 'high' ? 'bg-[var(--risk-bg-high)] text-[var(--risk-high)]' : 'bg-[var(--risk-bg-medium)] text-[var(--risk-medium)]'}`}>
+                                        {v.severity}
+                                    </span>
+                                </div>
+                                <div className="text-caption" style={{ color: '#ec4899' }}>⚖ {v.remedy}</div>
+                                <div className="text-caption text-[var(--bale-text-muted)] mt-1">Confidence: {(v.confidence * 100).toFixed(0)}%</div>
+                            </div>
+                        ))}
+                    </div>
+                </FrontierCard>
+
+                {/* XVI. Case Law RAG */}
+                <FrontierCard
+                    frontier={V12_FRONTIERS[1]}
+                    expanded={activeFrontier === 'caselaw'}
+                >
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-2xl font-bold" style={{ color: '#14b8a6' }}>{mockResult.v12.rag.citations_retrieved}</span>
+                            <span className="text-small text-[var(--bale-text-muted)]">citations from {mockResult.v12.rag.cases_searched} cases ({mockResult.v12.rag.jurisdictions.join(', ')})</span>
+                        </div>
+                        {mockResult.v12.rag.citations.map((c, idx) => (
+                            <div key={idx} className="p-3 rounded-lg bg-[var(--bale-surface-elevated)]" style={{ borderLeft: '3px solid #14b8a6' }}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-small font-medium" style={{ color: '#14b8a6' }}>{c.case}</span>
+                                    <span className="text-caption px-2 py-0.5 rounded-full" style={{ background: 'rgba(20,184,166,0.15)', color: '#14b8a6' }}>
+                                        {(c.relevance * 100).toFixed(0)}% match
+                                    </span>
+                                </div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">{c.principle}</div>
+                                <div className="text-caption capitalize mt-1" style={{ color: '#14b8a6' }}>→ {c.type.replace('_', ' ')}</div>
+                            </div>
+                        ))}
+                    </div>
+                </FrontierCard>
+
+                {/* XVII. Graph Attention Network */}
+                <FrontierCard
+                    frontier={V12_FRONTIERS[2]}
+                    expanded={activeFrontier === 'gnn'}
+                >
+                    <div className="space-y-3">
+                        <div className="grid grid-cols-3 gap-3 mb-3">
+                            <div className="text-center">
+                                <div className="text-xl font-bold" style={{ color: '#a855f7' }}>{mockResult.v12.gnn.graph_risk.toFixed(1)}</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Learned Risk</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-xl font-bold text-[var(--bale-text-muted)]">{mockResult.v12.gnn.heuristic_risk.toFixed(1)}</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Heuristic Risk</div>
+                            </div>
+                            <div className="text-center">
+                                <div className="text-xl font-bold" style={{ color: mockResult.v12.gnn.anomaly_score > 0.3 ? 'var(--risk-high)' : '#a855f7' }}>{(mockResult.v12.gnn.anomaly_score * 100).toFixed(0)}%</div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">Anomaly</div>
+                            </div>
+                        </div>
+
+                        <div className="text-caption text-[var(--bale-text-muted)] mb-2">Node Risk Scores (GAT)</div>
+                        {mockResult.v12.gnn.top_nodes.map((n, idx) => (
+                            <div key={idx} className="flex items-center gap-3">
+                                <span className="text-caption w-28 truncate capitalize">{n.type.replace('_', ' ')}</span>
+                                <div className="flex-1 h-3 bg-[var(--bale-surface-elevated)] rounded-full overflow-hidden">
+                                    <div className="h-full rounded-full" style={{ width: `${n.learned_risk * 100}%`, backgroundColor: '#a855f7' }} />
+                                </div>
+                                <span className="text-caption w-10 text-right">{(n.learned_risk * 100).toFixed(0)}%</span>
+                                <span className={`text-caption w-12 text-right ${n.delta > 0 ? 'text-[var(--risk-high)]' : 'text-[var(--risk-low)]'}`}>
+                                    {n.delta > 0 ? '+' : ''}{(n.delta * 100).toFixed(0)}%
+                                </span>
+                            </div>
+                        ))}
+
+                        <div className="text-caption text-[var(--bale-text-muted)] mt-3 mb-1">Top Attention Edges</div>
+                        {mockResult.v12.gnn.top_edges.map((e, idx) => (
+                            <div key={idx} className="flex items-center gap-2 text-caption">
+                                <span className="capitalize">{e.source.replace('_', ' ')}</span>
+                                <span style={{ color: '#a855f7' }}>→</span>
+                                <span className="capitalize">{e.target.replace('_', ' ')}</span>
+                                <span className="ml-auto" style={{ color: '#a855f7' }}>{(e.attention * 100).toFixed(0)}%</span>
+                            </div>
+                        ))}
+                    </div>
+                </FrontierCard>
+
+                {/* XVIII. Multi-Agent Debate */}
+                <FrontierCard
+                    frontier={V12_FRONTIERS[3]}
+                    expanded={activeFrontier === 'debate'}
+                >
+                    <div className="space-y-3">
+                        <div className="flex items-center justify-between mb-2">
+                            <span className="text-xl font-bold capitalize" style={{
+                                color: mockResult.v12.debate.verdict === 'high_risk' ? 'var(--risk-high)' :
+                                    mockResult.v12.debate.verdict === 'moderate_risk' ? 'var(--risk-medium)' : 'var(--risk-low)'
+                            }}>
+                                {mockResult.v12.debate.verdict.replace('_', ' ')}
+                            </span>
+                            <span className="text-caption text-[var(--bale-text-muted)]">
+                                {mockResult.v12.debate.sustained} sustained · {mockResult.v12.debate.overruled} overruled · {mockResult.v12.debate.duration_ms}ms
+                            </span>
+                        </div>
+
+                        {mockResult.v12.debate.rulings.map((r, idx) => (
+                            <div key={idx} className="p-3 rounded-lg bg-[var(--bale-surface-elevated)]" style={{
+                                borderLeft: `3px solid ${r.verdict === 'sustained' ? '#f97316' : 'var(--risk-low)'}`
+                            }}>
+                                <div className="flex items-center justify-between mb-1">
+                                    <span className="text-small font-medium capitalize">{r.clause.replace('_', ' ')}</span>
+                                    <span className={`text-caption px-2 py-0.5 rounded-full ${r.verdict === 'sustained'
+                                        ? 'bg-[rgba(249,115,22,0.15)] text-[#f97316]'
+                                        : 'bg-[var(--risk-bg-low)] text-[var(--risk-low)]'
+                                        }`}>
+                                        {r.verdict}
+                                    </span>
+                                </div>
+                                <div className="text-caption text-[var(--bale-text-muted)]">{r.reasoning}</div>
+                                <div className="flex items-center gap-4 mt-1">
+                                    <div className="flex items-center gap-1 text-caption">
+                                        <span style={{ color: '#f97316' }}>⚔</span> {(r.pro_strength * 100).toFixed(0)}%
+                                    </div>
+                                    <div className="flex items-center gap-1 text-caption">
+                                        <span style={{ color: 'var(--risk-low)' }}>🛡</span> {(r.def_strength * 100).toFixed(0)}%
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+
+                        <div className="p-3 rounded-lg bg-[var(--bale-surface)] text-caption text-[var(--bale-text-muted)] italic mt-2" style={{ borderTop: '1px solid var(--bale-border)' }}>
+                            {mockResult.v12.debate.summary}
+                        </div>
                     </div>
                 </FrontierCard>
             </div>

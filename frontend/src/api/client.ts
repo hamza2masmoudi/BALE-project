@@ -539,3 +539,158 @@ export function useV11Analysis() {
 
     return { analyze, loading, error, result }
 }
+
+// ==================== V12 QUAD-INNOVATION ====================
+
+export interface V12AnalyzeRequest {
+    contract_text: string
+    contract_name?: string
+    contract_type?: string
+    suggest_rewrites?: boolean
+    simulate_risk?: boolean
+    corpus_compare?: boolean
+    use_semantic_chunking?: boolean
+    enable_symbolic?: boolean
+    enable_rag?: boolean
+    enable_gnn?: boolean
+    enable_debate?: boolean
+}
+
+export interface SymbolicViolation {
+    rule_id: string
+    rule_name: string
+    family: string
+    severity: string
+    violation_text: string
+    remedy: string
+    citation: string
+    risk_contribution: number
+    triggering_clauses: string[]
+    confidence: number
+}
+
+export interface CaseLawCitation {
+    citation: string
+    case_name: string
+    year: number
+    jurisdiction: string
+    clause_type: string
+    ruling_summary: string
+    legal_principle: string
+    safe_language: string
+    relevance_score: number
+    grounded_rewrite: string
+    risk_explanation: string
+}
+
+export interface GATNodeResult {
+    clause_id: string
+    clause_type: string
+    learned_risk: number
+    structural_importance: number
+    attention_received: Record<string, number>
+    heuristic_risk: number
+    risk_delta: number
+}
+
+export interface DebateArgument {
+    agent: string
+    clause_type: string
+    position: string
+    evidence: string[]
+    severity: string
+    confidence: number
+}
+
+export interface DebateRuling {
+    clause_type: string
+    verdict: string
+    reasoning: string
+    risk_adjustment: number
+    prosecution_strength: number
+    defense_strength: number
+}
+
+export interface V12AnalyzeResponse {
+    engine_version: string
+    contract_type: string
+    total_clauses: number
+    analysis_time_ms: number
+    v11_risk_score: number
+    v12_fused_risk: number
+    v12_confidence: number
+    classifications: Record<string, any>[]
+    graph_analysis: Record<string, any>
+    power_analysis: Record<string, any>
+    symbolic_verdict?: {
+        total_rules_evaluated: number
+        violations_triggered: number
+        violations: SymbolicViolation[]
+        doctrine_coverage: Record<string, number>
+        symbolic_risk_score: number
+        neural_risk_score: number
+        fused_risk_score: number
+        alpha: number
+        reasoning_chain: string[]
+    }
+    case_law_results?: {
+        total_cases_searched: number
+        citations_retrieved: number
+        citations: CaseLawCitation[]
+        jurisdictions_covered: string[]
+        clause_types_analyzed: string[]
+    }
+    gnn_scores?: {
+        node_results: GATNodeResult[]
+        graph_risk_score: number
+        structural_anomaly_score: number
+        top_attention_edges: Record<string, any>[]
+        heuristic_risk: number
+    }
+    debate_transcript?: {
+        prosecution_arguments: DebateArgument[]
+        defense_arguments: DebateArgument[]
+        rulings: DebateRuling[]
+        final_verdict: string
+        final_risk_adjustment: number
+        debate_duration_ms: number
+        summary: string
+    }
+    innovation_summary: Record<string, string>
+}
+
+// Add V12 method to the API class
+(baleApi as any).analyzeV12 = async function (request: V12AnalyzeRequest): Promise<V12AnalyzeResponse> {
+    const response = await fetch(`${API_BASE}/frontier/v12-analyze`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(request),
+    })
+    if (!response.ok) throw new Error(`V12 analysis failed: ${response.statusText}`)
+    return response.json()
+}
+
+export function useV12Analysis() {
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState<string | null>(null)
+    const [result, setResult] = useState<V12AnalyzeResponse | null>(null)
+
+    const analyze = useCallback(async (request: V12AnalyzeRequest) => {
+        setLoading(true)
+        setError(null)
+
+        try {
+            const response = await (baleApi as any).analyzeV12(request)
+            setResult(response)
+            return response
+        } catch (e) {
+            const message = e instanceof Error ? e.message : 'V12 analysis failed'
+            setError(message)
+            throw e
+        } finally {
+            setLoading(false)
+        }
+    }, [])
+
+    return { analyze, loading, error, result }
+}

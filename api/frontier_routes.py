@@ -419,3 +419,114 @@ async def analyze_contract_v11(request: V11AnalyzeRequest):
     except Exception as e:
         logger.error(f"V11 analysis failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+
+# ==================== V12 QUAD-INNOVATION ENDPOINT ====================
+
+class V12AnalyzeRequest(BaseModel):
+    """V12 analysis request with quad-innovation toggles."""
+    contract_text: str
+    contract_name: str = "Untitled"
+    contract_type: str = "MSA"
+    # V11 base options
+    suggest_rewrites: bool = True
+    simulate_risk: bool = True
+    corpus_compare: bool = True
+    use_semantic_chunking: bool = True
+    # V12 innovation toggles
+    enable_symbolic: bool = True
+    enable_rag: bool = True
+    enable_gnn: bool = True
+    enable_debate: bool = True
+
+
+class V12AnalyzeResponse(BaseModel):
+    """V12 analysis response with all four innovation outputs."""
+    engine_version: str
+    contract_type: str
+    total_clauses: int
+    analysis_time_ms: int
+    v11_risk_score: float
+    v12_fused_risk: float
+    v12_confidence: float
+    # V11 base
+    classifications: List[Dict[str, Any]]
+    graph_analysis: Dict[str, Any]
+    power_analysis: Dict[str, Any]
+    # V12 innovations
+    symbolic_verdict: Optional[Dict[str, Any]] = None
+    case_law_results: Optional[Dict[str, Any]] = None
+    gnn_scores: Optional[Dict[str, Any]] = None
+    debate_transcript: Optional[Dict[str, Any]] = None
+    innovation_summary: Dict[str, str] = {}
+
+
+@router.post("/v12-analyze", response_model=V12AnalyzeResponse)
+async def analyze_contract_v12(request: V12AnalyzeRequest):
+    """
+    Run V12 quad-innovation pipeline:
+    1. Neuro-Symbolic Legal Reasoning
+    2. RAG Case Law Intelligence
+    3. Graph Attention Network
+    4. Multi-Agent Legal Debate
+    """
+    logger.info(f"Starting V12 analysis for '{request.contract_name}'")
+
+    try:
+        from src.v10.pipeline import V10Pipeline
+        from src.v12.v12_engine import V12Engine
+
+        # Phase 1: Run V11 pipeline
+        pipeline = V10Pipeline(multilingual=True)
+        v11_report = pipeline.analyze(
+            contract_text=request.contract_text,
+            contract_type=request.contract_type,
+            suggest_rewrites=request.suggest_rewrites,
+            simulate_risk=request.simulate_risk,
+            corpus_compare=request.corpus_compare,
+            use_semantic_chunking=request.use_semantic_chunking,
+        )
+
+        # Phase 2: Run V12 quad-innovation engine
+        v12_engine = V12Engine()
+        v12_report = v12_engine.analyze(
+            v11_report,
+            enable_symbolic=request.enable_symbolic,
+            enable_rag=request.enable_rag,
+            enable_gnn=request.enable_gnn,
+            enable_debate=request.enable_debate,
+        )
+
+        return V12AnalyzeResponse(
+            engine_version=v12_report.engine_version,
+            contract_type=v12_report.v11_contract_type,
+            total_clauses=v12_report.v11_clause_count,
+            analysis_time_ms=v12_report.analysis_time_ms,
+            v11_risk_score=v12_report.v11_risk_score,
+            v12_fused_risk=v12_report.v12_fused_risk,
+            v12_confidence=v12_report.v12_confidence,
+            classifications=v11_report.clause_classifications,
+            graph_analysis=v11_report.graph,
+            power_analysis=v11_report.power,
+            symbolic_verdict=(
+                v12_report.symbolic_verdict.to_dict()
+                if v12_report.symbolic_verdict else None
+            ),
+            case_law_results=(
+                v12_report.case_law_results.to_dict()
+                if v12_report.case_law_results else None
+            ),
+            gnn_scores=(
+                v12_report.gnn_scores.to_dict()
+                if v12_report.gnn_scores else None
+            ),
+            debate_transcript=(
+                v12_report.debate_transcript.to_dict()
+                if v12_report.debate_transcript else None
+            ),
+            innovation_summary=v12_report.innovation_summary,
+        )
+
+    except Exception as e:
+        logger.error(f"V12 analysis failed: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
